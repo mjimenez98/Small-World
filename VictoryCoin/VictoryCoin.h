@@ -5,7 +5,7 @@
 #ifndef SMALL_WORLD_VICTORYCOIN_H
 #define SMALL_WORLD_VICTORYCOIN_H
 
-//Quantities
+// Quantities
 const int ONES = 35;
 const int THREES = 20;
 const int FIVES = 24;

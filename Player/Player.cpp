@@ -9,12 +9,12 @@ using namespace std;
 Player::Player(string raceChosen, string specialPowerBadgeChosen) {
 
     //Die die
-    LostTribeToken tribeTokens[MAXOFLOSTTRIBES];
-    MatchingRaceToken raceToken[MAXOFRACETOKENS];
+    //LostTribeToken tribeTokens[MAXOFLOSTTRIBES];
+    //MatchingRaceToken raceToken[MAXOFRACETOKENS];
     //Region regions[n];   n -> number of regions
-    SpecialPowerBadge badge = SpecialPowerBadge(specialPowerBadgeChosen);
-    SummarySheet summarySheet;
-    VictoryCoin coins[NUMOFCOINS];
+    //SpecialPowerBadge badge = SpecialPowerBadge(specialPowerBadgeChosen);
+    //SummarySheet summarySheet;
+    //VictoryCoin coins[NUMOFCOINS];
 
 }
 
