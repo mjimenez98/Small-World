@@ -22,7 +22,7 @@ void VictoryCoin::givePlayerCoins() {
 
 }
 
-//Sets up victory coins. The stock version of Small World has 35 1's, 20 3's, 24 5's and 30 10's
+// Sets up victory coins. The stock version of Small World has 35 1's, 20 3's, 24 5's and 30 10's
 VictoryCoin VictoryCoin::createVictoryCoins(int numOfOnes, int numOfThrees, int numOfFives, int numOfTens) {
 
     VictoryCoin coins[numOfOnes+numOfThrees+numOfFives+numOfTens];

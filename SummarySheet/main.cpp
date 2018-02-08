@@ -11,5 +11,8 @@ int main() {
 
     VictoryCoin coins = VictoryCoin::createVictoryCoins(ONES, THREES, FIVES, TENS);
 
+    MatchingRaceToken raceTokens = MatchingRaceToken::createMatchingRaceTokens(AMAZONS, DWARVES, ELVES, GHOULS, GIANTS,
+    HALFLINGS, HUMANS, ORCS, RATMEN, SKELETONS, SORCERERS, TRITONS, TROLLS, WIZARDS);
+
     return 0;
 }
