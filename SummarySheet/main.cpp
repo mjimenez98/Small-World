@@ -9,7 +9,7 @@
 
 int main() {
 
+    VictoryCoin coins = VictoryCoin::createVictoryCoins(ONES, THREES, FIVES, TENS);
 
     return 0;
 }
-
