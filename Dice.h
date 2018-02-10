@@ -1,13 +1,14 @@
 #pragma once
 class Dice
 {
-	int percentages [6] = { 0 };
-	int totalRolls;
+	int percentages [4] = { 0 };
+	int totalRolls = 0;
 	
 public:
-	int roll(int);
+	int roll();
 	void displayPercentages();
 	Dice();
 	~Dice();
 };
+
 
