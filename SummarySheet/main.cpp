@@ -10,12 +10,28 @@
 
 #include <iostream>
 
-int main() {
+void demoGame(vector<VictoryCoin> coins, vector<MatchingRaceToken> raceTokens, vector<SpecialPowerBadge> badges,
+              vector<GamePiece> gamePieces) {
+
+    if(coins.empty() || raceTokens.empty() || badges.empty() || gamePieces.empty()) {
+        cout << "ERROR" << endl;
+    }
+    else {
+        cout << "This Small World game set has:\n";
+        cout << VictoryCoin::demoVictoryCoins(coins) << endl;
+        cout << MatchingRaceToken::demoMatchingRaceTokens(raceTokens) << endl;
+        cout << SpecialPowerBadge::demoSpecialPowerBadges(badges) << endl;
+        cout << GamePiece::demoGamePieces(gamePieces);
+    }
+
+}
+
+void createGame() {
 
     vector<VictoryCoin> coins = VictoryCoin::createVictoryCoins(ONES, THREES, FIVES, TENS);
 
     vector<MatchingRaceToken> raceTokens = MatchingRaceToken::createMatchingRaceTokens(AMAZONS, DWARVES, ELVES, GHOULS, GIANTS,
-    HALFLINGS, HUMANS, ORCS, RATMEN, SKELETONS, SORCERERS, TRITONS, TROLLS, WIZARDS);
+                                                                                       HALFLINGS, HUMANS, ORCS, RATMEN, SKELETONS, SORCERERS, TRITONS, TROLLS, WIZARDS);
 
     vector<SpecialPowerBadge> badges = SpecialPowerBadge::createSpecialPowerBadges(ALCHEMISTCOINS, BERSERKCOINS, BIVOUACKINGCOINS,
                                                                                    COMMANDOCOINS, DIPLOMATCOINS, DRAGONMASTERCOINS,
@@ -23,15 +39,16 @@ int main() {
                                                                                    MERCHANTCOINS, MOUNTEDCOINS, PILLAGINGCOINS, SEAFARINGCOINS,
                                                                                    SPIRITCOINS, STOUTCOINS, SWAMPCOINS, UNDERWORLDCOINS, WEALTHYCOINS);
 
-    cout << "This Small World game set has:\n";
-    cout << VictoryCoin::demoVictoryCoins(coins) << endl;
-    cout << MatchingRaceToken::demoMatchingRaceTokens(raceTokens) << endl;
-    cout << SpecialPowerBadge::demoSpecialPowerBadges(badges);
+    vector<GamePiece> gamePieces = GamePiece::createGamePieces(DRAGONS, ENCAMPMENTS, FORTRESSES, HEROES, MOUNTAINS, TROLLLAIRS,
+                                                               HOLESINTHEGROUND);
 
-   /*
-    GamePiece gamePieces = GamePiece::createGamePieces(DRAGONS, ENCAMPMENTS, FORTRESSES, HEROES, MOUNTAINS, TROLLLAIRS,
-    HOLESINTHEGROUND);
-*/
+    demoGame(coins, raceTokens, badges, gamePieces);
+
+}
+
+int main() {
+
+    createGame();
 
     return 0;
 }

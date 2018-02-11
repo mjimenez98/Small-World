@@ -35,7 +35,7 @@ string printCoins(vector<VictoryCoin> coins, vector<int> positions) {
     int previous = 0;
 
     for(int position : positions) {
-        demo += "\n- " + to_string(position-previous) + " coins of value " + to_string(coins[position-1].getValue());
+        demo += "\n- " + to_string(position-previous) + " of value " + to_string(coins[position-1].getValue());
         previous = position;
     }
     demo += "\n";

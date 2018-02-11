@@ -6,6 +6,7 @@
 #define SMALL_WORLD_GAMEPIECES_H
 
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -21,9 +22,16 @@ const int HOLESINTHEGROUND = 2;
 class GamePiece {
 
 public:
+    // Constructors
     GamePiece();
     explicit GamePiece(string newType);
-    static GamePiece createGamePieces(int numOfDragons, int numOfEncampments, int numOfFortresses, int numOfHeroes,
+
+    // Getters
+    string getType();
+
+    // Other functions
+    static string demoGamePieces(vector<GamePiece> gamePieces);
+    static vector<GamePiece> createGamePieces(int numOfDragons, int numOfEncampments, int numOfFortresses, int numOfHeroes,
                                       int numOfMountains, int numOfTrollLairs, int numOfHolesInTheGround);
 
 private:
