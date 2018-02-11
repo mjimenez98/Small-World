@@ -10,22 +10,25 @@
 
 #include <iostream>
 
-void demoGame(vector<VictoryCoin> coins, vector<MatchingRaceToken> raceTokens, vector<SpecialPowerBadge> badges,
-              vector<GamePiece> gamePieces) {
+// Prints a description of the Small World deck
+void demoGame(vector<VictoryCoin>* coins, vector<MatchingRaceToken>* raceTokens, vector<SpecialPowerBadge>* badges,
+              vector<GamePiece>* gamePieces, vector<LostTribeToken>* lostTribes) {
 
-    if(coins.empty() || raceTokens.empty() || badges.empty() || gamePieces.empty()) {
+    if((*coins).empty() || (*raceTokens).empty() || (*badges).empty() || (*gamePieces).empty() || (*lostTribes).empty()) {
         cout << "ERROR" << endl;
     }
     else {
         cout << "This Small World game set has:\n";
-        cout << VictoryCoin::demoVictoryCoins(coins) << endl;
-        cout << MatchingRaceToken::demoMatchingRaceTokens(raceTokens) << endl;
-        cout << SpecialPowerBadge::demoSpecialPowerBadges(badges) << endl;
-        cout << GamePiece::demoGamePieces(gamePieces);
+        cout << VictoryCoin::demoVictoryCoins(*coins) << endl;
+        cout << MatchingRaceToken::demoMatchingRaceTokens(*raceTokens) << endl;
+        cout << SpecialPowerBadge::demoSpecialPowerBadges(*badges) << endl;
+        cout << GamePiece::demoGamePieces(*gamePieces) << endl;
+        cout << LostTribeToken::demoLostTribeTokens(*lostTribes);
     }
 
 }
 
+// Creates a deck of the Small World set
 void createGame() {
 
     vector<VictoryCoin> coins = VictoryCoin::createVictoryCoins(ONES, THREES, FIVES, TENS);
@@ -42,7 +45,9 @@ void createGame() {
     vector<GamePiece> gamePieces = GamePiece::createGamePieces(DRAGONS, ENCAMPMENTS, FORTRESSES, HEROES, MOUNTAINS, TROLLLAIRS,
                                                                HOLESINTHEGROUND);
 
-    demoGame(coins, raceTokens, badges, gamePieces);
+    vector<LostTribeToken> lostTribes = LostTribeToken::createLostTribeTokens(NUMOFLOSTTRIBETOKENS);
+
+    demoGame(&coins, &raceTokens, &badges, &gamePieces, &lostTribes);
 
 }
 

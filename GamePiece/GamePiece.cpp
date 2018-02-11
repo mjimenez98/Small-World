@@ -49,7 +49,7 @@ string GamePiece::demoGamePieces(vector<GamePiece> gamePieces) {
 
         for(int i=1; i<gamePieces.size(); i++) {
 
-            if(gamePieces[i].getType().compare(gamePieces[i-1].getType()) != 0) {
+            if(gamePieces[i].getType() != gamePieces[i-1].getType()) {
                 positions.push_back(i);
             }
 
