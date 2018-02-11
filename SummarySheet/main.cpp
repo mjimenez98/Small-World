@@ -17,14 +17,18 @@ int main() {
     vector<MatchingRaceToken> raceTokens = MatchingRaceToken::createMatchingRaceTokens(AMAZONS, DWARVES, ELVES, GHOULS, GIANTS,
     HALFLINGS, HUMANS, ORCS, RATMEN, SKELETONS, SORCERERS, TRITONS, TROLLS, WIZARDS);
 
+    vector<SpecialPowerBadge> badges = SpecialPowerBadge::createSpecialPowerBadges(ALCHEMISTCOINS, BERSERKCOINS, BIVOUACKINGCOINS,
+                                                                                   COMMANDOCOINS, DIPLOMATCOINS, DRAGONMASTERCOINS,
+                                                                                   FLYINGCOINS, FORESTCOINS, FORTIFIEDCOINS, HEROICCOINS, HILLCOINS,
+                                                                                   MERCHANTCOINS, MOUNTEDCOINS, PILLAGINGCOINS, SEAFARINGCOINS,
+                                                                                   SPIRITCOINS, STOUTCOINS, SWAMPCOINS, UNDERWORLDCOINS, WEALTHYCOINS);
+
+    cout << "This Small World game set has:\n";
     cout << VictoryCoin::demoVictoryCoins(coins) << endl;
-    cout << MatchingRaceToken::demoMatchingRaceTokens(raceTokens);
+    cout << MatchingRaceToken::demoMatchingRaceTokens(raceTokens) << endl;
+    cout << SpecialPowerBadge::demoSpecialPowerBadges(badges);
 
-    /*
-    SpecialPowerBadge badges = SpecialPowerBadge::createSpecialPowerBadges(ALCHEMISTCOINS, BERSERKCOINS, BIVOUACKINGCOINS,
-    COMMANDOCOINS, DIPLOMATCOINS, DRAGONMASTERCOINS, FLYINGCOINS, FORESTCOINS, FORTIFIEDCOINS, HEROICCOINS, HILLCOINS,
-    MERCHANTCOINS, MOUNTEDCOINS, PILLAGINGCOINS, SEAFARINGCOINS, SPIRITCOINS, STOUTCOINS, SWAMPCOINS, UNDERWORLDCOINS, WEALTHYCOINS);
-
+   /*
     GamePiece gamePieces = GamePiece::createGamePieces(DRAGONS, ENCAMPMENTS, FORTRESSES, HEROES, MOUNTAINS, TROLLLAIRS,
     HOLESINTHEGROUND);
 */

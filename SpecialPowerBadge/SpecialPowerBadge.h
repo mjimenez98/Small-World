@@ -6,6 +6,7 @@
 #define SMALL_WORLD_SPECIALPOWERBADGE_H
 
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -34,14 +35,22 @@ const int WEALTHYCOINS = 4;
 class SpecialPowerBadge {
 
 public:
+    // Constructors
     SpecialPowerBadge();
     SpecialPowerBadge(string newType, int newNumOfCoinsToGive);
+
+    // Getters
+    string getType();
+    int getNumOfCoinsToGive();
+
+    // Other functions
     void activate();
     void giveCoinsToPlayer();
-    static SpecialPowerBadge createSpecialPowerBadges(int coinsAlchemist, int coinsBerserk, int coinsBivouack, int coinsCommando,
-    int coinsDiplomat, int coinsDragonMaster, int coinsFlying, int coinsForest, int coinsFortified, int coinsHeroic,
-    int coinsHill, int coinsMerchant, int coinsMounted, int coinsPillaging, int coinsSeafaring, int coinsSpirit,
-    int coinsStout, int coinsSwamp, int coinsUnderworld, int coinsWealthy);
+    static string demoSpecialPowerBadges(vector<SpecialPowerBadge> badges);
+    static vector<SpecialPowerBadge> createSpecialPowerBadges(int coinsAlchemist, int coinsBerserk, int coinsBivouack, int coinsCommando,
+        int coinsDiplomat, int coinsDragonMaster, int coinsFlying, int coinsForest, int coinsFortified, int coinsHeroic,
+        int coinsHill, int coinsMerchant, int coinsMounted, int coinsPillaging, int coinsSeafaring, int coinsSpirit,
+        int coinsStout, int coinsSwamp, int coinsUnderworld, int coinsWealthy);
 
 private:
     string type;

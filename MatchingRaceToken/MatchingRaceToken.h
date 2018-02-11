@@ -59,8 +59,8 @@ public:
     void giveCoinsToPlayer();
     static string demoMatchingRaceTokens(vector<MatchingRaceToken> raceTokens);
     static vector<MatchingRaceToken> createMatchingRaceTokens(int numOfAmazons, int numOfDwarves, int numOfElves, int numOfGhouls,
-    int numOfGiants, int numOfHalflings, int numOfHumans, int numOfOrcs, int numOfRatmen, int numOfSkeletons, int numOfSorcerers,
-    int numOfTritons, int numOfTrolls, int numOfWizards);
+        int numOfGiants, int numOfHalflings, int numOfHumans, int numOfOrcs, int numOfRatmen, int numOfSkeletons, int numOfSorcerers,
+        int numOfTritons, int numOfTrolls, int numOfWizards);
 
 private:
     string type;
