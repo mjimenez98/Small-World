@@ -6,6 +6,7 @@
 #define SMALL_WORLD_MATCHINGRACETOKEN_H
 
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -44,11 +45,20 @@ const int WIZARDCOINS = 5;
 class MatchingRaceToken {
 
 public:
+    // Constructors
     MatchingRaceToken();
     MatchingRaceToken(string newType, int newNumOfTokens, int newNumOfCoinsToGive);
+
+    // Getters
+    string getType();
+    int getNumOfTokens();
+    int getNumOfCoinsToGive();
+
+    // Other functions
     void activate();
     void giveCoinsToPlayer();
-    static MatchingRaceToken createMatchingRaceTokens(int numOfAmazons, int numOfDwarves, int numOfElves, int numOfGhouls,
+    static string demoMatchingRaceTokens(vector<MatchingRaceToken> raceTokens);
+    static vector<MatchingRaceToken> createMatchingRaceTokens(int numOfAmazons, int numOfDwarves, int numOfElves, int numOfGhouls,
     int numOfGiants, int numOfHalflings, int numOfHumans, int numOfOrcs, int numOfRatmen, int numOfSkeletons, int numOfSorcerers,
     int numOfTritons, int numOfTrolls, int numOfWizards);
 

@@ -22,6 +22,24 @@ MatchingRaceToken::MatchingRaceToken(string newType, int newNumOfTokens, int new
 
 }
 
+string MatchingRaceToken::getType() {
+
+    return type;
+
+}
+
+int MatchingRaceToken::getNumOfTokens() {
+
+    return numOfTokens;
+
+}
+
+int MatchingRaceToken::getNumOfCoinsToGive() {
+
+    return numOfCoinsToGive;
+
+}
+
 void MatchingRaceToken::activate() {
 
     //TBD
@@ -34,33 +52,50 @@ void MatchingRaceToken::giveCoinsToPlayer() {
 
 }
 
+// Prints a description of all the Matching Race Tokens created
+string MatchingRaceToken::demoMatchingRaceTokens(vector<MatchingRaceToken> raceTokens) {
+
+    if(raceTokens.empty()) {
+        return "ERROR";
+    }
+    else {
+        string demo = "Matching Race Tokens:";
+
+        for(MatchingRaceToken raceToken : raceTokens) {
+            demo += "\n- " + to_string(raceToken.getNumOfTokens()) + " " + raceToken.getType();
+        }
+
+        demo += "\n";
+
+        return demo;
+    }
+
+}
+
 /* Sets up race tokens. The stock version of Small World has: 15 Amazons, 8 Dwarves, 11 Elves, 10 Ghouls, 13 Ratmen,
  * 20 Skeletons, 18 Sorcerers, 11 Tritons, 11 Giants, 11 Halflings, 10 Humans, 10 Orcs, 10 Trolls and 10 Wizards */
-MatchingRaceToken MatchingRaceToken::createMatchingRaceTokens(int numOfAmazons, int numOfDwarves, int numOfElves, int numOfGhouls,
+vector<MatchingRaceToken> MatchingRaceToken::createMatchingRaceTokens(int numOfAmazons, int numOfDwarves, int numOfElves, int numOfGhouls,
                                                               int numOfGiants, int numOfHalflings, int numOfHumans, int numOfOrcs,
                                                               int numOfRatmen, int numOfSkeletons, int numOfSorcerers,
                                                               int numOfTritons, int numOfTrolls, int numOfWizards) {
 
-    MatchingRaceToken raceTokens[numOfAmazons+numOfDwarves+numOfElves+numOfGhouls+numOfGiants+numOfHalflings+numOfHumans+
-    numOfOrcs+numOfRatmen+numOfSkeletons+numOfSorcerers+numOfTritons+numOfTrolls+numOfWizards];
+    vector<MatchingRaceToken> raceTokens;
 
-    int index = 0;
+    raceTokens.emplace_back(MatchingRaceToken("Amazon", numOfAmazons, AMAZONCOINS));
+    raceTokens.emplace_back(MatchingRaceToken("Dwarf", numOfDwarves, DWARFCOINS));
+    raceTokens.emplace_back(MatchingRaceToken("Elf", numOfElves, ELFCOINS));
+    raceTokens.emplace_back(MatchingRaceToken("Ghoul", numOfGhouls, GHOULCOINS));
+    raceTokens.emplace_back(MatchingRaceToken("Giant", numOfGiants, GIANTCOINS));
+    raceTokens.emplace_back(MatchingRaceToken("Halfling", numOfHalflings, HALFLINGCOINS));
+    raceTokens.emplace_back(MatchingRaceToken("Human", numOfHumans, HUMANCOINS));
+    raceTokens.emplace_back(MatchingRaceToken("Orc", numOfOrcs, ORCCOINS));
+    raceTokens.emplace_back(MatchingRaceToken("Ratman", numOfRatmen, RATMANCOINS));
+    raceTokens.emplace_back(MatchingRaceToken("Skeleton", numOfSkeletons, SKELETONCOINS));
+    raceTokens.emplace_back(MatchingRaceToken("Sorcerer", numOfSorcerers, SORCERERCOINS));
+    raceTokens.emplace_back(MatchingRaceToken("Triton", numOfTritons, TRITONCOINS));
+    raceTokens.emplace_back(MatchingRaceToken("Troll", numOfTrolls, TROLLCOINS));
+    raceTokens.emplace_back(MatchingRaceToken("Wizard", numOfWizards, WIZARDCOINS));
 
-    raceTokens[index++] = MatchingRaceToken("Amazon", numOfAmazons, AMAZONCOINS);
-    raceTokens[index++] = MatchingRaceToken("Dwarf", numOfDwarves, DWARFCOINS);
-    raceTokens[index++] = MatchingRaceToken("Elf", numOfElves, ELFCOINS);
-    raceTokens[index++] = MatchingRaceToken("Ghoul", numOfGhouls, GHOULCOINS);
-    raceTokens[index++] = MatchingRaceToken("Giant", numOfGiants, GIANTCOINS);
-    raceTokens[index++] = MatchingRaceToken("Halfling", numOfHalflings, HALFLINGCOINS);
-    raceTokens[index++] = MatchingRaceToken("Human", numOfHumans, HUMANCOINS);
-    raceTokens[index++] = MatchingRaceToken("Orc", numOfOrcs, ORCCOINS);
-    raceTokens[index++] = MatchingRaceToken("Ratman", numOfRatmen, RATMANCOINS);
-    raceTokens[index++] = MatchingRaceToken("Skeleton", numOfSkeletons, SKELETONCOINS);
-    raceTokens[index++] = MatchingRaceToken("Sorcerer", numOfSorcerers, SORCERERCOINS);
-    raceTokens[index++] = MatchingRaceToken("Triton", numOfTritons, TRITONCOINS);
-    raceTokens[index++] = MatchingRaceToken("Troll", numOfTrolls, TROLLCOINS);
-    raceTokens[index++] = MatchingRaceToken("Wizard", numOfWizards, WIZARDCOINS);
-
-    return *raceTokens;
+    return raceTokens;
 
 }

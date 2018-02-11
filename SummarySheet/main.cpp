@@ -14,11 +14,13 @@ int main() {
 
     vector<VictoryCoin> coins = VictoryCoin::createVictoryCoins(ONES, THREES, FIVES, TENS);
 
-    cout << VictoryCoin::demoVictoryCoins(coins);
-
-    /*MatchingRaceToken raceTokens = MatchingRaceToken::createMatchingRaceTokens(AMAZONS, DWARVES, ELVES, GHOULS, GIANTS,
+    vector<MatchingRaceToken> raceTokens = MatchingRaceToken::createMatchingRaceTokens(AMAZONS, DWARVES, ELVES, GHOULS, GIANTS,
     HALFLINGS, HUMANS, ORCS, RATMEN, SKELETONS, SORCERERS, TRITONS, TROLLS, WIZARDS);
 
+    cout << VictoryCoin::demoVictoryCoins(coins) << endl;
+    cout << MatchingRaceToken::demoMatchingRaceTokens(raceTokens);
+
+    /*
     SpecialPowerBadge badges = SpecialPowerBadge::createSpecialPowerBadges(ALCHEMISTCOINS, BERSERKCOINS, BIVOUACKINGCOINS,
     COMMANDOCOINS, DIPLOMATCOINS, DRAGONMASTERCOINS, FLYINGCOINS, FORESTCOINS, FORTIFIEDCOINS, HEROICCOINS, HILLCOINS,
     MERCHANTCOINS, MOUNTEDCOINS, PILLAGINGCOINS, SEAFARINGCOINS, SPIRITCOINS, STOUTCOINS, SWAMPCOINS, UNDERWORLDCOINS, WEALTHYCOINS);
