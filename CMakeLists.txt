@@ -4,10 +4,11 @@ project(Small-World)
 set(CMAKE_CXX_STANDARD 11)
 
 add_executable(Small-World
+        FantasyRaceBanner/FantasyRaceBanner.cpp FantasyRaceBanner/FantasyRaceBanner.h
         GamePiece/GamePiece.cpp GamePiece/GamePiece.h
         LostTribeToken/LostTribeToken.cpp LostTribeToken/LostTribeToken.h
         MatchingRaceToken/MatchingRaceToken.cpp MatchingRaceToken/MatchingRaceToken.h
         Player/Player.h Player/Player.cpp #Player/main.cpp
         SpecialPowerBadge/SpecialPowerBadge.cpp SpecialPowerBadge/SpecialPowerBadge.h
         SummarySheet/SummarySheet.cpp SummarySheet/SummarySheet.h SummarySheet/main.cpp
-        VictoryCoin/VictoryCoin.cpp VictoryCoin/VictoryCoin.h FantasyRaceBanner/FantasyRaceBanner.cpp FantasyRaceBanner/FantasyRaceBanner.h)
+        VictoryCoin/VictoryCoin.cpp VictoryCoin/VictoryCoin.h)
