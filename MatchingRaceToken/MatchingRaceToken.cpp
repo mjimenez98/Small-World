@@ -8,7 +8,7 @@ using namespace std;
 
 MatchingRaceToken::MatchingRaceToken() {
 
-    type = nullptr;
+    type = "";
     numOfTokens = -1;
     numOfCoinsToGive = -1;
 

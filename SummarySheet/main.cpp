@@ -2,28 +2,28 @@
 // Created by Miguel Jimenez on 2/7/18.
 //
 
+#include "../FantasyRaceBanner/FantasyRaceBanner.h"
 #include "../GamePiece/GamePiece.h"
 #include "../LostTribeToken/LostTribeToken.h"
-#include "../MatchingRaceToken/MatchingRaceToken.h"
-#include "../SpecialPowerBadge/SpecialPowerBadge.h"
 #include "../VictoryCoin/VictoryCoin.h"
 
 #include <iostream>
 
 // Prints a description of the Small World deck
 void demoGame(vector<VictoryCoin>* coins, vector<MatchingRaceToken>* raceTokens, vector<SpecialPowerBadge>* badges,
-              vector<GamePiece>* gamePieces, vector<LostTribeToken>* lostTribes) {
+              vector<GamePiece>* gamePieces, vector<LostTribeToken>* lostTribes, vector<FantasyRaceBanner>* raceBanners) {
 
     if((*coins).empty() || (*raceTokens).empty() || (*badges).empty() || (*gamePieces).empty() || (*lostTribes).empty()) {
         cout << "ERROR" << endl;
     }
     else {
-        cout << "This Small World game set has:\n";
+        cout << "This Small World game set has:\n" << endl;
         cout << VictoryCoin::demoVictoryCoins(*coins) << endl;
         cout << MatchingRaceToken::demoMatchingRaceTokens(*raceTokens) << endl;
         cout << SpecialPowerBadge::demoSpecialPowerBadges(*badges) << endl;
         cout << GamePiece::demoGamePieces(*gamePieces) << endl;
-        cout << LostTribeToken::demoLostTribeTokens(*lostTribes);
+        cout << LostTribeToken::demoLostTribeTokens(*lostTribes) << endl;
+        cout << FantasyRaceBanner::demoFantasyRaceBanner(*raceBanners);
     }
 
 }
@@ -47,7 +47,9 @@ void createGame() {
 
     vector<LostTribeToken> lostTribes = LostTribeToken::createLostTribeTokens(NUMOFLOSTTRIBETOKENS);
 
-    demoGame(&coins, &raceTokens, &badges, &gamePieces, &lostTribes);
+    vector<FantasyRaceBanner> raceBanners = FantasyRaceBanner::createFantasyRaceBanners(raceTokens);
+
+    demoGame(&coins, &raceTokens, &badges, &gamePieces, &lostTribes, &raceBanners);
 
 }
 

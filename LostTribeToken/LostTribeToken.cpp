@@ -11,7 +11,7 @@ LostTribeToken::LostTribeToken() {
 // Describes how many lost tribe tokens there are
 string LostTribeToken::demoLostTribeTokens(vector<LostTribeToken> lostTribes) {
 
-    return "Lost Tribe Tokens:\n- " + to_string(lostTribes.size());
+    return "Lost Tribe Tokens:\n- " + to_string(lostTribes.size()) + "\n";
 
 }
 
