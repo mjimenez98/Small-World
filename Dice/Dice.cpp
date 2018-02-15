@@ -43,7 +43,8 @@ using namespace std;
 	 void Dice::displayPercentages()
 	 {
 		 
-		 cout << "1: " << (percentages[0]*100 / totalRolls) << " %" <<
+		 cout << "Results: " << endl <<
+		     "1: " << (percentages[0]*100 / totalRolls) << " %" <<
 			 "\n2: " << (percentages[1] * 100 / totalRolls) << " %" <<
 			 "\n3: " << (percentages[2] * 100 / totalRolls) << " %" <<
 			 "\n0: " << (percentages[3] * 100 / totalRolls) << " %" << endl;
@@ -53,17 +54,3 @@ using namespace std;
 	Dice::~Dice()
 	{
 	}
-
-int main()
-{
-	Dice d1;
-	//cout<< "You rolled a: "<<d1.roll(3)<<"\n "<<endl;
-
-	for (int k = 0; k < 1000; ++k)
-		d1.roll();
-
-	
-
-	d1.displayPercentages();
-	system("pause");
-}

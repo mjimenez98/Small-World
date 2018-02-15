@@ -18,19 +18,25 @@ public:
     // Constructors
     FantasyRaceBanner();
     explicit FantasyRaceBanner(MatchingRaceToken newRaceToken);
+    FantasyRaceBanner(MatchingRaceToken newRaceToken, SpecialPowerBadge newPowerBadge);
 
     // Getters
     MatchingRaceToken getRaceToken();
-    //SpecialPowerBadge getPowerBadge();
+    SpecialPowerBadge getPowerBadge();
+
+    // Setters
+    void setRaceToken(MatchingRaceToken newRaceToken);
+    void setPowerBadge(SpecialPowerBadge newPowerBadge);
 
     // Other functions
     static string demoFantasyRaceBanner(vector<FantasyRaceBanner> raceBanners);
-    static vector<FantasyRaceBanner> createFantasyRaceBanners(vector<MatchingRaceToken> raceTokens);
+    static vector<FantasyRaceBanner> createFantasyRaceBanners(vector<MatchingRaceToken> raceTokens,
+                                                              vector<SpecialPowerBadge> powerBadges);
 
 
 private:
     MatchingRaceToken raceToken;
-    //SpecialPowerBadge powerBadge;
+    SpecialPowerBadge powerBadge;
 
 
 };

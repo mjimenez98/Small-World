@@ -26,6 +26,9 @@ public:
     // Getters
     int getValue();
 
+    // Setters
+    void setValue(int newValue);
+
     // Other functions
     void givePlayerCoins();
     static string demoVictoryCoins(vector<VictoryCoin> coins);

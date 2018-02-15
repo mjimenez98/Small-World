@@ -3,3 +3,13 @@
 //
 
 #include "SummarySheet.h"
+
+SummarySheet::SummarySheet() {
+
+}
+
+int SummarySheet::exists() {
+
+    return test;
+
+}
