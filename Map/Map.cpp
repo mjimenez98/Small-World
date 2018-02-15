@@ -133,7 +133,7 @@
 				size += s.at(0);
 				size += s.at(1);
 				int sizenum = stoi(size);
-			Map m1(50);
+			Map m1(sizenum);
 
 			//count keeps track of line number
 			int count = 1;
