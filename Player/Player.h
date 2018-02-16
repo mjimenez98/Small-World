@@ -7,6 +7,7 @@
 
 #include "../Dice/Dice.h"
 #include "../FantasyRaceBanner/FantasyRaceBanner.h"
+#include "../Map/Map.h"
 #include "../SummarySheet/SummarySheet.h"
 #include "../VictoryCoin/VictoryCoin.h"
 
@@ -41,7 +42,7 @@ public:
 private:
     Dice dice;
     FantasyRaceBanner raceBanner;
-    //Region regions
+    vector<Map> regions;
     SummarySheet summarySheet;
     //vector<VictoryCoin> coins;
     VictoryCoin coins;

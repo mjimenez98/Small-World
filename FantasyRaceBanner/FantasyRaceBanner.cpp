@@ -48,6 +48,12 @@ void FantasyRaceBanner::setPowerBadge(SpecialPowerBadge newPowerBadge) {
 
 }
 
+void FantasyRaceBanner::setNumOfTokens(int newNumOfTokens) {
+
+    raceToken.setNumOfTokens(newNumOfTokens);
+
+}
+
 // Prints a description of all the Fantasy Race Banners
 string FantasyRaceBanner::demoFantasyRaceBanner(vector<FantasyRaceBanner> raceBanners) {
 

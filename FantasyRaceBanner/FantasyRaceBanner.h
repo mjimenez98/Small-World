@@ -27,17 +27,16 @@ public:
     // Setters
     void setRaceToken(MatchingRaceToken newRaceToken);
     void setPowerBadge(SpecialPowerBadge newPowerBadge);
+    void setNumOfTokens(int newNumOfTokens);
 
     // Other functions
     static string demoFantasyRaceBanner(vector<FantasyRaceBanner> raceBanners);
     static vector<FantasyRaceBanner> createFantasyRaceBanners(vector<MatchingRaceToken> raceTokens,
                                                               vector<SpecialPowerBadge> powerBadges);
 
-
 private:
     MatchingRaceToken raceToken;
     SpecialPowerBadge powerBadge;
-
 
 };
 

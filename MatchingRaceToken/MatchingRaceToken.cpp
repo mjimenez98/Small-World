@@ -10,15 +10,13 @@ MatchingRaceToken::MatchingRaceToken() {
 
     type = "";
     numOfTokens = -1;
-    numOfStartingTroops = -1;
 
 }
 
-MatchingRaceToken::MatchingRaceToken(string newType, int newNumOfTokens, int newNumOfCoinsToGive) {
+MatchingRaceToken::MatchingRaceToken(string newType, int newNumOfTokens) {
 
     type = newType;
     numOfTokens = newNumOfTokens;
-    numOfStartingTroops = newNumOfCoinsToGive;
 
 }
 
@@ -34,9 +32,9 @@ int MatchingRaceToken::getNumOfTokens() {
 
 }
 
-int MatchingRaceToken::getNumOfStartingTroops() {
+void MatchingRaceToken::setNumOfTokens(int newNumOfTokens) {
 
-    return numOfStartingTroops;
+    numOfTokens = newNumOfTokens;
 
 }
 
@@ -97,20 +95,20 @@ vector<MatchingRaceToken> MatchingRaceToken::createMatchingRaceTokens(int numOfA
 
     vector<MatchingRaceToken> raceTokens;
 
-    raceTokens.emplace_back(MatchingRaceToken("Amazon", numOfAmazons, AMAZONSTART));
-    raceTokens.emplace_back(MatchingRaceToken("Dwarf", numOfDwarves, DWARFSTART));
-    raceTokens.emplace_back(MatchingRaceToken("Elf", numOfElves, ELFSTART));
-    raceTokens.emplace_back(MatchingRaceToken("Ghoul", numOfGhouls, GHOULSTART));
-    raceTokens.emplace_back(MatchingRaceToken("Giant", numOfGiants, GIANTSTART));
-    raceTokens.emplace_back(MatchingRaceToken("Halfling", numOfHalflings, HALFLINGSTART));
-    raceTokens.emplace_back(MatchingRaceToken("Human", numOfHumans, HUMANSTART));
-    raceTokens.emplace_back(MatchingRaceToken("Orc", numOfOrcs, ORCSTART));
-    raceTokens.emplace_back(MatchingRaceToken("Ratman", numOfRatmen, RATMANSTART));
-    raceTokens.emplace_back(MatchingRaceToken("Skeleton", numOfSkeletons, SKELETONSTART));
-    raceTokens.emplace_back(MatchingRaceToken("Sorcerer", numOfSorcerers, SORCERERSTART));
-    raceTokens.emplace_back(MatchingRaceToken("Triton", numOfTritons, TRITONSTART));
-    raceTokens.emplace_back(MatchingRaceToken("Troll", numOfTrolls, TROLLSTART));
-    raceTokens.emplace_back(MatchingRaceToken("Wizard", numOfWizards, WIZARDSTART));
+    raceTokens.emplace_back(MatchingRaceToken("Amazon", numOfAmazons));
+    raceTokens.emplace_back(MatchingRaceToken("Dwarf", numOfDwarves));
+    raceTokens.emplace_back(MatchingRaceToken("Elf", numOfElves));
+    raceTokens.emplace_back(MatchingRaceToken("Ghoul", numOfGhouls));
+    raceTokens.emplace_back(MatchingRaceToken("Giant", numOfGiants));
+    raceTokens.emplace_back(MatchingRaceToken("Halfling", numOfHalflings));
+    raceTokens.emplace_back(MatchingRaceToken("Human", numOfHumans));
+    raceTokens.emplace_back(MatchingRaceToken("Orc", numOfOrcs));
+    raceTokens.emplace_back(MatchingRaceToken("Ratman", numOfRatmen));
+    raceTokens.emplace_back(MatchingRaceToken("Skeleton", numOfSkeletons));
+    raceTokens.emplace_back(MatchingRaceToken("Sorcerer", numOfSorcerers));
+    raceTokens.emplace_back(MatchingRaceToken("Triton", numOfTritons));
+    raceTokens.emplace_back(MatchingRaceToken("Troll", numOfTrolls));
+    raceTokens.emplace_back(MatchingRaceToken("Wizard", numOfWizards));
 
     return raceTokens;
 

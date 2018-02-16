@@ -5,8 +5,6 @@
 
 using namespace std;
 
-
-
 	Dice::Dice()
 	{
 		totalRolls = 0;

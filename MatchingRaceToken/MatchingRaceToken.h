@@ -10,7 +10,7 @@
 
 using namespace std;
 
-// Quantity
+// Number of tokens in the game
 const int AMAZONS = 15;
 const int DWARVES = 8;
 const int ELVES = 11;
@@ -26,7 +26,7 @@ const int TRITONS = 11;
 const int TROLLS = 10;
 const int WIZARDS = 10;
 
-// Coins to give
+// Starting tokens
 const int AMAZONSTART = 6;
 const int DWARFSTART = 3;
 const int ELFSTART = 6;
@@ -47,12 +47,14 @@ class MatchingRaceToken {
 public:
     // Constructors
     MatchingRaceToken();
-    MatchingRaceToken(string newType, int newNumOfTokens, int newNumOfStartingTroops);
+    MatchingRaceToken(string newType, int newNumOfTokens);
 
     // Getters
     string getType();
     int getNumOfTokens();
-    int getNumOfStartingTroops();
+
+    // Setters
+    void setNumOfTokens(int newNumOfTokens);
 
     // Other functions
     void activate();
@@ -65,7 +67,6 @@ public:
 private:
     string type;
     int numOfTokens;
-    int numOfStartingTroops;
 
 };
 
