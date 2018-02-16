@@ -37,11 +37,13 @@ void createGame() {
     vector<MatchingRaceToken> raceTokens = MatchingRaceToken::createMatchingRaceTokens(AMAZONS, DWARVES, ELVES, GHOULS, GIANTS,
                                                                                        HALFLINGS, HUMANS, ORCS, RATMEN, SKELETONS, SORCERERS, TRITONS, TROLLS, WIZARDS);
 
-    vector<SpecialPowerBadge> badges = SpecialPowerBadge::createSpecialPowerBadges(ALCHEMISTCOINS, BERSERKCOINS, BIVOUACKINGCOINS,
-                                                                                   COMMANDOCOINS, DIPLOMATCOINS, DRAGONMASTERCOINS,
-                                                                                   FLYINGCOINS, FORESTCOINS, FORTIFIEDCOINS, HEROICCOINS, HILLCOINS,
-                                                                                   MERCHANTCOINS, MOUNTEDCOINS, PILLAGINGCOINS, SEAFARINGCOINS,
-                                                                                   SPIRITCOINS, STOUTCOINS, SWAMPCOINS, UNDERWORLDCOINS, WEALTHYCOINS);
+    vector<SpecialPowerBadge> badges = SpecialPowerBadge::createSpecialPowerBadges(ALCHEMISTTOKENS, BERSERKTOKENS, BIVOUACKINGTOKENS,
+                                                                                   COMMANDOTOKENS, DIPLOMATTOKENS, DRAGONMASTERTOKENS,
+                                                                                   FLYINGTOKENS, FORESTTOKENS, FORTIFIEDTOKENS,
+                                                                                   HEROICTOKENS, HILLTOKENS, MERCHANTTOKENS,
+                                                                                   MOUNTEDTOKENS, PILLAGINGTOKENS, SEAFARINGTOKENS,
+                                                                                   SPIRITTOKENS, STOUTTOKENS, SWAMPTOKENS,
+                                                                                   UNDERWORLDTOKENS, WEALTHYTOKENS);
 
     vector<GamePiece> gamePieces = GamePiece::createGamePieces(DRAGONS, ENCAMPMENTS, FORTRESSES, HEROES, MOUNTAINS, TROLLLAIRS,
                                                                HOLESINTHEGROUND);

@@ -42,7 +42,7 @@ public:
 private:
     Dice dice;
     FantasyRaceBanner raceBanner;
-    vector<Map> regions;
+    vector<int> regions;
     SummarySheet summarySheet;
     //vector<VictoryCoin> coins;
     VictoryCoin coins;

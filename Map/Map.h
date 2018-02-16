@@ -1,20 +1,19 @@
 #pragma once
-#include "../Player/Player.h"
-
 #include <string>
 
 using namespace std;
 
 class Map
 {
-	
+
 	struct Region;
-	int spaces;
+	int numOfRegions;
 	Region * regions;
 	int connections[50][50] = { {0} };
-	
+
 
 public:
+	int getNumOfRegions();
 	void addEdge(int,int);
 	bool isConnected(int, int);
 	void setTokens(int,int);
@@ -29,12 +28,13 @@ public:
 	bool getMine(int);
 	void setMagic(int, bool);
 	bool getMagic(int);
+	bool getExterior(int);
+	void setExterior(int, bool);
 
 
 	Map(int);
-	 
+
 	~Map();
 };
 
 Map loadMap(string);
-
