@@ -1,4 +1,5 @@
 #pragma once
+
 class Dice
 {
 	int percentages [4] = { 0 };

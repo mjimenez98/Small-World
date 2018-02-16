@@ -10,15 +10,13 @@ MatchingRaceToken::MatchingRaceToken() {
 
     type = "";
     numOfTokens = -1;
-    numOfCoinsToGive = -1;
 
 }
 
-MatchingRaceToken::MatchingRaceToken(string newType, int newNumOfTokens, int newNumOfCoinsToGive) {
+MatchingRaceToken::MatchingRaceToken(string newType, int newNumOfTokens) {
 
     type = newType;
     numOfTokens = newNumOfTokens;
-    numOfCoinsToGive = newNumOfCoinsToGive;
 
 }
 
@@ -34,9 +32,9 @@ int MatchingRaceToken::getNumOfTokens() {
 
 }
 
-int MatchingRaceToken::getNumOfCoinsToGive() {
+void MatchingRaceToken::setNumOfTokens(int newNumOfTokens) {
 
-    return numOfCoinsToGive;
+    numOfTokens = newNumOfTokens;
 
 }
 
@@ -52,22 +50,38 @@ void MatchingRaceToken::giveCoinsToPlayer() {
 
 }
 
-// Prints a description of all the Matching Race Tokens created
-string MatchingRaceToken::demoMatchingRaceTokens(vector<MatchingRaceToken> raceTokens) {
+/* Prints a description of all the Matching Race Tokens created.
+ *      raceTokens: vector to be described
+ *      withTokens: whether the number of tokens should be returned or not */
+string MatchingRaceToken::demoMatchingRaceTokens(vector<MatchingRaceToken> raceTokens, bool withTokens) {
 
     if(raceTokens.empty()) {
         return "ERROR";
     }
     else {
+
+        int index = 1;
         string demo = "Matching Race Tokens:";
 
-        for(MatchingRaceToken raceToken : raceTokens) {
-            demo += "\n- " + to_string(raceToken.getNumOfTokens()) + " " + raceToken.getType();
+        if(withTokens) {
+
+            for(MatchingRaceToken raceToken : raceTokens) {
+                demo += "\n" + to_string(index) + ". " + to_string(raceToken.getNumOfTokens()) + " " + raceToken.getType();
+                index++;
+            }
+
+        }
+        else {
+
+            for(MatchingRaceToken raceToken : raceTokens) {
+                demo += "\n " + to_string(index++) + ". " + raceToken.getType();
+            }
+
         }
 
         demo += "\n";
-
         return demo;
+
     }
 
 }
@@ -81,20 +95,20 @@ vector<MatchingRaceToken> MatchingRaceToken::createMatchingRaceTokens(int numOfA
 
     vector<MatchingRaceToken> raceTokens;
 
-    raceTokens.emplace_back(MatchingRaceToken("Amazon", numOfAmazons, AMAZONCOINS));
-    raceTokens.emplace_back(MatchingRaceToken("Dwarf", numOfDwarves, DWARFCOINS));
-    raceTokens.emplace_back(MatchingRaceToken("Elf", numOfElves, ELFCOINS));
-    raceTokens.emplace_back(MatchingRaceToken("Ghoul", numOfGhouls, GHOULCOINS));
-    raceTokens.emplace_back(MatchingRaceToken("Giant", numOfGiants, GIANTCOINS));
-    raceTokens.emplace_back(MatchingRaceToken("Halfling", numOfHalflings, HALFLINGCOINS));
-    raceTokens.emplace_back(MatchingRaceToken("Human", numOfHumans, HUMANCOINS));
-    raceTokens.emplace_back(MatchingRaceToken("Orc", numOfOrcs, ORCCOINS));
-    raceTokens.emplace_back(MatchingRaceToken("Ratman", numOfRatmen, RATMANCOINS));
-    raceTokens.emplace_back(MatchingRaceToken("Skeleton", numOfSkeletons, SKELETONCOINS));
-    raceTokens.emplace_back(MatchingRaceToken("Sorcerer", numOfSorcerers, SORCERERCOINS));
-    raceTokens.emplace_back(MatchingRaceToken("Triton", numOfTritons, TRITONCOINS));
-    raceTokens.emplace_back(MatchingRaceToken("Troll", numOfTrolls, TROLLCOINS));
-    raceTokens.emplace_back(MatchingRaceToken("Wizard", numOfWizards, WIZARDCOINS));
+    raceTokens.emplace_back(MatchingRaceToken("Amazon", numOfAmazons));
+    raceTokens.emplace_back(MatchingRaceToken("Dwarf", numOfDwarves));
+    raceTokens.emplace_back(MatchingRaceToken("Elf", numOfElves));
+    raceTokens.emplace_back(MatchingRaceToken("Ghoul", numOfGhouls));
+    raceTokens.emplace_back(MatchingRaceToken("Giant", numOfGiants));
+    raceTokens.emplace_back(MatchingRaceToken("Halfling", numOfHalflings));
+    raceTokens.emplace_back(MatchingRaceToken("Human", numOfHumans));
+    raceTokens.emplace_back(MatchingRaceToken("Orc", numOfOrcs));
+    raceTokens.emplace_back(MatchingRaceToken("Ratman", numOfRatmen));
+    raceTokens.emplace_back(MatchingRaceToken("Skeleton", numOfSkeletons));
+    raceTokens.emplace_back(MatchingRaceToken("Sorcerer", numOfSorcerers));
+    raceTokens.emplace_back(MatchingRaceToken("Triton", numOfTritons));
+    raceTokens.emplace_back(MatchingRaceToken("Troll", numOfTrolls));
+    raceTokens.emplace_back(MatchingRaceToken("Wizard", numOfWizards));
 
     return raceTokens;
 

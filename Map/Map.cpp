@@ -1,18 +1,14 @@
-
 #include "Map.h"
 
-#include<iostream>
-#include<fstream>
+#include <iostream>
+#include <fstream>
 #include <string>
-
-
-	
 
 	struct Map::Region {
 
 		int tokens;
 		string player;
-		char regionType=NULL;
+		char regionType='N';
 		//H=hill
 		//W=Water
 		//S=Swamp

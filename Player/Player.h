@@ -5,12 +5,13 @@
 #ifndef SMALL_WORLD_PLAYER_H
 #define SMALL_WORLD_PLAYER_H
 
-#include "../LostTribeToken/LostTribeToken.h"
-#include "../MatchingRaceToken/MatchingRaceToken.h"
-#include "../SpecialPowerBadge/SpecialPowerBadge.h"
+#include "../Dice/Dice.h"
+#include "../FantasyRaceBanner/FantasyRaceBanner.h"
+#include "../Map/Map.h"
 #include "../SummarySheet/SummarySheet.h"
 #include "../VictoryCoin/VictoryCoin.h"
 
+#include <iostream>
 #include <string>
 
 using namespace std;
@@ -18,20 +19,33 @@ using namespace std;
 class Player {
 
 public:
-    Player(string raceChosen, string specialPowerBadgeChosen);
-    string toString();
+    // Constructors
+    Player();
 
-private:
+    // Getters
+    Dice getDice();
+    FantasyRaceBanner getRaceBanner();
+    SummarySheet getSummarySheet();
+    //vector<VictoryCoin> getCoins();
+
+    // Setters
+    void setCoins(int newValue);
+
+    // Other functions
+    string toString();
+    int totalCoinsValue();
+    bool hasSummarySheet();
     void picks_race();
     void conquers();
     void scores();
-    //Die die
-    //LostTribeToken tribeTokens[MAXOFLOSTTRIBES];
-    //MatchingRaceToken raceTokens[MAXOFRACETOKENS];
-    //Region regions[n];   n -> number of regions
-    //SpecialPowerBadge badge(string specialPowerBadgeChosen);
-    //SummarySheet summarySheet;
-    //VictoryCoin coins[];
+
+private:
+    Dice dice;
+    FantasyRaceBanner raceBanner;
+    vector<Map> regions;
+    SummarySheet summarySheet;
+    //vector<VictoryCoin> coins;
+    VictoryCoin coins;
 
 };
 

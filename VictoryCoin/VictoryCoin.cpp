@@ -22,6 +22,12 @@ int VictoryCoin::getValue() {
 
 }
 
+void VictoryCoin::setValue(int newValue) {
+
+    value = newValue;
+
+}
+
 void VictoryCoin::givePlayerCoins() {
 
     // TBD

@@ -10,7 +10,7 @@
 
 using namespace std;
 
-// Quantity
+// Number of tokens in the game
 const int AMAZONS = 15;
 const int DWARVES = 8;
 const int ELVES = 11;
@@ -26,38 +26,40 @@ const int TRITONS = 11;
 const int TROLLS = 10;
 const int WIZARDS = 10;
 
-// Coins to give
-const int AMAZONCOINS = 6;
-const int DWARFCOINS = 3;
-const int ELFCOINS = 6;
-const int GHOULCOINS = 5;
-const int GIANTCOINS = 6;
-const int HALFLINGCOINS = 6;
-const int HUMANCOINS = 5;
-const int ORCCOINS = 5;
-const int RATMANCOINS = 8;
-const int SKELETONCOINS = 6;
-const int SORCERERCOINS = 5;
-const int TRITONCOINS = 6;
-const int TROLLCOINS = 5;
-const int WIZARDCOINS = 5;
+// Starting tokens
+const int AMAZONSTART = 6;
+const int DWARFSTART = 3;
+const int ELFSTART = 6;
+const int GHOULSTART = 5;
+const int GIANTSTART = 6;
+const int HALFLINGSTART = 6;
+const int HUMANSTART = 5;
+const int ORCSTART = 5;
+const int RATMANSTART = 8;
+const int SKELETONSTART = 6;
+const int SORCERERSTART = 5;
+const int TRITONSTART = 6;
+const int TROLLSTART = 5;
+const int WIZARDSTART = 5;
 
 class MatchingRaceToken {
 
 public:
     // Constructors
     MatchingRaceToken();
-    MatchingRaceToken(string newType, int newNumOfTokens, int newNumOfCoinsToGive);
+    MatchingRaceToken(string newType, int newNumOfTokens);
 
     // Getters
     string getType();
     int getNumOfTokens();
-    int getNumOfCoinsToGive();
+
+    // Setters
+    void setNumOfTokens(int newNumOfTokens);
 
     // Other functions
     void activate();
     void giveCoinsToPlayer();
-    static string demoMatchingRaceTokens(vector<MatchingRaceToken> raceTokens);
+    static string demoMatchingRaceTokens(vector<MatchingRaceToken> raceTokens, bool withTokens);
     static vector<MatchingRaceToken> createMatchingRaceTokens(int numOfAmazons, int numOfDwarves, int numOfElves, int numOfGhouls,
         int numOfGiants, int numOfHalflings, int numOfHumans, int numOfOrcs, int numOfRatmen, int numOfSkeletons, int numOfSorcerers,
         int numOfTritons, int numOfTrolls, int numOfWizards);
@@ -65,7 +67,6 @@ public:
 private:
     string type;
     int numOfTokens;
-    int numOfCoinsToGive;
 
 };
 

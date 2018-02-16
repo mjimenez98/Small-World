@@ -13,6 +13,14 @@ FantasyRaceBanner::FantasyRaceBanner() {
 FantasyRaceBanner::FantasyRaceBanner(MatchingRaceToken newRaceToken) {
 
     raceToken = newRaceToken;
+    powerBadge = SpecialPowerBadge();
+
+}
+
+FantasyRaceBanner::FantasyRaceBanner(MatchingRaceToken newRaceToken, SpecialPowerBadge newPowerBadge) {
+
+    raceToken = newRaceToken;
+    powerBadge = newPowerBadge;
 
 }
 
@@ -22,8 +30,34 @@ MatchingRaceToken FantasyRaceBanner::getRaceToken() {
 
 }
 
+SpecialPowerBadge FantasyRaceBanner::getPowerBadge() {
+
+    return powerBadge;
+
+}
+
+void FantasyRaceBanner::setRaceToken(MatchingRaceToken newRaceToken) {
+
+    raceToken = newRaceToken;
+
+}
+
+void FantasyRaceBanner::setPowerBadge(SpecialPowerBadge newPowerBadge) {
+
+    powerBadge = newPowerBadge;
+
+}
+
+void FantasyRaceBanner::setNumOfTokens(int newNumOfTokens) {
+
+    raceToken.setNumOfTokens(newNumOfTokens);
+
+}
+
 // Prints a description of all the Fantasy Race Banners
 string FantasyRaceBanner::demoFantasyRaceBanner(vector<FantasyRaceBanner> raceBanners) {
+
+    int index = 1;
 
     if(raceBanners.empty()) {
         return "ERROR";
@@ -32,7 +66,8 @@ string FantasyRaceBanner::demoFantasyRaceBanner(vector<FantasyRaceBanner> raceBa
         string demo = "Fantasy Race Banners:";
 
         for(FantasyRaceBanner raceBanner : raceBanners) {
-            demo += "\n- Matching Race Token: " + raceBanner.getRaceToken().getType() + ", Power Badge: TBD";
+            demo += "\n" + to_string(index++) + ". Race Token: " + raceBanner.getRaceToken().getType() + ", Power Badge: " +
+                    raceBanner.getPowerBadge().getType();
         }
 
         demo += "\n";
@@ -44,12 +79,13 @@ string FantasyRaceBanner::demoFantasyRaceBanner(vector<FantasyRaceBanner> raceBa
 }
 
 // Creates all the Fantasy Race Banners with their respective Race Tokens and Power Badge chosen by the player
-vector<FantasyRaceBanner> FantasyRaceBanner::createFantasyRaceBanners(vector<MatchingRaceToken> raceTokens) {
+vector<FantasyRaceBanner> FantasyRaceBanner::createFantasyRaceBanners(vector<MatchingRaceToken> raceTokens,
+                                                                      vector<SpecialPowerBadge> powerBadges) {
 
     vector<FantasyRaceBanner> raceBanners;
 
-    for(MatchingRaceToken raceToken : raceTokens) {
-        raceBanners.emplace_back(FantasyRaceBanner(raceToken));
+    for(int i=0; i<raceTokens.size(); i++) {
+        raceBanners.emplace_back(FantasyRaceBanner(raceTokens[i], powerBadges[i]));
     }
 
     return raceBanners;

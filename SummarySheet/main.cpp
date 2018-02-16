@@ -20,7 +20,7 @@ void demoGame(vector<VictoryCoin>* coins, vector<MatchingRaceToken>* raceTokens,
     else {
         cout << "This Small World game set has:\n" << endl;
         cout << VictoryCoin::demoVictoryCoins(*coins) << endl;
-        cout << MatchingRaceToken::demoMatchingRaceTokens(*raceTokens) << endl;
+        cout << MatchingRaceToken::demoMatchingRaceTokens(*raceTokens, 1) << endl;
         cout << SpecialPowerBadge::demoSpecialPowerBadges(*badges) << endl;
         cout << GamePiece::demoGamePieces(*gamePieces) << endl;
         cout << LostTribeToken::demoLostTribeTokens(*lostTribes) << endl;
@@ -48,7 +48,7 @@ void createGame() {
 
     vector<LostTribeToken> lostTribes = LostTribeToken::createLostTribeTokens(NUMOFLOSTTRIBETOKENS);
 
-    vector<FantasyRaceBanner> raceBanners = FantasyRaceBanner::createFantasyRaceBanners(raceTokens);
+    vector<FantasyRaceBanner> raceBanners = FantasyRaceBanner::createFantasyRaceBanners(raceTokens, badges);
 
     demoGame(&coins, &raceTokens, &badges, &gamePieces, &lostTribes, &raceBanners);
 

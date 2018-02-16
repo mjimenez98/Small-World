@@ -10,27 +10,27 @@
 
 using namespace std;
 
-// Coins to give
-const int ALCHEMISTCOINS = 4;
-const int BERSERKCOINS = 4;
-const int BIVOUACKINGCOINS = 5;
-const int COMMANDOCOINS = 4;
-const int DIPLOMATCOINS = 5;
-const int DRAGONMASTERCOINS = 5;
-const int FLYINGCOINS = 5;
-const int FORESTCOINS = 4;
-const int FORTIFIEDCOINS = 3;
-const int HEROICCOINS = 5;
-const int HILLCOINS = 4;
-const int MERCHANTCOINS = 2;
-const int MOUNTEDCOINS = 5;
-const int PILLAGINGCOINS = 5;
-const int SEAFARINGCOINS = 5;
-const int SPIRITCOINS = 5;
-const int STOUTCOINS = 4;
-const int SWAMPCOINS = 4;
-const int UNDERWORLDCOINS = 5;
-const int WEALTHYCOINS = 4;
+// Tokens to give
+const int ALCHEMISTTOKENS = 4;
+const int BERSERKTOKENS = 4;
+const int BIVOUACKINGTOKENS = 5;
+const int COMMANDOTOKENS = 4;
+const int DIPLOMATTOKENS = 5;
+const int DRAGONMASTERTOKENS = 5;
+const int FLYINGTOKENS = 5;
+const int FORESTTOKENS = 4;
+const int FORTIFIEDTOKENS = 3;
+const int HEROICTOKENS = 5;
+const int HILLTOKENS = 4;
+const int MERCHANTTOKENS = 2;
+const int MOUNTEDTOKENS = 5;
+const int PILLAGINGTOKENS = 5;
+const int SEAFARINGTOKENS = 5;
+const int SPIRITTOKENS = 5;
+const int STOUTTOKENS = 4;
+const int SWAMPTOKENS = 4;
+const int UNDERWORLDTOKENS = 5;
+const int WEALTHYTOKENS = 4;
 
 class SpecialPowerBadge {
 

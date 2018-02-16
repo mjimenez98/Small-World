@@ -6,7 +6,7 @@
 
 SpecialPowerBadge::SpecialPowerBadge() {
 
-    type = nullptr;
+    type = "";
     numOfCoinsToGive = -1;
 
 }
@@ -49,14 +49,15 @@ string SpecialPowerBadge::demoSpecialPowerBadges(vector<SpecialPowerBadge> badge
         return "ERROR";
     }
     else {
+
+        int index = 1;
         string demo = "Special Power Badges:";
 
         for(SpecialPowerBadge badge : badges) {
-            demo += "\n- " + badge.getType();
+            demo += "\n" + to_string(index++) + ". " + badge.getType();
         }
 
         demo += "\n";
-
         return demo;
 
     }
