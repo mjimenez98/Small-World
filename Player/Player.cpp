@@ -4,6 +4,8 @@
 
 #include "Player.h"
 
+#include <random>   // Default random engine
+
 using namespace std;
 
 Player::Player() {
@@ -81,23 +83,24 @@ bool Player::hasSummarySheet() {
 
 }
 
-
 // Allows player to pick a race
 void Player::picks_race() {
 
     int race = -1;
+    unsigned seed = chrono::system_clock::now().time_since_epoch().count();
 
-    vector<MatchingRaceToken> availableTokens = MatchingRaceToken::createMatchingRaceTokens(AMAZONS, DWARVES, ELVES, GHOULS,
-            GIANTS, HALFLINGS, HUMANS, ORCS, RATMEN, SKELETONS, SORCERERS, TRITONS, TROLLS, WIZARDS);
+    vector<MatchingRaceToken> availableTokens = MatchingRaceToken::createMatchingRaceTokens(AMAZONSTART, DWARFSTART,
+         ELFSTART, GHOULSTART, GIANTSTART, HALFLINGSTART, HUMANSTART, ORCSTART, RATMANSTART, SKELETONSTART,
+         SORCERERSTART, TRITONSTART, TROLLSTART, WIZARDSTART);
 
-    vector<SpecialPowerBadge> availableBadges = SpecialPowerBadge::createSpecialPowerBadges(ALCHEMISTCOINS, BERSERKCOINS,
-            BIVOUACKINGCOINS, COMMANDOCOINS, DIPLOMATCOINS, DRAGONMASTERCOINS, FLYINGCOINS, FORESTCOINS, FORTIFIEDCOINS,
-            HEROICCOINS, HILLCOINS, MERCHANTCOINS, MOUNTEDCOINS, PILLAGINGCOINS, SEAFARINGCOINS, SPIRITCOINS, STOUTCOINS,
-            SWAMPCOINS, UNDERWORLDCOINS, WEALTHYCOINS);
+    vector<SpecialPowerBadge> availableBadges = SpecialPowerBadge::createSpecialPowerBadges(ALCHEMISTTOKENS, BERSERKTOKENS,
+            BIVOUACKINGTOKENS, COMMANDOTOKENS, DIPLOMATTOKENS, DRAGONMASTERTOKENS, FLYINGTOKENS, FORESTTOKENS, FORTIFIEDTOKENS,
+            HEROICTOKENS, HILLTOKENS, MERCHANTTOKENS, MOUNTEDTOKENS, PILLAGINGTOKENS, SEAFARINGTOKENS, SPIRITTOKENS, STOUTTOKENS,
+            SWAMPTOKENS, UNDERWORLDTOKENS, WEALTHYTOKENS);
 
     // Game rules only allow the player to pick from 6 options
-    random_shuffle(availableTokens.begin(), availableTokens.end());
-    random_shuffle(availableBadges.begin(), availableBadges.end());
+    shuffle(availableTokens.begin(), availableTokens.end(), std::default_random_engine(seed));
+    shuffle(availableBadges.begin(), availableBadges.end(), std::default_random_engine(seed));
 
     availableTokens.resize(6);
     availableBadges.resize(6);
@@ -125,6 +128,9 @@ void Player::picks_race() {
     raceBanner.setRaceToken(availableBanners[race-1].getRaceToken());
     raceBanner.setPowerBadge(availableBanners[race-1].getPowerBadge());
 
+    //Number of starting tokens = number on race + number on badge
+    raceBanner.setNumOfTokens(raceBanner.getRaceToken().getNumOfTokens()+raceBanner.getPowerBadge().getNumOfCoinsToGive());
+
     cout << "You have picked the race " << getRaceBanner().getRaceToken().getType() << " and the badge " <<
          getRaceBanner().getPowerBadge().getType() << endl << endl;
 
@@ -132,18 +138,22 @@ void Player::picks_race() {
 
 void Player::conquers() {
 
+    // TBD
+
 }
 
+// Awards player 1 coin for every region they possess
 void Player::scores() {
 
-
+    setCoins((int) regions.size());
+    cout << "Player has been awarded " << to_string(regions.size()) << " coins" << endl;
 
 }
 
 string Player::toString() {
 
     return "This player has:\nRegions:\nTokens: " + getRaceBanner().getRaceToken().getType() + ", " +
-            to_string(getRaceBanner().getRaceToken().getNumOfStartingTroops()) + "\nBadge: " + getRaceBanner().getPowerBadge().getType() +
+            to_string(getRaceBanner().getRaceToken().getNumOfTokens()) + "\nBadge: " + getRaceBanner().getPowerBadge().getType() +
             "\n" + "Victory Coins: " + to_string(totalCoinsValue()) + "\nDice: roll, " + to_string(dice.roll()) +
             "\nSummary Sheet: " + to_string(hasSummarySheet());
 
