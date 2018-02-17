@@ -58,6 +58,9 @@ void createGame() {
 
 int main() {
 
+
+    // This main creates all the game pieces needed for Small World and then prints a description of all of them
+
     createGame();
 
     return 0;
