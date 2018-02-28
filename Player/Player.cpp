@@ -87,7 +87,7 @@ bool Player::hasSummarySheet() {
 void Player::picks_race() {
 
     int race = -1;
-    unsigned seed = chrono::system_clock::now().time_since_epoch().count();
+    unsigned seed = chrono::system_clock::now().time_since_epoch().count();     // For shuffling fantasy banners
 
     vector<MatchingRaceToken> availableTokens = MatchingRaceToken::createMatchingRaceTokens(AMAZONSTART, DWARFSTART,
          ELFSTART, GHOULSTART, GIANTSTART, HALFLINGSTART, HUMANSTART, ORCSTART, RATMANSTART, SKELETONSTART,
@@ -136,25 +136,109 @@ void Player::picks_race() {
 
 }
 
+// Allows the player to conquer regions by using their race tokens
 void Player::conquers() {
 
-    // TBD
+    cout << "It is time for you to conquer!\nSince it is your first turn, you can pick any region adjacent to the edge of "
+            "the board or to an exterior sea.\nThese are your options:";
+
+
+    Map map = loadMap("../textMaps/2Players.txt");
+
+    vector<int> availableRegions;
+
+    for(int i=0; i < map.getNumOfRegions(); i++) {
+
+        if(map.getExterior(i)) {
+            availableRegions.push_back(i);
+            cout << "\nRegion " + to_string(i) + ", " + map.getRegionType(i);
+        }
+
+    }
+
+    cout << endl << endl;
+
+    int regionSelection = -1;
+    int tokenSelection = -1;
+    cout << "Pick 3 regions" << endl;
+
+    // Tentatively, allow the player to pick 3 regions. This will not be on the final version of this function.
+    for(int i=0; i<3; i++) {
+
+        if(raceBanner.getRaceToken().getNumOfTokens() > 0) {
+
+            // Check for a valid region selection
+            do {
+
+                cout << "Region " + to_string(i+1) + ": ";
+                cin >> regionSelection;
+
+                if(!map.getExterior(regionSelection)) {
+                    cout << "Invalid input. Number must belong to one of the options" << endl;
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                }
+
+            } while(!map.getExterior(regionSelection));
+
+            // Check for a valid token selection
+            do {
+
+                cout << "You have " + to_string(raceBanner.getRaceToken().getNumOfTokens()) + " tokens left" << endl;
+                cout << "How many would you like to place on this region? ";
+                cin >> tokenSelection;
+
+                if(tokenSelection < 0 || tokenSelection > raceBanner.getRaceToken().getNumOfTokens()) {
+                    cout << "Invalid input. Number must belong to one of the options" << endl;
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                }
+
+            } while(tokenSelection < 0 || tokenSelection > raceBanner.getRaceToken().getNumOfTokens());
+
+            cout << endl;
+
+            // Update player's number of tokens
+            raceBanner.setNumOfTokens(raceBanner.getRaceToken().getNumOfTokens()-tokenSelection);
+
+            // Add region selected to the player
+            regions.emplace_back(regionSelection);
+
+            // Update number of tokens in that region
+            map.setTokens(regionSelection, tokenSelection);
+
+        }
+        else {
+
+            cout << "You have no tokens left" << endl;
+        }
+
+    }
 
 }
 
 // Awards player 1 coin for every region they possess
 void Player::scores() {
 
-    setCoins((int) regions.size());
-    cout << "Player has been awarded " << to_string(regions.size()) << " coins" << endl;
+    setCoins((int) regions.size() + totalCoinsValue());
+    cout << "Player has been awarded " << to_string(regions.size()) << " coins\n" << endl;
 
 }
 
 string Player::toString() {
 
-    return "This player has:\nRegions:\nTokens: " + getRaceBanner().getRaceToken().getType() + ", " +
+    string player = "This player has:\nRegions: ";
+
+    for(int region : regions) {
+
+        player += to_string(region) + " | ";
+    }
+
+    player += "\nTokens: " + getRaceBanner().getRaceToken().getType() + ", " +
             to_string(getRaceBanner().getRaceToken().getNumOfTokens()) + "\nBadge: " + getRaceBanner().getPowerBadge().getType() +
             "\n" + "Victory Coins: " + to_string(totalCoinsValue()) + "\nDice: roll, " + to_string(dice.roll()) +
             "\nSummary Sheet: " + to_string(hasSummarySheet());
+
+    return player;
 
 }

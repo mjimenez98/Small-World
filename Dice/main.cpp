@@ -4,8 +4,15 @@
 
 #include "Dice.h"
 
+#include <iostream>
+
+using namespace std;
+
 int main()
 {
+
+    // This main creates a dice, rolls it several times and displays a percentage of the numbers rolled
+
     Dice d1;
     //cout<< "You rolled a: "<<d1.roll(3)<<"\n "<<endl;
 
