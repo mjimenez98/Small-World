@@ -13,4 +13,5 @@ add_executable(Small-World
         Player/Player.h Player/Player.cpp #Player/main.cpp
         SpecialPowerBadge/SpecialPowerBadge.cpp SpecialPowerBadge/SpecialPowerBadge.h
         SummarySheet/SummarySheet.cpp SummarySheet/SummarySheet.h #SummarySheet/main.cpp
-        VictoryCoin/VictoryCoin.cpp VictoryCoin/VictoryCoin.h)
+        VictoryCoin/VictoryCoin.cpp VictoryCoin/VictoryCoin.h
+        textMaps)
