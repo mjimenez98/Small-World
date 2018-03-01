@@ -6,35 +6,44 @@ using namespace std;
 class Map
 {
 
+public:
+	// Constructors
+	Map(int);
+
+	// Deconstructors
+	~Map();
+
+	// Getters
+	int getNumOfRegions();
+	int getTokens(int);
+	string getRegionPlayer(int);
+	char getRegionType(int);
+
+	// Setters
+	void setCavern(int, bool);
+	void setExterior(int, bool);
+	void setMine(int, bool);
+	void setMagic(int, bool);
+	void setRegionPlayer(int, string);
+	void setRegionType(int, char);
+	void setTokens(int,int);
+
+	// Is
+	bool isCavern(int);
+	bool isExterior(int);
+	bool isMagic(int);
+	bool isMine(int);
+	bool isConnected(int, int);
+
+	// Other functions
+	void addEdge(int,int);
+
+private:
 	struct Region;
 	int numOfRegions;
 	Region * regions;
 	int connections[50][50] = { {0} };
 
-
-public:
-	int getNumOfRegions();
-	void addEdge(int,int);
-	bool isConnected(int, int);
-	void setTokens(int,int);
-	void setRegionPlayer(int, string);
-	string getRegionPlayer(int);
-	int getTokens(int);
-	void setRegionType(int, char);
-	char getRegionType(int);
-	void setCavern(int, bool);
-	bool getCavern(int);
-	void setMine(int, bool);
-	bool getMine(int);
-	void setMagic(int, bool);
-	bool getMagic(int);
-	bool getExterior(int);
-	void setExterior(int, bool);
-
-
-	Map(int);
-
-	~Map();
 };
 
 Map loadMap(string);

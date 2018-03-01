@@ -3,7 +3,12 @@
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # Idea
-# .idea
+.idea/Small-World.iml
+.idea/codeStyles/Project.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/workspace.xml
 
 # CMake
 cmake-build-debug/

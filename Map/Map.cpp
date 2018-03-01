@@ -28,7 +28,7 @@ void Map::setExterior(int n, bool b)
     regions[n].exterior = b;
 }
 
-bool Map::getExterior(int n)
+bool Map::isExterior(int n)
 {
 
     if(n > getNumOfRegions())
@@ -42,7 +42,7 @@ void Map::setCavern(int n, bool b)
     regions[n].cavern = b;
 }
 
-bool Map::getCavern(int n)
+bool Map::isCavern(int n)
 {
     return regions[n].cavern;
 }
@@ -51,7 +51,7 @@ void Map::setMine(int n, bool b)
     regions[n].mine = b;
 }
 
-bool Map::getMine(int n)
+bool Map::isMine(int n)
 {
     return regions[n].mine;
 }
@@ -60,7 +60,7 @@ void Map::setMagic(int n, bool b)
     regions[n].magic = b;
 }
 
-bool Map::getMagic(int n)
+bool Map::isMagic(int n)
 {
     return regions[n].magic;
 }

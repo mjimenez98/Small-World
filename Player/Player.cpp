@@ -131,8 +131,8 @@ void Player::picks_race() {
     //Number of starting tokens = number on race + number on badge
     raceBanner.setNumOfTokens(raceBanner.getRaceToken().getNumOfTokens()+raceBanner.getPowerBadge().getNumOfCoinsToGive());
 
-    cout << "You have picked the race " << getRaceBanner().getRaceToken().getType() << " and the badge " <<
-         getRaceBanner().getPowerBadge().getType() << endl << endl;
+    cout << "You have picked the badge " << getRaceBanner().getPowerBadge().getType() << " and the token " <<
+         getRaceBanner().getRaceToken().getType() << endl << endl;
 
 }
 
@@ -149,7 +149,7 @@ void Player::conquers() {
 
     for(int i=0; i < map.getNumOfRegions(); i++) {
 
-        if(map.getExterior(i)) {
+        if(map.isExterior(i)) {
             availableRegions.push_back(i);
             cout << "\nRegion " + to_string(i) + ", " + map.getRegionType(i);
         }
@@ -173,13 +173,13 @@ void Player::conquers() {
                 cout << "Region " + to_string(i+1) + ": ";
                 cin >> regionSelection;
 
-                if(!map.getExterior(regionSelection)) {
+                if(!map.isExterior(regionSelection)) {
                     cout << "Invalid input. Number must belong to one of the options" << endl;
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(),'\n');
                 }
 
-            } while(!map.getExterior(regionSelection));
+            } while(!map.isExterior(regionSelection));
 
             // Check for a valid token selection
             do {
