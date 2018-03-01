@@ -3,6 +3,8 @@
 
 using namespace std;
 
+
+
 class Map
 {
 
@@ -32,9 +34,12 @@ public:
 	void setExterior(int, bool);
 
 
+
 	Map(int);
 
 	~Map();
 };
-
 Map loadMap(string);
+bool checkConnect(Map);
+
+

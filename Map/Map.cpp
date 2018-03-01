@@ -3,6 +3,10 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <list>
+
+using namespace std;
+
 
 struct Map::Region {
 
@@ -131,11 +135,18 @@ bool Map::isConnected(int n1, int n2)
 //s=source of magic
 //x=cavern and mine
 //n = none
+
 Map loadMap(string mapName)
 {
     ifstream file;
 
-    file.open(mapName);
+    try {
+        file.open(mapName);
+    }catch(int e)
+    {
+        cout<<"Failed to open file."<<endl;
+    }
+
 
     string s;
     getline(file, s);
@@ -188,13 +199,7 @@ Map loadMap(string mapName)
         {
 
             char c = s1.at(k);
-            //check if file is valid
-            if (c != ',' &&( c > '9' || c < '0'))
-            {
-                cout << "Invalid map file." << endl;
 
-                return NULL;
-            }
 
             if (c == ',')
             {
@@ -208,8 +213,39 @@ Map loadMap(string mapName)
         }
         ++count;
     }
+
+
     file.close();
     return m1;
+}
+//check if map is connected
+bool checkConnect(Map map)
+{
+    int size = map.getNumOfRegions();
+    // Mark all the vertices as not visited
+    int *visited = new int[size];
+    *visited ={0};
+
+
+    for(int j =2; j<=size; ++j) {
+        if (map.isConnected(1, j));
+        {
+
+            visited[j] = 1;
+        }
+    }
+
+
+    for(int k = 1; k<=size; ++k)
+    {
+    }
+    if(map.getNumOfRegions()==30) {
+        cout << "invalid map" << endl;
+        return false;
+    }
+
+    return true;
+
 }
 
 
