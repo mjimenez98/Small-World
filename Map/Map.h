@@ -41,5 +41,6 @@ public:
 };
 Map loadMap(string);
 bool checkConnect(Map);
+void createMapAndPlayers();
 
 

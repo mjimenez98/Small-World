@@ -9,7 +9,8 @@
 using namespace std;
 // Prints a description of the Small World deck
 void demoGame(vector<VictoryCoin>* coins, vector<MatchingRaceToken>* raceTokens, vector<SpecialPowerBadge>* badges,
-              vector<GamePiece>* gamePieces, vector<LostTribeToken>* lostTribes, vector<FantasyRaceBanner>* raceBanners) {
+              vector<GamePiece>* gamePieces, vector<LostTribeToken>* lostTribes, vector<FantasyRaceBanner>* raceBanners)
+{
 
     if((*coins).empty() || (*raceTokens).empty() || (*badges).empty() || (*gamePieces).empty() || (*lostTribes).empty() ||
        (*raceBanners).empty()) {

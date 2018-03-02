@@ -36,7 +36,7 @@ public:
     int totalCoinsValue();
     bool hasSummarySheet();
     void picks_race();
-    void conquers();
+    void conquers(Map*map);
     void scores();
 
 private:
