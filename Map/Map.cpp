@@ -3,13 +3,6 @@
 #include <iostream>
 #include <fstream>
 
-Map::Map(int newNumOfRegions)
-{
-    regions = new Region[newNumOfRegions];
-    numOfRegions = newNumOfRegions;
-
-}
-
 // Subclass: Region in map
 struct Map::Region {
 
@@ -29,7 +22,17 @@ struct Map::Region {
     bool magic = false;
     bool exterior = false;
 
+    GamePiece* gamePiece = nullptr;
+    LostTribeToken* lostTribeToken = nullptr;
+
 };
+
+Map::Map(int newNumOfRegions)
+{
+    regions = new Region[newNumOfRegions];
+    numOfRegions = newNumOfRegions;
+
+}
 
 // Getters
 char Map::getRegionType(int region)
@@ -47,7 +50,8 @@ string Map::getRegionPlayer(int region)
     return regions[region].player;
 }
 
-int Map::getNumOfRegions(){
+int Map::getNumOfRegions()
+{
     return numOfRegions;
 }
 
@@ -60,6 +64,11 @@ void Map::setCavern(int region, bool state)
 void Map::setExterior(int region, bool state)
 {
     regions[region].exterior = state;
+}
+
+void Map::setLostTribes(int region, LostTribeToken newToken)
+{
+    regions[region].lostTribeToken = &newToken;
 }
 
 void Map::setMagic(int region, bool state)
@@ -80,6 +89,9 @@ void Map::setRegionPlayer(int region, string player)
 void Map::setRegionType(int region, char type)
 {
     regions[region].regionType = type;
+
+    if(type == 'M')
+        regions[region].gamePiece = new GamePiece("Mountain");
 }
 
 void Map::setTokens(int n,int tokens)
@@ -119,12 +131,29 @@ bool Map::isMine(int region)
     return regions[region].mine;
 }
 
+bool Map::hasLostTribes(int region)
+{
+    if(regions[region].lostTribeToken != NULL) {
+        return true;
+    }
+    return false;
+}
+
+bool Map::hasMountains(int region)
+{
+    if(regions[region].gamePiece != NULL && regions[region].gamePiece->getType() == "Mountain") {
+        return true;
+    }
+
+    return false;
+}
+
+
 // Other
 void Map::addEdge(int region1, int region2)
 {
     connections[region1][region2] = 1;
     connections[region2][region1] = 1;
-
 }
 
 // Deconstructor
@@ -196,13 +225,21 @@ Map loadMap(string mapName)
             m1.setCavern(count, true);
             m1.setMine(count, true);
         }
-        //set exterior
-        char ext = s1.at(2);
+
+        // Set lost tribes
+        char tribe = s1.at(2);
+
+        if(tribe == 'T') {
+            m1.setLostTribes(count, LostTribeToken());
+        }
+
+        // Set exterior
+        char ext = s1.at(3);
         if (ext == 'E')
             m1.setExterior(count, true);
 
         string number = "";
-        for (unsigned int k = 3; k < s1.length()-3; ++k)
+        for (unsigned int k = 4; k < s1.length()-4; ++k)
         {
 
             char c = s1.at(k);

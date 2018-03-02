@@ -1,4 +1,8 @@
 #pragma once
+
+#include "../LostTribeToken/LostTribeToken.h"
+#include "../GamePiece/GamePiece.h"
+
 #include <string>
 
 using namespace std;
@@ -19,6 +23,7 @@ public:
 	// Setters
 	void setCavern(int region, bool state);
 	void setExterior(int region, bool state);
+	void setLostTribes(int region, LostTribeToken newToken);
 	void setMine(int region, bool state);
 	void setMagic(int region, bool state);
 	void setRegionPlayer(int region, string player);
@@ -27,10 +32,14 @@ public:
 
 	// Is
 	bool isCavern(int region);
+	bool isConnected(int region1, int region2);
 	bool isExterior(int region);
 	bool isMagic(int region);
 	bool isMine(int region);
-	bool isConnected(int region1, int region2);
+
+	// Has
+	bool hasMountains(int region);
+	bool hasLostTribes(int region);
 
 	// Other functions
 	void addEdge(int region1, int region2);
@@ -46,4 +55,4 @@ private:
 
 };
 
-Map loadMap(string);
+Map loadMap(string mapName);

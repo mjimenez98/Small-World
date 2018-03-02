@@ -4,28 +4,49 @@
 
 #include "GameTurn.h"
 #include "../Player/Player.h"
+#include "../VictoryCoin/VictoryCoin.h"
 
 using namespace std;
 
-void runDemo(GameTurn* gameTurn, Player player1) {
-
-    player1.picks_race();
-
-    cout << gameTurn->toString() << endl;
-    gameTurn->setTurn(gameTurn->getTurn()+1);
-
-}
-
 int main() {
 
-    GameTurn *gameTurn;
-    *gameTurn = GameTurn();
+    Map map = loadMap("../textMaps/2Players.txt");
 
-    Player player1;
+    auto *gameTurn = new GameTurn();
+    auto *player1 = new Player();
 
-    // Demo
-    runDemo(gameTurn, player1);
+    cout << "///  PART 1  ///" << endl;
+    cout << gameTurn->toString() << endl;
+    gameTurn->setTurn(gameTurn->getTurn()+1);
+    cout << endl;
+
+    cout << "///  PARTS 2 and 3  ///" << endl;
+    (*player1).picks_race();
+
+    cout << "///  PART 4  ///" << endl;
+    cout << "Regions with Lost Tribes:" << endl;
+    for(int i=0; i<map.getNumOfRegions(); i++) {
+
+        if(map.hasLostTribes(i)) {
+            cout << to_string(i) << endl;
+        }
+
+    }
+    cout << endl;
+
+    cout << "///  PART 5  ///" << endl;
+    cout << "Regions with Mountains:" << endl;
+    for(int i=0; i<map.getNumOfRegions(); i++) {
+
+        if(map.hasMountains(i)) {
+            cout << to_string(i) << endl;
+        }
+
+    }
+    cout << endl;
+
+    cout << "///  PART 6  ///" << endl;
 
     return 0;
-    
+
 }
