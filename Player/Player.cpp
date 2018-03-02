@@ -13,13 +13,10 @@ Player::Player() {
     dice = Dice();
     raceBanner = FantasyRaceBanner();
     summarySheet = SummarySheet();
-    coins = VictoryCoin(5);
 
-    //coins = vector<VictoryCoin>();
-    /*
+    coins = vector<VictoryCoin>();
     for(int i=0; i<5; i++)
         coins.emplace_back(VictoryCoin(1));
-    */
 
 }
 
@@ -41,7 +38,6 @@ SummarySheet Player::getSummarySheet() {
 
 }
 
-/*
 vector<VictoryCoin> Player::getCoins() {
 
     return coins;
@@ -50,7 +46,7 @@ vector<VictoryCoin> Player::getCoins() {
 
 
 // Returns how many coins in value the player has
-int Player::totalCoinsValue() {
+int Player::getTotalCoinsValue() {
 
     int sum = 0;
 
@@ -60,19 +56,7 @@ int Player::totalCoinsValue() {
     return sum;
 
 }
-*/
 
-int Player::totalCoinsValue() {
-
-    return coins.getValue();
-
-}
-
-void Player::setCoins(int newValue) {
-
-    coins.setValue(newValue);
-
-}
 
 bool Player::hasSummarySheet() {
 
@@ -123,7 +107,8 @@ void Player::picks_race() {
 
     } while(race < 1 || race > availableBanners.size());
 
-    setCoins(coins.getValue()-(race-1));
+    // To be fixed. Broken because
+    //setCoins(coins.getValue()-(race-1));
 
     raceBanner.setRaceToken(availableBanners[race-1].getRaceToken());
     raceBanner.setPowerBadge(availableBanners[race-1].getPowerBadge());
@@ -227,18 +212,18 @@ void Player::scores() {
 
 string Player::toString() {
 
-    string player = "This player has:\nRegions: ";
+    string description = "This player has:\nRegions: ";
 
     for(int region : regions) {
 
-        player += to_string(region) + " | ";
+        description += to_string(region) + " | ";
     }
 
-    player += "\nTokens: " + getRaceBanner().getRaceToken().getType() + ", " +
+    description += "\nTokens: " + getRaceBanner().getRaceToken().getType() + ", " +
             to_string(getRaceBanner().getRaceToken().getNumOfTokens()) + "\nBadge: " + getRaceBanner().getPowerBadge().getType() +
-            "\n" + "Victory Coins: " + to_string(totalCoinsValue()) + "\nDice: roll, " + to_string(dice.roll()) +
+            "\n" + "Victory Coins: " + VictoryCoin::demoVictoryCoins(getCoins()) + "\nDice: roll, " + to_string(dice.roll()) +
             "\nSummary Sheet: " + to_string(hasSummarySheet());
 
-    return player;
+    return description;
 
 }

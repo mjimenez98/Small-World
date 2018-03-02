@@ -45,7 +45,9 @@ int main() {
     }
     cout << endl;
 
+    // When each player is created, 5 coins of value 1 are automatically given. See Player().
     cout << "///  PART 6  ///" << endl;
+    cout << VictoryCoin::demoVictoryCoins(player1->getCoins());
 
     return 0;
 
