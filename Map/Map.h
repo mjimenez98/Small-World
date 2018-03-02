@@ -8,35 +8,35 @@ class Map
 
 public:
 	// Constructors
-	Map(int);
-
-	// Deconstructors
-	~Map();
+	Map(int newNumOfRegions);
 
 	// Getters
 	int getNumOfRegions();
-	int getTokens(int);
-	string getRegionPlayer(int);
-	char getRegionType(int);
+	int getTokens(int region);
+	string getRegionPlayer(int region);
+	char getRegionType(int region);
 
 	// Setters
-	void setCavern(int, bool);
-	void setExterior(int, bool);
-	void setMine(int, bool);
-	void setMagic(int, bool);
-	void setRegionPlayer(int, string);
-	void setRegionType(int, char);
-	void setTokens(int,int);
+	void setCavern(int region, bool state);
+	void setExterior(int region, bool state);
+	void setMine(int region, bool state);
+	void setMagic(int region, bool state);
+	void setRegionPlayer(int region, string player);
+	void setRegionType(int region, char type);
+	void setTokens(int, int);
 
 	// Is
-	bool isCavern(int);
-	bool isExterior(int);
-	bool isMagic(int);
-	bool isMine(int);
-	bool isConnected(int, int);
+	bool isCavern(int region);
+	bool isExterior(int region);
+	bool isMagic(int region);
+	bool isMine(int region);
+	bool isConnected(int region1, int region2);
 
 	// Other functions
-	void addEdge(int,int);
+	void addEdge(int region1, int region2);
+
+	// Deconstructors
+	~Map();
 
 private:
 	struct Region;
