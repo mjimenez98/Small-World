@@ -1,47 +1,113 @@
 #include "Map.h"
+#include "../Player/Player.h"
+#include "../SummarySheet/SummarySheet.h"
+#include "../GamePiece/GamePiece.h"
+#include "../LostTribeToken/LostTribeToken.h"
 #include <iostream>
+#include <string>
 
 using namespace std;
+// Prints a description of the Small World deck
+void demoGame(vector<VictoryCoin>* coins, vector<MatchingRaceToken>* raceTokens, vector<SpecialPowerBadge>* badges,
+              vector<GamePiece>* gamePieces, vector<LostTribeToken>* lostTribes, vector<FantasyRaceBanner>* raceBanners) {
+
+    if((*coins).empty() || (*raceTokens).empty() || (*badges).empty() || (*gamePieces).empty() || (*lostTribes).empty() ||
+       (*raceBanners).empty()) {
+        cout << "ERROR" << endl;
+    }
+    else {
+        cout << "This Small World game set has:\n" << endl;
+        cout << VictoryCoin::demoVictoryCoins(*coins) << endl;
+        cout << MatchingRaceToken::demoMatchingRaceTokens(*raceTokens, 1) << endl;
+        cout << SpecialPowerBadge::demoSpecialPowerBadges(*badges) << endl;
+        cout << GamePiece::demoGamePieces(*gamePieces) << endl;
+        cout << LostTribeToken::demoLostTribeTokens(*lostTribes) << endl;
+        cout << FantasyRaceBanner::demoFantasyRaceBanner(*raceBanners);
+    }
+
+}
+// Creates a deck of the Small World set
+void createGame() {
+
+    vector<VictoryCoin> coins = VictoryCoin::createVictoryCoins(ONES, THREES, FIVES, TENS);
+
+    vector<MatchingRaceToken> raceTokens = MatchingRaceToken::createMatchingRaceTokens(AMAZONS, DWARVES, ELVES, GHOULS, GIANTS,
+                                                                                       HALFLINGS, HUMANS, ORCS, RATMEN, SKELETONS, SORCERERS, TRITONS, TROLLS, WIZARDS);
+
+    vector<SpecialPowerBadge> badges = SpecialPowerBadge::createSpecialPowerBadges(ALCHEMISTTOKENS, BERSERKTOKENS, BIVOUACKINGTOKENS,
+                                                                                   COMMANDOTOKENS, DIPLOMATTOKENS, DRAGONMASTERTOKENS,
+                                                                                   FLYINGTOKENS, FORESTTOKENS, FORTIFIEDTOKENS,
+                                                                                   HEROICTOKENS, HILLTOKENS, MERCHANTTOKENS,
+                                                                                   MOUNTEDTOKENS, PILLAGINGTOKENS, SEAFARINGTOKENS,
+                                                                                   SPIRITTOKENS, STOUTTOKENS, SWAMPTOKENS,
+                                                                                   UNDERWORLDTOKENS, WEALTHYTOKENS);
+
+    vector<GamePiece> gamePieces = GamePiece::createGamePieces(DRAGONS, ENCAMPMENTS, FORTRESSES, HEROES, MOUNTAINS, TROLLLAIRS,
+                                                               HOLESINTHEGROUND);
+
+    vector<LostTribeToken> lostTribes = LostTribeToken::createLostTribeTokens(NUMOFLOSTTRIBETOKENS);
+
+    vector<FantasyRaceBanner> raceBanners = FantasyRaceBanner::createFantasyRaceBanners(raceTokens, badges);
+
+    demoGame(&coins, &raceTokens, &badges, &gamePieces, &lostTribes, &raceBanners);
+
+}
 
 int main()
 {
-    //test for creating a Map
+    int players = 0;
+    bool loop = true;
+    while(loop) {
+        cout << "How many people will be playing?" << endl;
+        cin >> players;
+        if (players < 2 || players>5)
+        {
+            cout<<"Invalid number of players."<<endl;
+        }
 
-    /*Map m1(10);
-    m1.addEdge(1, 2);
-    m1.addEdge(1, 6);
-    m1.addEdge(10, 2);
-    m1.addEdge(6, 5);
+        else
+            loop = false;
+    }
 
-    cout<<m1.isConnected(1, 2)<<endl;
-    cout << m1.isConnected(2, 1) << endl;
-    cout << m1.isConnected(1, 6) << endl;
-    cout << m1.isConnected(10, 2) << endl;
-    cout << m1.isConnected(5, 6) << endl;
-    cout << m1.isConnected(5, 7) << endl;
-    cout << m1.isConnected(1, 8) << endl;
+    switch(players)
+    {
+        case 2: {Map map = loadMap("../textMaps/2Players.txt");
+            if( !checkConnect(map))
+                return(0);
+            Player player1();
+            Player player2();
+            cout<<"Loaded the 2 player map and created 2 players"<<endl;break;}
+        case 3:{ Map map = loadMap("../textMaps/3Players.txt");
+            if( !checkConnect(map))
+                return(0);
+            Player player1();
+            Player player2();
+            Player player3();
+            cout<<"Loaded the 3 player map and created 3 players"<<endl;break;}
+        case 4:{ Map map = loadMap("../textMaps/4Players.txt");
+            if( !checkConnect(map))
+                return(0);
+            Player player1();
+            Player player2();
+            Player player3();
+            Player player4();
+            cout<<"Loaded the 4 player map and created 4 players"<<endl;break;}
+        case 5:{ Map map = loadMap("../textMaps/5Players.txt");
+            if( !checkConnect(map))
+                return(0);
+            Player player1();
+            Player player2();
+            Player player3();
+            Player player4();
+            Player player5();
+            cout<<"Loaded 5 player map and created 5 players"<<endl;break;}
+        default : cout<<"switch error"<<endl;break;
 
-    m1.setRegionPlayer(2, "p1");
-    m1.setTokens(4, 8);
-    cout << m1.getTokens(4) << endl;
-    cout << m1.getRegionPlayer(2) << endl;*/
 
-
-    //test for loading a map that is the wrong format
-    //Map m = loadMap("textMaps/Fail.txt");
-
-    //test for loading ap
-    Map m1 = loadMap("../textMaps/5Players.txt");
-
-    cout << "Are regions 7 and 18 connected? " << m1.isConnected(7, 18) << endl;
-    cout << "Are regions 35 and 24 connected? " << m1.isConnected(35, 24) << endl;
-    cout << "Are regions 44 and 30 connected? " << m1.isConnected(44, 30) << endl;
-    cout << "Are regions 3 and 12 connected? " << m1.isConnected(3, 12) << endl;
-    cout << "Are regions 16 and 1 connected? " << m1.isConnected(16, 1) << endl;
-    cout << "Are regions 21 and 23 connected? " << m1.isConnected(21, 23) << endl;
-    cout << "What is region 3's type? " << m1.getRegionType(3) << endl;
-    cout << "Does region 9 have magic? " << m1.getMagic(9) << endl;
-    cout << "Is region 10 exterior? " << m1.getExterior(10) << endl;
-
-    return 0;
+    }
+    createGame();
 }
+
+
+
+

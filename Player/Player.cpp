@@ -5,6 +5,8 @@
 #include "Player.h"
 
 #include <random>   // Default random engine
+#include<chrono>
+#include <algorithm>
 
 using namespace std;
 

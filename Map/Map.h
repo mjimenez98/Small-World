@@ -56,3 +56,4 @@ private:
 };
 
 Map loadMap(string mapName);
+bool checkConnect(Map);
