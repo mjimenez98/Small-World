@@ -66,15 +66,16 @@ string FantasyRaceBanner::demoFantasyRaceBanner(vector<FantasyRaceBanner> raceBa
         string demo = "Fantasy Race Banners:";
 
         for(FantasyRaceBanner raceBanner : raceBanners) {
-            demo += "\n" + to_string(index++) + ". Race Token: " + raceBanner.getRaceToken().getType() + " (" +
-                    to_string(raceBanner.getRaceToken().getNumOfTokens()) + "), Power Badge: " +
-                    raceBanner.getPowerBadge().getType() + " (" + to_string(raceBanner.getPowerBadge().getNumOfCoinsToGive())
+            demo += "\n" + to_string(index++) + ". Power Badge: " +  raceBanner.getPowerBadge().getType() + " (" +
+                    to_string(raceBanner.getPowerBadge().getNumOfCoinsToGive())+ "), Race Token: " +
+                    raceBanner.getRaceToken().getType() + " (" + to_string(raceBanner.getRaceToken().getNumOfTokens())
                     + ")";
         }
 
         demo += "\n";
 
         return demo;
+
 
     }
 

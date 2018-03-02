@@ -26,14 +26,12 @@ public:
     Dice getDice();
     FantasyRaceBanner getRaceBanner();
     SummarySheet getSummarySheet();
-    //vector<VictoryCoin> getCoins();
-
-    // Setters
-    void setCoins(int newValue);
+    vector<VictoryCoin> getCoins();
+    int getTotalCoinsValue();
 
     // Other functions
     string toString();
-    int totalCoinsValue();
+    //int totalCoinsValue();
     bool hasSummarySheet();
     void picks_race();
     void conquers();
@@ -44,8 +42,7 @@ private:
     FantasyRaceBanner raceBanner;
     vector<int> regions;
     SummarySheet summarySheet;
-    //vector<VictoryCoin> coins;
-    VictoryCoin coins;
+    vector<VictoryCoin> coins;
 
 };
 

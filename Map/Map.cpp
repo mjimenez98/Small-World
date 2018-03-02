@@ -7,135 +7,175 @@
 
 using namespace std;
 
-
+// Subclass: Region in map
 struct Map::Region {
 
     int tokens;
     string player;
     char regionType=NULL;
-    //H=hill
-    //W=Water
-    //S=Swamp
-    //F=field
-    //T=trees
-    //M=mountain
+    /* H = hill
+     * W = Water
+     * S = Swamp
+     * F = field
+     * T = trees
+     * M = mountain
+    */
 
     bool cavern = false;
     bool mine = false;
     bool magic = false;
     bool exterior = false;
+
+    GamePiece* gamePiece = nullptr;
+    LostTribeToken* lostTribeToken = nullptr;
+
 };
-//getter and setters
 
-void Map::setExterior(int n, bool b)
+Map::Map(int newNumOfRegions)
 {
-    regions[n].exterior = b;
-}
+    regions = new Region[newNumOfRegions];
+    numOfRegions = newNumOfRegions;
 
-bool Map::getExterior(int n)
-{
-
-    if(n > getNumOfRegions())
-        return false;
-
-    return regions[n].exterior;
 }
 
-void Map::setCavern(int n, bool b)
+// Getters
+char Map::getRegionType(int region)
 {
-    regions[n].cavern = b;
+    return regions[region].regionType;
 }
 
-bool Map::getCavern(int n)
+int Map::getTokens(int region)
 {
-    return regions[n].cavern;
-}
-void Map::setMine(int n, bool b)
-{
-    regions[n].mine = b;
+    return regions[region].tokens;
 }
 
-bool Map::getMine(int n)
+string Map::getRegionPlayer(int region)
 {
-    return regions[n].mine;
-}
-void Map::setMagic(int n, bool b)
-{
-    regions[n].magic = b;
+    return regions[region].player;
 }
 
-bool Map::getMagic(int n)
+int Map::getNumOfRegions()
 {
-    return regions[n].magic;
+    return numOfRegions;
 }
-void Map::setRegionType(int n, char c)
+
+// Setters
+void Map::setCavern(int region, bool state)
 {
-    regions[n].regionType = c;
+    regions[region].cavern = state;
 }
-char Map::getRegionType(int n)
+
+void Map::setExterior(int region, bool state)
 {
-    return regions[n].regionType;
+    regions[region].exterior = state;
 }
+
+void Map::setLostTribes(int region, LostTribeToken newToken)
+{
+    regions[region].lostTribeToken = &newToken;
+}
+
+void Map::setMagic(int region, bool state)
+{
+    regions[region].magic = state;
+}
+
+void Map::setMine(int region, bool state)
+{
+    regions[region].mine = state;
+}
+
+void Map::setRegionPlayer(int region, string player)
+{
+    regions[region].player = player;
+}
+
+void Map::setRegionType(int region, char type)
+{
+    regions[region].regionType = type;
+
+    if(type == 'M')
+        regions[region].gamePiece = new GamePiece("Mountain");
+}
+
 void Map::setTokens(int n,int tokens)
 {
     regions[n].tokens = tokens;
 }
 
-int Map::getTokens(int n)
+// Is
+bool Map::isCavern(int region)
 {
-    return regions[n].tokens;
+    return regions[region].cavern;
 }
 
-void Map::setRegionPlayer(int n,string p)
+bool Map::isConnected(int region1, int region2)
 {
-    regions[n].player = p;
-}
-
-string Map::getRegionPlayer(int n)
-{
-    return regions[n].player;
-}
-
-Map::Map(int s)
-{
-    regions = new Region[s];
-    numOfRegions = s;
-
-};
-int Map::getNumOfRegions(){
-    return numOfRegions;
-}
-
-
-void Map::addEdge(int n1, int n2)
-{
-    connections[n1][n2] = 1;
-    connections[n2][n1] = 1;
-
-};
-
-bool Map::isConnected(int n1, int n2)
-{
-    if (connections[n1][n2] == 1)
+    if (connections[region1][region2] == 1)
         return true;
 
     return false;
 }
 
-//First element of each line is region type
-//H=hill
-//W=Water
-//S=Swamp
-//F=field
-//T=trees
-//M=mountain
-//second letter is special area in region
-//c=cavern
-//m=mine
-//s=source of magic
-//x=cavern and mine
-//n = none
+bool Map::isExterior(int region)
+{
+    if(region > getNumOfRegions())
+        return false;
 
+    return regions[region].exterior;
+}
+
+bool Map::isMagic(int region)
+{
+    return regions[region].magic;
+}
+
+bool Map::isMine(int region)
+{
+    return regions[region].mine;
+}
+
+bool Map::hasLostTribes(int region)
+{
+    if(regions[region].lostTribeToken != NULL) {
+        return true;
+    }
+    return false;
+}
+
+bool Map::hasMountains(int region)
+{
+    if(regions[region].gamePiece != NULL && regions[region].gamePiece->getType() == "Mountain") {
+        return true;
+    }
+
+    return false;
+}
+
+// Other
+void Map::addEdge(int region1, int region2)
+{
+    connections[region1][region2] = 1;
+    connections[region2][region1] = 1;
+}
+
+/* First element of each line is region type
+ * H = hill
+ * W = Water
+ * S = Swamp
+ * F = field
+ * T = trees
+ * M = mountain
+ * Second letter is special area in region
+ * c = cavern
+ * m = mine
+ * s = source of magic
+ * x = cavern and mine
+ * n = none
+ * Third letter is lost tribe token
+ * T = true
+ * F = false
+*/
 Map loadMap(string mapName)
 {
     ifstream file;
@@ -189,13 +229,21 @@ Map loadMap(string mapName)
             m1.setCavern(count, true);
             m1.setMine(count, true);
         }
-        //set exterior
-        char ext = s1.at(2);
+
+        // Set lost tribes
+        char tribe = s1.at(2);
+
+        if(tribe == 'T') {
+            m1.setLostTribes(count, LostTribeToken());
+        }
+
+        // Set exterior
+        char ext = s1.at(3);
         if (ext == 'E')
             m1.setExterior(count, true);
 
         string number = "";
-        for (unsigned int k = 3; k < s1.length()-3; ++k)
+        for (unsigned int k = 4; k < s1.length()-4; ++k)
         {
 
             char c = s1.at(k);
@@ -217,7 +265,9 @@ Map loadMap(string mapName)
 
     file.close();
     return m1;
+
 }
+
 //check if map is connected
 bool checkConnect(Map map)
 {
@@ -247,7 +297,6 @@ bool checkConnect(Map map)
     return true;
 
 }
-
 
 Map::~Map()
 {
