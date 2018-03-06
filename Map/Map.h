@@ -29,6 +29,7 @@ public:
 	void setRegionPlayer(int region, string player);
 	void setRegionType(int region, char type);
 	void setTokens(int, int);
+	void addTokens(int,int);
 
 	// Is
 	bool isCavern(int region);

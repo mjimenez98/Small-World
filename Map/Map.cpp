@@ -10,7 +10,7 @@ using namespace std;
 // Subclass: Region in map
 struct Map::Region {
 
-    int tokens;
+    int tokens =0;
     string player;
     char regionType=NULL;
     /* H = hill
@@ -102,6 +102,13 @@ void Map::setTokens(int n,int tokens)
 {
     regions[n].tokens = tokens;
 }
+
+//add tokens to current ammount of tokens
+void Map::addTokens(int n,int tokens)
+{
+    regions[n].tokens += tokens;
+}
+
 
 // Is
 bool Map::isCavern(int region)
@@ -211,6 +218,10 @@ Map loadMap(string mapName)
         //set region
         char regionType = s1.at(0);
         m1.setRegionType(count, regionType);
+        //add a token to the region if it has a mountain
+        if(m1.getRegionType(count)=='M')
+            m1.addTokens(count,1);
+
 
         //set special
         char special = s1.at(1);
@@ -235,6 +246,8 @@ Map loadMap(string mapName)
 
         if(tribe == 'T') {
             m1.setLostTribes(count, LostTribeToken());
+
+            m1.addTokens(count,1);
         }
 
         // Set exterior
@@ -243,17 +256,18 @@ Map loadMap(string mapName)
             m1.setExterior(count, true);
 
         string number = "";
-        for (unsigned int k = 4; k < s1.length()-4; ++k)
+        for (int k = 4; k < s1.length(); ++k)
         {
 
             char c = s1.at(k);
-
 
             if (c == ',')
             {
                 //convert string to integer
                 int val = stoi(number);
+
                 m1.addEdge(count, val);
+
                 number = "";
                 continue;
             }
