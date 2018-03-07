@@ -1,7 +1,9 @@
 #pragma once
 
+#include "../FantasyRaceBanner/FantasyRaceBanner.h"
 #include "../LostTribeToken/LostTribeToken.h"
 #include "../GamePiece/GamePiece.h"
+#include "../VictoryCoin/VictoryCoin.h"
 
 #include <string>
 
@@ -12,7 +14,8 @@ class Map
 
 public:
 	// Constructors
-	Map(int newNumOfRegions);
+    Map();
+    Map(int newNumOfRegions);
 
 	// Getters
 	int getNumOfRegions();
@@ -45,7 +48,7 @@ public:
 	// Other functions
 	void addEdge(int region1, int region2);
 
-	// Deconstructors
+	// Destructor
 	~Map();
 
 private:
@@ -58,3 +61,4 @@ private:
 
 Map loadMap(string mapName);
 bool checkConnect(Map);
+void createGame();

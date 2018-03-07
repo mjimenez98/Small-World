@@ -31,6 +31,13 @@ struct Map::Region {
 
 };
 
+Map::Map() {
+
+    regions = new Region[0];
+    numOfRegions = 0;
+
+}
+
 Map::Map(int newNumOfRegions)
 {
     regions = new Region[newNumOfRegions];
@@ -103,7 +110,7 @@ void Map::setTokens(int n,int tokens)
     regions[n].tokens = tokens;
 }
 
-//add tokens to current ammount of tokens
+//add tokens to current amount of tokens
 void Map::addTokens(int n,int tokens)
 {
     regions[n].tokens += tokens;
@@ -142,9 +149,11 @@ bool Map::isMine(int region)
     return regions[region].mine;
 }
 
+
+// Has
 bool Map::hasLostTribes(int region)
 {
-    if(regions[region].lostTribeToken != NULL) {
+    if(regions[region].lostTribeToken != nullptr) {
         return true;
     }
     return false;
@@ -152,7 +161,7 @@ bool Map::hasLostTribes(int region)
 
 bool Map::hasMountains(int region)
 {
-    if(regions[region].gamePiece != NULL && regions[region].gamePiece->getType() == "Mountain") {
+    if(regions[region].gamePiece != nullptr && regions[region].gamePiece->getType() == "Mountain") {
         return true;
     }
 
@@ -209,7 +218,7 @@ Map loadMap(string mapName)
     //count keeps track of line number
     int count = 1;
     //each line is the current Region, all values on the line are connected regions
-    //seperated by commas
+    //separated by commas
     while (!file.eof())
     {
         string s1;
@@ -309,6 +318,55 @@ bool checkConnect(Map map)
     }
 
     return true;
+
+}
+
+// Prints a description of the Small World deck
+void demoGame(vector<VictoryCoin>* coins, vector<MatchingRaceToken>* raceTokens, vector<SpecialPowerBadge>* badges,
+              vector<GamePiece>* gamePieces, vector<LostTribeToken>* lostTribes, vector<FantasyRaceBanner>* raceBanners)
+{
+
+    if((*coins).empty() || (*raceTokens).empty() || (*badges).empty() || (*gamePieces).empty() || (*lostTribes).empty() ||
+       (*raceBanners).empty()) {
+        cout << "ERROR" << endl;
+    }
+    else {
+        cout << "This Small World game set has:" << endl;
+        cout << VictoryCoin::demoVictoryCoins(*coins) << endl;
+        cout << MatchingRaceToken::demoMatchingRaceTokens(*raceTokens, 1) << endl;
+        cout << SpecialPowerBadge::demoSpecialPowerBadges(*badges) << endl;
+        cout << GamePiece::demoGamePieces(*gamePieces) << endl;
+        cout << LostTribeToken::demoLostTribeTokens(*lostTribes) << endl;
+        cout << FantasyRaceBanner::demoFantasyRaceBanner(*raceBanners);
+    }
+
+}
+
+// Creates a deck of the Small World set
+void createGame() {
+
+    vector<VictoryCoin> coins = VictoryCoin::createVictoryCoins(ONES, THREES, FIVES, TENS);
+
+    vector<MatchingRaceToken> raceTokens = MatchingRaceToken::createMatchingRaceTokens(AMAZONS, DWARVES, ELVES, GHOULS, GIANTS,
+                                                                                       HALFLINGS, HUMANS, ORCS, RATMEN, SKELETONS,
+                                                                                       SORCERERS, TRITONS, TROLLS, WIZARDS);
+
+    vector<SpecialPowerBadge> badges = SpecialPowerBadge::createSpecialPowerBadges(ALCHEMISTTOKENS, BERSERKTOKENS, BIVOUACKINGTOKENS,
+                                                                                   COMMANDOTOKENS, DIPLOMATTOKENS, DRAGONMASTERTOKENS,
+                                                                                   FLYINGTOKENS, FORESTTOKENS, FORTIFIEDTOKENS,
+                                                                                   HEROICTOKENS, HILLTOKENS, MERCHANTTOKENS,
+                                                                                   MOUNTEDTOKENS, PILLAGINGTOKENS, SEAFARINGTOKENS,
+                                                                                   SPIRITTOKENS, STOUTTOKENS, SWAMPTOKENS,
+                                                                                   UNDERWORLDTOKENS, WEALTHYTOKENS);
+
+    vector<GamePiece> gamePieces = GamePiece::createGamePieces(DRAGONS, ENCAMPMENTS, FORTRESSES, HEROES, MOUNTAINS, TROLLLAIRS,
+                                                               HOLESINTHEGROUND);
+
+    vector<LostTribeToken> lostTribes = LostTribeToken::createLostTribeTokens(NUMOFLOSTTRIBETOKENS);
+
+    vector<FantasyRaceBanner> raceBanners = FantasyRaceBanner::createFantasyRaceBanners(raceTokens, badges);
+
+    demoGame(&coins, &raceTokens, &badges, &gamePieces, &lostTribes, &raceBanners);
 
 }
 

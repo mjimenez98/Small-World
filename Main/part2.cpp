@@ -2,7 +2,7 @@
 // Created by Miguel Jimenez on 3/1/18.
 //
 
-#include "GameTurn.h"
+#include "../GameTurn/GameTurn.h"
 #include "../Player/Player.h"
 #include "../VictoryCoin/VictoryCoin.h"
 
