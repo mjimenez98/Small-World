@@ -113,20 +113,20 @@ vector<MatchingRaceToken>* MatchingRaceToken::createMatchingRaceTokens(int numOf
 
     auto * raceTokens = new vector<MatchingRaceToken>;
 
-    (*raceTokens).emplace_back(MatchingRaceToken("Amazon", numOfAmazons));
-    (*raceTokens).emplace_back(MatchingRaceToken("Dwarf", numOfDwarves));
-    (*raceTokens).emplace_back(MatchingRaceToken("Elf", numOfElves));
-    (*raceTokens).emplace_back(MatchingRaceToken("Ghoul", numOfGhouls));
-    (*raceTokens).emplace_back(MatchingRaceToken("Giant", numOfGiants));
-    (*raceTokens).emplace_back(MatchingRaceToken("Halfling", numOfHalflings));
-    (*raceTokens).emplace_back(MatchingRaceToken("Human", numOfHumans));
-    (*raceTokens).emplace_back(MatchingRaceToken("Orc", numOfOrcs));
-    (*raceTokens).emplace_back(MatchingRaceToken("Ratman", numOfRatmen));
-    (*raceTokens).emplace_back(MatchingRaceToken("Skeleton", numOfSkeletons));
-    (*raceTokens).emplace_back(MatchingRaceToken("Sorcerer", numOfSorcerers));
-    (*raceTokens).emplace_back(MatchingRaceToken("Triton", numOfTritons));
-    (*raceTokens).emplace_back(MatchingRaceToken("Troll", numOfTrolls));
-    (*raceTokens).emplace_back(MatchingRaceToken("Wizard", numOfWizards));
+    (*raceTokens).emplace_back(MatchingRaceToken("Amazons", numOfAmazons));
+    (*raceTokens).emplace_back(MatchingRaceToken("Dwarves", numOfDwarves));
+    (*raceTokens).emplace_back(MatchingRaceToken("Elves", numOfElves));
+    (*raceTokens).emplace_back(MatchingRaceToken("Ghouls", numOfGhouls));
+    (*raceTokens).emplace_back(MatchingRaceToken("Giants", numOfGiants));
+    (*raceTokens).emplace_back(MatchingRaceToken("Halflings", numOfHalflings));
+    (*raceTokens).emplace_back(MatchingRaceToken("Humans", numOfHumans));
+    (*raceTokens).emplace_back(MatchingRaceToken("Orcs", numOfOrcs));
+    (*raceTokens).emplace_back(MatchingRaceToken("Ratmen", numOfRatmen));
+    (*raceTokens).emplace_back(MatchingRaceToken("Skeletons", numOfSkeletons));
+    (*raceTokens).emplace_back(MatchingRaceToken("Sorcerers", numOfSorcerers));
+    (*raceTokens).emplace_back(MatchingRaceToken("Tritons", numOfTritons));
+    (*raceTokens).emplace_back(MatchingRaceToken("Trolls", numOfTrolls));
+    (*raceTokens).emplace_back(MatchingRaceToken("Wizards", numOfWizards));
 
     //Shuffle
     unsigned seed = chrono::system_clock::now().time_since_epoch().count();

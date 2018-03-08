@@ -52,12 +52,6 @@ void SpecialPowerBadge::activate() {
 
 }
 
-void SpecialPowerBadge::giveCoinsToPlayer() {
-
-    //TBD
-
-}
-
 // Prints a description of all the Power Badges created
 string SpecialPowerBadge::demoSpecialPowerBadges(vector<SpecialPowerBadge>& badges) {
 

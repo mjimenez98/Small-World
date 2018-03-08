@@ -27,20 +27,20 @@ const int TROLLS_TOKENS = 10;
 const int WIZARDS_TOKENS = 10;
 
 // Starting tokens
-const int AMAZON_COINS = 6;
-const int DWARF_COINS = 3;
-const int ELF_COINS = 6;
-const int GHOUL_COINS = 5;
-const int GIANT_COINS = 6;
-const int HALFLING_COINS = 6;
-const int HUMAN_COINS = 5;
-const int ORC_COINS = 5;
-const int RATMAN_COINS = 8;
-const int SKELETON_COINS = 6;
-const int SORCERER_COINS = 5;
-const int TRITON_COINS = 6;
-const int TROLL_COINS = 5;
-const int WIZARD_COINS = 5;
+const int AMAZONS_START = 6;
+const int DWARVES_START = 3;
+const int ELVES_START = 6;
+const int GHOULS_START = 5;
+const int GIANTS_START = 6;
+const int HALFLINGS_START = 6;
+const int HUMANS_START = 5;
+const int ORCS_START = 5;
+const int RATMEN_START = 8;
+const int SKELETONS_START = 6;
+const int SORCERERS_START = 5;
+const int TRITONS_START = 6;
+const int TROLLS_START = 5;
+const int WIZARDS_START = 5;
 
 class MatchingRaceToken {
 

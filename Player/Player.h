@@ -31,7 +31,6 @@ public:
 
     // Other functions
     string toString();
-    //int totalCoinsValue();
     bool hasSummarySheet();
     void picks_race(vector<FantasyRaceBanner>& availableBanners);
     void firstConquer(Map*map);
@@ -43,6 +42,10 @@ private:
     vector<int> regions;
     SummarySheet summarySheet;
     vector<VictoryCoin> coins;
+
+    int giveBadgeCoins();
+    int giveRaceCoins();
+    void distributeCoins(int toBeAwarded);
 
 };
 

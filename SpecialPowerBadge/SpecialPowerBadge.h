@@ -49,7 +49,6 @@ public:
 
     // Other functions
     void activate();
-    void giveCoinsToPlayer();
     static string demoSpecialPowerBadges(vector<SpecialPowerBadge>& badges);
     static vector<SpecialPowerBadge>* createSpecialPowerBadges(int coinsAlchemist, int coinsBerserk, int coinsBivouack, int coinsCommando,
         int coinsDiplomat, int coinsDragonMaster, int coinsFlying, int coinsForest, int coinsFortified, int coinsHeroic,

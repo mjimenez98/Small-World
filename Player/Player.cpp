@@ -3,6 +3,7 @@
 //
 
 #include "Player.h"
+#include "../GameTurn/GameTurn.h"
 
 using namespace std;
 
@@ -11,10 +12,7 @@ Player::Player() {
     dice = Dice();
     raceBanner = FantasyRaceBanner();
     summarySheet = SummarySheet();
-
     coins = vector<VictoryCoin>();
-    for(int i=0; i<5; i++)
-        coins.emplace_back(VictoryCoin(1));
 
 }
 
@@ -42,7 +40,6 @@ vector<VictoryCoin>* Player::getCoins() {
 
 }
 
-
 // Returns how many coins in value the player has
 int Player::getTotalCoinsValue() {
 
@@ -54,7 +51,6 @@ int Player::getTotalCoinsValue() {
     return sum;
 
 }
-
 
 bool Player::hasSummarySheet() {
 
@@ -96,8 +92,9 @@ void Player::picks_race(vector<FantasyRaceBanner>& raceBanners) {
 
     } while(race < 1 || race > availableBanners.size());
 
-    // To be fixed. Broken because
-    //setCoins(coins.getValue()-(race-1));
+    // Give coins to player
+    for(int i=0; i<availableBanners.size()-race; i++)
+        coins.emplace_back(VictoryCoin(1));
 
     // Set the player's race banner
     raceBanner.setRaceToken(availableBanners[race-1].getRaceToken());
@@ -188,12 +185,12 @@ void Player::firstConquer(Map*map) {
                     regions.emplace_back(regionSelection);
 
                     // Update number of tokens in that region
-                    int tokenAmmount = tokenSelection;
+                    int tokenAmount = tokenSelection;
                     //player places tokens, the mountain stays
                     //The lost tribes do not stay if a player conquers
                     if(map->hasMountains(regionSelection))
-                        ++tokenAmmount;
-                    map->setTokens(regionSelection, tokenAmmount);
+                        ++tokenAmount;
+                    map->setTokens(regionSelection, tokenAmount);
 
                 } else {
 
@@ -304,12 +301,12 @@ void Player::firstConquer(Map*map) {
                             regions.emplace_back(regionSelection);
 
                             // Update number of tokens in that region
-                            int tokenAmmount = tokenSelection;
+                            int tokenAmount = tokenSelection;
                             //player places tokens, the mountain stays
                             //The lost tribes do not stay if a player conquers
                             if (map->hasMountains(regionSelection))
-                                ++tokenAmmount;
-                            map->setTokens(regionSelection, tokenAmmount);
+                                ++tokenAmount;
+                            map->setTokens(regionSelection, tokenAmount);
 
                         }
                     }
@@ -338,12 +335,12 @@ void Player::firstConquer(Map*map) {
                 regions.emplace_back(regionSelection);
 
                 // Update number of tokens in that region
-                int tokenAmmount = tokenSelection;
+                int tokenAmount = tokenSelection;
                 //player places tokens, the mountain stays
                 //The lost tribes do not stay if a player conquers
                 if (map->hasMountains(regionSelection))
-                    ++tokenAmmount;
-                map->setTokens(regionSelection, tokenAmmount);
+                    ++tokenAmount;
+                map->setTokens(regionSelection, tokenAmount);
 
             } else {
 
@@ -354,11 +351,99 @@ void Player::firstConquer(Map*map) {
     }
 }
 
-// Awards player 1 coin for every region they possess
+void Player::distributeCoins(int toBeAwarded) {
+
+    while(toBeAwarded > 0) {
+
+        if(toBeAwarded > 10 && toBeAwarded % 10 < 10) {
+            coins.emplace_back(VictoryCoin(10));
+            toBeAwarded -= 10;
+        }
+        else if(toBeAwarded > 5 && toBeAwarded % 5 < 5) {
+            coins.emplace_back(VictoryCoin(5));
+            toBeAwarded -= 5;
+        }
+        else if(toBeAwarded > 3 && toBeAwarded % 3 < 3) {
+            coins.emplace_back(VictoryCoin(3));
+            toBeAwarded -= 3;
+        }
+        else if(toBeAwarded > 1 && toBeAwarded % 1 < 1) {
+            coins.emplace_back(VictoryCoin(1));
+            toBeAwarded -= 1;
+        }
+
+    }
+
+}
+
+// Give Victory Coins to player determined by the Matching Race
+int Player::giveRaceCoins() {
+
+    // NOTE: could be done with switch and enum instead of string. Revise for a future release.
+    if(raceBanner.getRaceToken().getType() == "Dwarves")
+        return 0;   // Each mine region occupied by dwarves
+    else if(raceBanner.getRaceToken().getType() == "Humans")
+        return 0; // 1 bonus victory coin for every farmland region
+    else if(raceBanner.getRaceToken().getType() == "Orcs")
+        return 0; // Each not empty Region your Orcs conquered this turn is worth 1 bonus Victory coin
+    else if(raceBanner.getRaceToken().getType() == "Wizards")
+        return 0; // Each Magic Region your Wizards occupy is worth 1 bonus Victory coin
+    else
+        return 0;
+}
+
+// Give Victory Coins to player determined by the Special Power Badge
+int Player::giveBadgeCoins() {
+
+    // NOTE: could be done with switch and enum instead of string. Revise for a future release.
+    if(raceBanner.getPowerBadge().getType() == "Alchemist")
+        return 2;
+    else if(raceBanner.getPowerBadge().getType() == "Forest")
+        return 0; // 1 bonus victory coin for every forest region
+    else if(raceBanner.getPowerBadge().getType() == "Fortified")
+        return 0;   // 1 if player has a fortress
+    else if(raceBanner.getPowerBadge().getType() == "Hill")
+        return 0; // 1 bonus victory coin for every hill region
+    else if(raceBanner.getPowerBadge().getType() == "Merchant") {
+
+        // If player has at least 1 region
+        if (regions.size() > 0)
+            return 1;
+        return 0;
+
+    }
+    else if(raceBanner.getPowerBadge().getType() == "Pillaging")
+        return 0; // 1 bonus Victory Coin for every non-empty conquered region in this turn
+    else if(raceBanner.getPowerBadge().getType() == "Swamp")
+        return 0; // 1 bonus victory coin for every swamp region
+    else if(raceBanner.getPowerBadge().getType() == "Wealthy") {
+
+        // If it is the first turn
+        if(1)
+            return 7;
+        else
+            return 0;
+
+    }
+    return 0;
+
+}
+
+// Awards player 1 coin for every region they possess and a determined amount by their Race and/or Special Power
 void Player::scores() {
 
-    //setCoins((int) regions.size() + totalCoinsValue());
-    cout << "Player has been awarded " << to_string(regions.size()) << " coins\n" << endl;
+    int oldScore = getTotalCoinsValue();
+
+    // For every region
+    distributeCoins((int) regions.size());
+
+    // Special Power
+    distributeCoins(giveBadgeCoins());
+
+    // Special Power
+    distributeCoins(giveBadgeCoins());
+
+    cout << "Player has been awarded " << to_string(getTotalCoinsValue()-oldScore) << " coins\n" << endl;
 
 }
 
@@ -366,15 +451,13 @@ string Player::toString() {
 
     string description = "This player has:\nRegions: ";
 
-    for(int region : regions) {
-
+    for(int region : regions)
         description += to_string(region) + " | ";
-    }
 
     description += "\nTokens: " + getRaceBanner().getRaceToken().getType() + ", " +
             to_string(getRaceBanner().getRaceToken().getNumOfTokens()) + "\nBadge: " + getRaceBanner().getPowerBadge().getType() +
-            "\n" + "Victory Coins: " + VictoryCoin::demoVictoryCoins(*getCoins()) + "\nDice: roll, " + to_string(dice.roll()) +
-            "\nSummary Sheet: " + to_string(hasSummarySheet());
+            "\nSummary Sheet: " + to_string(hasSummarySheet()) + "\nScore: " + to_string(getTotalCoinsValue()) +
+            "\n" + VictoryCoin::demoVictoryCoins(*getCoins());
 
     return description;
 
