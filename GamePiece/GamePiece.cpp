@@ -39,7 +39,7 @@ string printGamePieces(vector<GamePiece> gamePieces, vector<int> positions) {
 }
 
 // Prints a description of all the Game Pieces created
-string GamePiece::demoGamePieces(vector<GamePiece> gamePieces) {
+string GamePiece::demoGamePieces(vector<GamePiece>& gamePieces) {
 
     if(gamePieces.empty()) {
         return "ERROR";
@@ -63,37 +63,37 @@ string GamePiece::demoGamePieces(vector<GamePiece> gamePieces) {
 
 /* Sets up game pieces. The stock version of Small World has: 1 Dragon, 5 Encampments, 6 Fortresses, 2 Heroes, 9 Mountains,
  * 10 Troll Lairs and 2 Holes-in-the-ground */
-vector<GamePiece> GamePiece::createGamePieces(int numOfDragons, int numOfEncampments, int numOfFortresses, int numOfHeroes,
+vector<GamePiece>* GamePiece::createGamePieces(int numOfDragons, int numOfEncampments, int numOfFortresses, int numOfHeroes,
                                       int numOfMountains, int numOfTrollLairs, int numOfHolesInTheGround) {
 
-    vector<GamePiece> gamePieces;
+    auto * gamePieces = new vector<GamePiece>;
 
     for(int i=0; i<numOfDragons; i++) {
-        gamePieces.emplace_back(GamePiece("Dragon"));
+        (*gamePieces).emplace_back(GamePiece("Dragon"));
     }
 
     for(int i=0; i<numOfEncampments; i++) {
-        gamePieces.emplace_back(GamePiece("Encampment"));
+        (*gamePieces).emplace_back(GamePiece("Encampment"));
     }
 
     for(int i=0; i<numOfFortresses; i++) {
-        gamePieces.emplace_back(GamePiece("Fortress"));
+        (*gamePieces).emplace_back(GamePiece("Fortress"));
     }
 
     for(int i=0; i<numOfHeroes; i++) {
-        gamePieces.emplace_back(GamePiece("Hero"));
+        (*gamePieces).emplace_back(GamePiece("Hero"));
     }
 
     for(int i=0; i<numOfMountains; i++) {
-        gamePieces.emplace_back(GamePiece("Mountain"));
+        (*gamePieces).emplace_back(GamePiece("Mountain"));
     }
 
     for(int i=0; i<numOfTrollLairs; i++) {
-        gamePieces.emplace_back(GamePiece("Troll Lair"));
+        (*gamePieces).emplace_back(GamePiece("Troll Lair"));
     }
 
     for(int i=0; i<numOfHolesInTheGround; i++) {
-        gamePieces.emplace_back(GamePiece("Hole-in-the-ground"));
+        (*gamePieces).emplace_back(GamePiece("Hole-in-the-ground"));
     }
 
     return gamePieces;

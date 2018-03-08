@@ -59,7 +59,7 @@ void SpecialPowerBadge::giveCoinsToPlayer() {
 }
 
 // Prints a description of all the Power Badges created
-string SpecialPowerBadge::demoSpecialPowerBadges(vector<SpecialPowerBadge> badges) {
+string SpecialPowerBadge::demoSpecialPowerBadges(vector<SpecialPowerBadge>& badges) {
 
     if(badges.empty()) {
         return "ERROR";

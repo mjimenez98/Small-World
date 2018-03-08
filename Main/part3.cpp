@@ -9,9 +9,6 @@ using namespace std;
 
 int main() {
 
-    Map map = loadMap("../textMaps/2Players.txt");
-
-
 
     return 0;
 };

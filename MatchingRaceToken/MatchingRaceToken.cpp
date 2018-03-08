@@ -71,7 +71,7 @@ void MatchingRaceToken::giveCoinsToPlayer() {
 /* Prints a description of all the Matching Race Tokens created.
  *      raceTokens: vector to be described
  *      withTokens: whether the number of tokens should be returned or not */
-string MatchingRaceToken::demoMatchingRaceTokens(vector<MatchingRaceToken> raceTokens, bool withTokens) {
+string MatchingRaceToken::demoMatchingRaceTokens(vector<MatchingRaceToken>& raceTokens, bool withTokens) {
 
     if(raceTokens.empty()) {
         return "ERROR";

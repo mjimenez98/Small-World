@@ -36,9 +36,9 @@ SummarySheet Player::getSummarySheet() {
 
 }
 
-vector<VictoryCoin> Player::getCoins() {
+vector<VictoryCoin>* Player::getCoins() {
 
-    return coins;
+    return &coins;
 
 }
 
@@ -48,7 +48,7 @@ int Player::getTotalCoinsValue() {
 
     int sum = 0;
 
-    for(VictoryCoin coin : getCoins())
+    for(VictoryCoin coin : *getCoins())
         sum += coin.getValue();
 
     return sum;
@@ -373,7 +373,7 @@ string Player::toString() {
 
     description += "\nTokens: " + getRaceBanner().getRaceToken().getType() + ", " +
             to_string(getRaceBanner().getRaceToken().getNumOfTokens()) + "\nBadge: " + getRaceBanner().getPowerBadge().getType() +
-            "\n" + "Victory Coins: " + VictoryCoin::demoVictoryCoins(getCoins()) + "\nDice: roll, " + to_string(dice.roll()) +
+            "\n" + "Victory Coins: " + VictoryCoin::demoVictoryCoins(*getCoins()) + "\nDice: roll, " + to_string(dice.roll()) +
             "\nSummary Sheet: " + to_string(hasSummarySheet());
 
     return description;

@@ -319,19 +319,23 @@ bool checkConnect(Map map)
 }
 
 // Prints a description of the Small World deck
-void demoGame(vector<VictoryCoin>* coins, vector<GamePiece>* gamePieces, vector<LostTribeToken>* lostTribes,
-              vector<FantasyRaceBanner>* raceBanners)
+void demoGame(vector<VictoryCoin>& coins, vector<GamePiece>& gamePieces, vector<LostTribeToken>& lostTribes,
+              vector<FantasyRaceBanner>& raceBanners, vector<MatchingRaceToken>& raceTokens, vector<SpecialPowerBadge>& badges)
 {
 
-    if((*coins).empty() || (*gamePieces).empty() || (*lostTribes).empty() || (*raceBanners).empty()) {
+    if(coins.empty() || gamePieces.empty() || lostTribes.empty() || raceBanners.empty() ||
+            raceTokens.empty() || badges.empty() ) {
         cout << "ERROR" << endl;
     }
     else {
+
         cout << "This Small World game set has:" << endl;
-        cout << VictoryCoin::demoVictoryCoins(*coins) << endl;
-        cout << GamePiece::demoGamePieces(*gamePieces) << endl;
-        cout << LostTribeToken::demoLostTribeTokens(*lostTribes) << endl;
-        cout << FantasyRaceBanner::demoFantasyRaceBanner(*raceBanners);
+        cout << VictoryCoin::demoVictoryCoins(coins) << endl;
+        cout << MatchingRaceToken::demoMatchingRaceTokens(raceTokens, 1) << endl;
+        cout << SpecialPowerBadge::demoSpecialPowerBadges(badges) << endl;
+        cout << GamePiece::demoGamePieces(gamePieces) << endl;
+        cout << LostTribeToken::demoLostTribeTokens(lostTribes) << endl;
+        cout << FantasyRaceBanner::demoFantasyRaceBanner(raceBanners);
     }
 
 }
@@ -341,14 +345,31 @@ void createGame() {
 
     vector<FantasyRaceBanner>* raceBanners = FantasyRaceBanner::createFantasyRaceBanners();
 
-    vector<VictoryCoin> coins = VictoryCoin::createVictoryCoins(ONES, THREES, FIVES, TENS);
+    vector<VictoryCoin>* coins = VictoryCoin::createVictoryCoins(ONES, THREES, FIVES, TENS);
 
-    vector<GamePiece> gamePieces = GamePiece::createGamePieces(DRAGONS, ENCAMPMENTS, FORTRESSES, HEROES, MOUNTAINS, TROLLLAIRS,
+    vector<GamePiece>* gamePieces = GamePiece::createGamePieces(DRAGONS, ENCAMPMENTS, FORTRESSES, HEROES, MOUNTAINS, TROLLLAIRS,
                                                                HOLESINTHEGROUND);
 
-    vector<LostTribeToken> lostTribes = LostTribeToken::createLostTribeTokens(NUMOFLOSTTRIBETOKENS);
+    vector<LostTribeToken>* lostTribes = LostTribeToken::createLostTribeTokens(NUMOFLOSTTRIBETOKENS);
 
-    demoGame(&coins, &gamePieces, &lostTribes, raceBanners);
+    // TEMP for demo purposes
+    vector<MatchingRaceToken>* raceTokens = MatchingRaceToken::createMatchingRaceTokens(AMAZONS_TOKENS, DWARVES_TOKENS,
+                                                                                        ELVES_TOKENS, GHOULS_TOKENS, GIANTS_TOKENS,
+                                                                                        HALFLINGS_TOKENS, HUMANS_TOKENS,
+                                                                                        ORCS_TOKENS, RATMEN_TOKENS, SKELETONS_TOKENS,
+                                                                                        SORCERERS_TOKENS, TRITONS_TOKENS,
+                                                                                        TROLLS_TOKENS, WIZARDS_TOKENS);
+
+    vector<SpecialPowerBadge>* powerBadges = SpecialPowerBadge::createSpecialPowerBadges(ALCHEMIST_TOKENS, BERSERK_TOKENS,
+                                                                                         BIVOUACKING_TOKENS, COMMANDO_TOKENS,
+                                                                                         DIPLOMAT_TOKENS, DRAGONMASTER_TOKENS,
+                                                                                         FLYING_TOKENS, FOREST_TOKENS, FORTIFIED_TOKENS,
+                                                                                         HEROIC_TOKENS, HILL_TOKENS, MERCHANT_TOKENS,
+                                                                                         MOUNTED_TOKENS, PILLAGING_TOKENS, SEAFARING_TOKENS,
+                                                                                         SPIRIT_TOKENS, STOUT_TOKENS, SWAMP_TOKENS,
+                                                                                         UNDERWORLD_TOKENS, WEALTHY_TOKENS);
+
+    demoGame(*coins, *gamePieces, *lostTribes, *raceBanners, *raceTokens, *powerBadges);
 
 }
 

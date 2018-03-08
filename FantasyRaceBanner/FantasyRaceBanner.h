@@ -17,8 +17,7 @@ class FantasyRaceBanner {
 public:
     // Constructors
     FantasyRaceBanner();
-    explicit FantasyRaceBanner(MatchingRaceToken newRaceToken);
-    FantasyRaceBanner(MatchingRaceToken newRaceToken, SpecialPowerBadge newPowerBadge);
+    FantasyRaceBanner(MatchingRaceToken& newRaceToken, SpecialPowerBadge& newPowerBadge);
 
     // Getters
     MatchingRaceToken getRaceToken();
@@ -32,7 +31,7 @@ public:
 
     // Other functions
     bool isTaken();
-    static string demoFantasyRaceBanner(vector<FantasyRaceBanner> raceBanners);
+    static string demoFantasyRaceBanner(vector<FantasyRaceBanner>& raceBanners);
     static vector<FantasyRaceBanner>* createFantasyRaceBanners();
 
 private:

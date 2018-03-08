@@ -19,8 +19,8 @@ public:
     LostTribeToken();
 
     // Other functions
-    static string demoLostTribeTokens(vector<LostTribeToken> lostTribes);
-    static vector<LostTribeToken> createLostTribeTokens(int numOfTokens);
+    static string demoLostTribeTokens(vector<LostTribeToken>& lostTribes);
+    static vector<LostTribeToken>* createLostTribeTokens(int numOfTokens);
 
 };
 

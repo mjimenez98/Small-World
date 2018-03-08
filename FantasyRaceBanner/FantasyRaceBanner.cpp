@@ -10,14 +10,7 @@ FantasyRaceBanner::FantasyRaceBanner() {
 
 }
 
-FantasyRaceBanner::FantasyRaceBanner(MatchingRaceToken newRaceToken) {
-
-    raceToken = newRaceToken;
-    powerBadge = SpecialPowerBadge();
-
-}
-
-FantasyRaceBanner::FantasyRaceBanner(MatchingRaceToken newRaceToken, SpecialPowerBadge newPowerBadge) {
+FantasyRaceBanner::FantasyRaceBanner(MatchingRaceToken& newRaceToken, SpecialPowerBadge& newPowerBadge) {
 
     raceToken = newRaceToken;
     powerBadge = newPowerBadge;
@@ -68,7 +61,7 @@ bool FantasyRaceBanner::isTaken() {
 }
 
 // Prints a description of all the Fantasy Race Banners
-string FantasyRaceBanner::demoFantasyRaceBanner(vector<FantasyRaceBanner> raceBanners) {
+string FantasyRaceBanner::demoFantasyRaceBanner(vector<FantasyRaceBanner>& raceBanners) {
 
     int index = 1;
 

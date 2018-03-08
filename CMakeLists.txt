@@ -19,5 +19,5 @@ add_executable(Small-World
         #Main/part2.cpp
         #Main/part3.cpp
         Main/part4.cpp
-        #Main/part4.cpp
+        #Main/part5.cpp
         )

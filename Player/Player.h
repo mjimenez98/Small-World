@@ -26,7 +26,7 @@ public:
     Dice getDice();
     FantasyRaceBanner getRaceBanner();
     SummarySheet getSummarySheet();
-    vector<VictoryCoin> getCoins();
+    vector<VictoryCoin>* getCoins();
     int getTotalCoinsValue();
 
     // Other functions
