@@ -11,26 +11,26 @@
 using namespace std;
 
 // Tokens to give
-const int ALCHEMISTTOKENS = 4;
-const int BERSERKTOKENS = 4;
-const int BIVOUACKINGTOKENS = 5;
-const int COMMANDOTOKENS = 4;
-const int DIPLOMATTOKENS = 5;
-const int DRAGONMASTERTOKENS = 5;
-const int FLYINGTOKENS = 5;
-const int FORESTTOKENS = 4;
-const int FORTIFIEDTOKENS = 3;
-const int HEROICTOKENS = 5;
-const int HILLTOKENS = 4;
-const int MERCHANTTOKENS = 2;
-const int MOUNTEDTOKENS = 5;
-const int PILLAGINGTOKENS = 5;
-const int SEAFARINGTOKENS = 5;
-const int SPIRITTOKENS = 5;
-const int STOUTTOKENS = 4;
-const int SWAMPTOKENS = 4;
-const int UNDERWORLDTOKENS = 5;
-const int WEALTHYTOKENS = 4;
+const int ALCHEMIST_TOKENS = 4;
+const int BERSERK_TOKENS = 4;
+const int BIVOUACKING_TOKENS = 5;
+const int COMMANDO_TOKENS = 4;
+const int DIPLOMAT_TOKENS = 5;
+const int DRAGONMASTER_TOKENS = 5;
+const int FLYING_TOKENS = 5;
+const int FOREST_TOKENS = 4;
+const int FORTIFIED_TOKENS = 3;
+const int HEROIC_TOKENS = 5;
+const int HILL_TOKENS = 4;
+const int MERCHANT_TOKENS = 2;
+const int MOUNTED_TOKENS = 5;
+const int PILLAGING_TOKENS = 5;
+const int SEAFARING_TOKENS = 5;
+const int SPIRIT_TOKENS = 5;
+const int STOUT_TOKENS = 4;
+const int SWAMP_TOKENS = 4;
+const int UNDERWORLD_TOKENS = 5;
+const int WEALTHY_TOKENS = 4;
 
 class SpecialPowerBadge {
 
@@ -42,12 +42,16 @@ public:
     // Getters
     string getType();
     int getNumOfCoinsToGive();
+    bool isTaken();
+
+    // Setters
+    void setTaken(bool isTaken);
 
     // Other functions
     void activate();
     void giveCoinsToPlayer();
     static string demoSpecialPowerBadges(vector<SpecialPowerBadge> badges);
-    static vector<SpecialPowerBadge> createSpecialPowerBadges(int coinsAlchemist, int coinsBerserk, int coinsBivouack, int coinsCommando,
+    static vector<SpecialPowerBadge>* createSpecialPowerBadges(int coinsAlchemist, int coinsBerserk, int coinsBivouack, int coinsCommando,
         int coinsDiplomat, int coinsDragonMaster, int coinsFlying, int coinsForest, int coinsFortified, int coinsHeroic,
         int coinsHill, int coinsMerchant, int coinsMounted, int coinsPillaging, int coinsSeafaring, int coinsSpirit,
         int coinsStout, int coinsSwamp, int coinsUnderworld, int coinsWealthy);
@@ -55,6 +59,7 @@ public:
 private:
     string type;
     int numOfCoinsToGive;
+    bool taken;
 
 };
 

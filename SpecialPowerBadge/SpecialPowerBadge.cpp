@@ -4,6 +4,10 @@
 
 #include "SpecialPowerBadge.h"
 
+#include <random>   // Default random engine
+#include <chrono>
+#include <algorithm>
+
 SpecialPowerBadge::SpecialPowerBadge() {
 
     type = "";
@@ -27,6 +31,18 @@ string SpecialPowerBadge::getType() {
 int SpecialPowerBadge::getNumOfCoinsToGive() {
 
     return numOfCoinsToGive;
+
+}
+
+bool SpecialPowerBadge::isTaken() {
+
+    return taken;
+
+}
+
+void SpecialPowerBadge::setTaken(bool isTaken) {
+
+    taken = isTaken;
 
 }
 
@@ -67,7 +83,7 @@ string SpecialPowerBadge::demoSpecialPowerBadges(vector<SpecialPowerBadge> badge
 /* Sets up victory coins. The stock version of Small World has Alchemist, Berserk, Bivouack, Commando, Diplomat, Dragon Master,
  * Flying, Forest, Fortified, Heroic, Hill, Merchant, Mounted, Pillaging, Seafaring, Spirit, Stout, Swamp, Underworld and
  * Swamp */
-vector<SpecialPowerBadge> SpecialPowerBadge::createSpecialPowerBadges(int coinsAlchemist, int coinsBerserk, int coinsBivouack,
+vector<SpecialPowerBadge>* SpecialPowerBadge::createSpecialPowerBadges(int coinsAlchemist, int coinsBerserk, int coinsBivouack,
                                                               int coinsCommando, int coinsDiplomat,
                                                               int coinsDragonMaster, int coinsFlying, int coinsForest,
                                                               int coinsFortified, int coinsHeroic, int coinsHill,
@@ -75,28 +91,32 @@ vector<SpecialPowerBadge> SpecialPowerBadge::createSpecialPowerBadges(int coinsA
                                                               int coinsSeafaring, int coinsSpirit, int coinsStout,
                                                               int coinsSwamp, int coinsUnderworld, int coinsWealthy) {
 
-    vector<SpecialPowerBadge> badges;
+    auto * badges = new vector<SpecialPowerBadge>;
 
-    badges.emplace_back(SpecialPowerBadge("Alchemist", coinsAlchemist));
-    badges.emplace_back(SpecialPowerBadge("Berserk", coinsBerserk));
-    badges.emplace_back(SpecialPowerBadge("Bivouack", coinsBivouack));
-    badges.emplace_back(SpecialPowerBadge("Commando", coinsCommando));
-    badges.emplace_back(SpecialPowerBadge("Diplomat", coinsDiplomat));
-    badges.emplace_back(SpecialPowerBadge("Dragon Master", coinsDragonMaster));
-    badges.emplace_back(SpecialPowerBadge("Flying", coinsFlying));
-    badges.emplace_back(SpecialPowerBadge("Forest", coinsForest));
-    badges.emplace_back(SpecialPowerBadge("Fortified", coinsFortified));
-    badges.emplace_back(SpecialPowerBadge("Heroic", coinsHeroic));
-    badges.emplace_back(SpecialPowerBadge("Hill", coinsHill));
-    badges.emplace_back(SpecialPowerBadge("Merchant", coinsMerchant));
-    badges.emplace_back(SpecialPowerBadge("Mounted", coinsMounted));
-    badges.emplace_back(SpecialPowerBadge("Pillaging", coinsPillaging));
-    badges.emplace_back(SpecialPowerBadge("Seafaring", coinsSeafaring));
-    badges.emplace_back(SpecialPowerBadge("Spirit", coinsSpirit));
-    badges.emplace_back(SpecialPowerBadge("Stout", coinsStout));
-    badges.emplace_back(SpecialPowerBadge("Swamp", coinsSwamp));
-    badges.emplace_back(SpecialPowerBadge("Underworld", coinsUnderworld));
-    badges.emplace_back(SpecialPowerBadge("Wealthy", coinsWealthy));
+    (*badges).emplace_back(SpecialPowerBadge("Alchemist", coinsAlchemist));
+    (*badges).emplace_back(SpecialPowerBadge("Berserk", coinsBerserk));
+    (*badges).emplace_back(SpecialPowerBadge("Bivouack", coinsBivouack));
+    (*badges).emplace_back(SpecialPowerBadge("Commando", coinsCommando));
+    (*badges).emplace_back(SpecialPowerBadge("Diplomat", coinsDiplomat));
+    (*badges).emplace_back(SpecialPowerBadge("Dragon Master", coinsDragonMaster));
+    (*badges).emplace_back(SpecialPowerBadge("Flying", coinsFlying));
+    (*badges).emplace_back(SpecialPowerBadge("Forest", coinsForest));
+    (*badges).emplace_back(SpecialPowerBadge("Fortified", coinsFortified));
+    (*badges).emplace_back(SpecialPowerBadge("Heroic", coinsHeroic));
+    (*badges).emplace_back(SpecialPowerBadge("Hill", coinsHill));
+    (*badges).emplace_back(SpecialPowerBadge("Merchant", coinsMerchant));
+    (*badges).emplace_back(SpecialPowerBadge("Mounted", coinsMounted));
+    (*badges).emplace_back(SpecialPowerBadge("Pillaging", coinsPillaging));
+    (*badges).emplace_back(SpecialPowerBadge("Seafaring", coinsSeafaring));
+    (*badges).emplace_back(SpecialPowerBadge("Spirit", coinsSpirit));
+    (*badges).emplace_back(SpecialPowerBadge("Stout", coinsStout));
+    (*badges).emplace_back(SpecialPowerBadge("Swamp", coinsSwamp));
+    (*badges).emplace_back(SpecialPowerBadge("Underworld", coinsUnderworld));
+    (*badges).emplace_back(SpecialPowerBadge("Wealthy", coinsWealthy));
+
+    //Shuffle
+    unsigned seed = chrono::system_clock::now().time_since_epoch().count();
+    shuffle((*badges).begin(), (*badges).end(), std::default_random_engine(seed));
 
     return badges;
 

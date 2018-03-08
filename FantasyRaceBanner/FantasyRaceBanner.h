@@ -28,11 +28,12 @@ public:
     void setRaceToken(MatchingRaceToken newRaceToken);
     void setPowerBadge(SpecialPowerBadge newPowerBadge);
     void setNumOfTokens(int newNumOfTokens);
+    void setTaken(bool isTaken);
 
     // Other functions
+    bool isTaken();
     static string demoFantasyRaceBanner(vector<FantasyRaceBanner> raceBanners);
-    static vector<FantasyRaceBanner> createFantasyRaceBanners(vector<MatchingRaceToken> raceTokens,
-                                                              vector<SpecialPowerBadge> powerBadges);
+    static vector<FantasyRaceBanner>* createFantasyRaceBanners();
 
 private:
     MatchingRaceToken raceToken;

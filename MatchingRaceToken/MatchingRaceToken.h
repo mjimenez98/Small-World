@@ -11,36 +11,36 @@
 using namespace std;
 
 // Number of tokens in the game
-const int AMAZONS = 15;
-const int DWARVES = 8;
-const int ELVES = 11;
-const int GHOULS = 10;
-const int GIANTS = 11;
-const int HALFLINGS = 11;
-const int HUMANS = 10;
-const int ORCS = 10;
-const int RATMEN = 13;
-const int SKELETONS = 20;
-const int SORCERERS = 18;
-const int TRITONS = 11;
-const int TROLLS = 10;
-const int WIZARDS = 10;
+const int AMAZONS_TOKENS = 15;
+const int DWARVES_TOKENS = 8;
+const int ELVES_TOKENS = 11;
+const int GHOULS_TOKENS = 10;
+const int GIANTS_TOKENS = 11;
+const int HALFLINGS_TOKENS = 11;
+const int HUMANS_TOKENS = 10;
+const int ORCS_TOKENS = 10;
+const int RATMEN_TOKENS = 13;
+const int SKELETONS_TOKENS = 20;
+const int SORCERERS_TOKENS = 18;
+const int TRITONS_TOKENS = 11;
+const int TROLLS_TOKENS = 10;
+const int WIZARDS_TOKENS = 10;
 
 // Starting tokens
-const int AMAZONSTART = 6;
-const int DWARFSTART = 3;
-const int ELFSTART = 6;
-const int GHOULSTART = 5;
-const int GIANTSTART = 6;
-const int HALFLINGSTART = 6;
-const int HUMANSTART = 5;
-const int ORCSTART = 5;
-const int RATMANSTART = 8;
-const int SKELETONSTART = 6;
-const int SORCERERSTART = 5;
-const int TRITONSTART = 6;
-const int TROLLSTART = 5;
-const int WIZARDSTART = 5;
+const int AMAZON_COINS = 6;
+const int DWARF_COINS = 3;
+const int ELF_COINS = 6;
+const int GHOUL_COINS = 5;
+const int GIANT_COINS = 6;
+const int HALFLING_COINS = 6;
+const int HUMAN_COINS = 5;
+const int ORC_COINS = 5;
+const int RATMAN_COINS = 8;
+const int SKELETON_COINS = 6;
+const int SORCERER_COINS = 5;
+const int TRITON_COINS = 6;
+const int TROLL_COINS = 5;
+const int WIZARD_COINS = 5;
 
 class MatchingRaceToken {
 
@@ -52,21 +52,24 @@ public:
     // Getters
     string getType();
     int getNumOfTokens();
+    bool isTaken();
 
     // Setters
     void setNumOfTokens(int newNumOfTokens);
+    void setTaken(bool isTaken);
 
     // Other functions
     void activate();
     void giveCoinsToPlayer();
     static string demoMatchingRaceTokens(vector<MatchingRaceToken> raceTokens, bool withTokens);
-    static vector<MatchingRaceToken> createMatchingRaceTokens(int numOfAmazons, int numOfDwarves, int numOfElves, int numOfGhouls,
+    static vector<MatchingRaceToken>* createMatchingRaceTokens(int numOfAmazons, int numOfDwarves, int numOfElves, int numOfGhouls,
         int numOfGiants, int numOfHalflings, int numOfHumans, int numOfOrcs, int numOfRatmen, int numOfSkeletons, int numOfSorcerers,
         int numOfTritons, int numOfTrolls, int numOfWizards);
 
 private:
     string type;
     int numOfTokens;
+    bool taken;
 
 };
 

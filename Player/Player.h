@@ -33,7 +33,7 @@ public:
     string toString();
     //int totalCoinsValue();
     bool hasSummarySheet();
-    void picks_race();
+    void picks_race(vector<FantasyRaceBanner>& availableBanners);
     void firstConquer(Map*map);
     void scores();
 

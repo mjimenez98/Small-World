@@ -10,6 +10,8 @@ using namespace std;
 
 int main() {
 
+    vector<FantasyRaceBanner>* raceBanners = FantasyRaceBanner::createFantasyRaceBanners();
+
     Map map = loadMap("../textMaps/2Players.txt");
 
     auto *gameTurn = new GameTurn();
@@ -21,7 +23,7 @@ int main() {
     cout << endl;
 
     cout << "///  PARTS 2 and 3  ///" << endl;
-    (*player1).picks_race();
+    (*player1).picks_race(*raceBanners);
 
     cout << "///  PART 4  ///" << endl;
     cout << "Regions with Lost Tribes:" << endl;

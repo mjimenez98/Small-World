@@ -4,10 +4,6 @@
 
 #include "Player.h"
 
-#include <random>   // Default random engine
-#include<chrono>
-#include <algorithm>
-
 using namespace std;
 
 Player::Player() {
@@ -70,28 +66,19 @@ bool Player::hasSummarySheet() {
 }
 
 // Allows player to pick a race
-void Player::picks_race() {
+void Player::picks_race(vector<FantasyRaceBanner>& raceBanners) {
 
     int race = -1;
-    unsigned seed = chrono::system_clock::now().time_since_epoch().count();     // For shuffling fantasy banners
+    vector<FantasyRaceBanner> availableBanners;
 
-    vector<MatchingRaceToken> availableTokens = MatchingRaceToken::createMatchingRaceTokens(AMAZONSTART, DWARFSTART,
-         ELFSTART, GHOULSTART, GIANTSTART, HALFLINGSTART, HUMANSTART, ORCSTART, RATMANSTART, SKELETONSTART,
-         SORCERERSTART, TRITONSTART, TROLLSTART, WIZARDSTART);
+    for(FantasyRaceBanner raceBanner : raceBanners) {
 
-    vector<SpecialPowerBadge> availableBadges = SpecialPowerBadge::createSpecialPowerBadges(ALCHEMISTTOKENS, BERSERKTOKENS,
-            BIVOUACKINGTOKENS, COMMANDOTOKENS, DIPLOMATTOKENS, DRAGONMASTERTOKENS, FLYINGTOKENS, FORESTTOKENS, FORTIFIEDTOKENS,
-            HEROICTOKENS, HILLTOKENS, MERCHANTTOKENS, MOUNTEDTOKENS, PILLAGINGTOKENS, SEAFARINGTOKENS, SPIRITTOKENS, STOUTTOKENS,
-            SWAMPTOKENS, UNDERWORLDTOKENS, WEALTHYTOKENS);
+        if(!raceBanner.isTaken())
+            availableBanners.push_back(raceBanner);
 
-    // Game rules only allow the player to pick from 6 options
-    shuffle(availableTokens.begin(), availableTokens.end(), std::default_random_engine(seed));
-    shuffle(availableBadges.begin(), availableBadges.end(), std::default_random_engine(seed));
+    }
 
-    availableTokens.resize(6);
-    availableBadges.resize(6);
-
-    vector<FantasyRaceBanner> availableBanners = FantasyRaceBanner::createFantasyRaceBanners(availableTokens, availableBadges);
+    availableBanners.resize(6);
 
     cout << "Pick a race by writing in the number you prefer" << endl;
     cout << FantasyRaceBanner::demoFantasyRaceBanner(availableBanners) << endl;
@@ -112,8 +99,10 @@ void Player::picks_race() {
     // To be fixed. Broken because
     //setCoins(coins.getValue()-(race-1));
 
+    // Set the player's race banner
     raceBanner.setRaceToken(availableBanners[race-1].getRaceToken());
     raceBanner.setPowerBadge(availableBanners[race-1].getPowerBadge());
+    raceBanners[race-1].setTaken(true);
 
     //Number of starting tokens = number on race + number on badge
     raceBanner.setNumOfTokens(raceBanner.getRaceToken().getNumOfTokens()+raceBanner.getPowerBadge().getNumOfCoinsToGive());
@@ -122,8 +111,6 @@ void Player::picks_race() {
          getRaceBanner().getRaceToken().getType() << endl << endl;
 
 }
-
-
 
 // Allows the player to conquer regions by using their race tokens, on the first turn of the game
 void Player::firstConquer(Map*map) {
