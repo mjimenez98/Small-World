@@ -41,6 +41,7 @@ public:
     bool hasSummarySheet();
     void picks_race(vector<FantasyRaceBanner>& availableBanners);
     void firstConquer(Map*map);
+    void redeploy(Map*map);
     void scores();
 
 private:
