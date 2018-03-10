@@ -35,6 +35,7 @@ public:
     bool hasSummarySheet();
     void picks_race();
     void firstConquer(Map*map);
+    void redeploy(Map*map);
     void scores();
 
 private:

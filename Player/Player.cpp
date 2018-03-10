@@ -98,7 +98,7 @@ void Player::picks_race() {
 
     do {
 
-        cout << "Race: ";
+        cout << "Race: "<<flush;
         cin >> race;
 
         if(race < 1 || race > availableBanners.size()) {
@@ -216,7 +216,7 @@ void Player::firstConquer(Map*map) {
 
             cout<< "Now you may conquer regions adjacent to the ones you own."<<endl;
 
-    {
+
         //all regions the player can pick
         vector<int> adjRegions;
 
@@ -302,9 +302,9 @@ void Player::firstConquer(Map*map) {
 
                         cout << "You rolled a " << roll << endl;
 
-                        if (raceBanner.getRaceToken().getNumOfTokens() < (map->getTokens(regionSelection) + 2)) {
+                        if (raceBanner.getRaceToken().getNumOfTokens() + roll < (map->getTokens(regionSelection))+2) {
                             cout << "You did not roll enough to conquer the region" << endl;
-                            break;
+                            return;
                         } else
                         {
                             cout << "This was enough to conquer the region" << endl;
@@ -323,6 +323,8 @@ void Player::firstConquer(Map*map) {
                             if (map->hasMountains(regionSelection))
                                 ++tokenAmmount;
                             map->setTokens(regionSelection, tokenAmmount);
+
+                            return;
 
                         }
                     }
@@ -361,10 +363,120 @@ void Player::firstConquer(Map*map) {
             } else {
 
                 cout << "You have no tokens left" << endl;
+
             }
 
         }
+
+}
+
+void Player::redeploy(Map*map)
+{
+    char redeploy;
+
+    //ask player if they want to redeploy
+    while(redeploy!='y'&& redeploy!='n') {
+
+        cout << "Would you like to re-arrange your tokens?(y/n)" << endl;
+        cin >> redeploy;
+        tolower(redeploy);//makes input lower case
+        if (redeploy != 'y' && redeploy != 'n')//make sure input is valid
+        {
+            cout << "Invalid input, enter 'y' or 'n'."<<endl;
+            continue;
+        }
+        if(redeploy=='n')
+            return;
     }
+
+
+    cout<<"You may now re-arrange your tokens "<< endl;
+
+    int regionRedeploy;
+
+    //let player choose a region to remove tokens from
+    do {
+        cout << "Your regions are:" << endl;
+
+        for (int j = 0; j < this->regions.size(); ++j) {
+            cout << "Region " << this->regions[j] << endl;
+        }
+
+        cout << "Select a region to remove tokens from." << endl;
+        cin >> regionRedeploy;
+
+        //check if chosen value is owned by the player
+        if (!(std::find(this->regions.begin(), this->regions.end(), regionRedeploy) != this->regions.end()))
+        {
+            cout<<"You do not own this region"<<endl;
+        }
+    }while(!(std::find(this->regions.begin(), this->regions.end(), regionRedeploy) != this->regions.end()));
+
+    cout<<"This region has "<<map->getTokens(regionRedeploy)<<" tokens on it"<<endl;
+
+    int tokenNumber;
+
+    //let player choose how many tokens to remove
+    do{
+        cout<<"How many tokens would you like to remove?"<<endl;
+        cin>>tokenNumber;
+
+        if((tokenNumber<0 || tokenNumber >= map->getTokens(regionRedeploy)))
+        {
+            cout<<"You must leave at least one token on the region"<<endl;
+        }
+
+    }while(tokenNumber<0 || tokenNumber>= map->getTokens(regionRedeploy));
+
+    //remove tokens
+    map->setTokens(regionRedeploy,map->getTokens(regionRedeploy)-tokenNumber);
+
+
+    //let player place removed tokens
+    do{
+        cout<<"You now have "<< tokenNumber<<" tokens to place"<<endl;
+
+        //make sure they ony place tokens on owned regions
+
+        do {
+            cout<<"Your regions are:"<<endl;
+
+            for (int j = 0; j < this->regions.size(); ++j) {
+                cout << "Region " << this->regions[j] << endl;
+            }
+
+            cout << "Which region would you like to place tokens on?" << endl;
+            cin >> regionRedeploy;
+
+            if(!(std::find(this->regions.begin(), this->regions.end(), regionRedeploy) != this->regions.end()))
+            {
+                cout<<"This is not your region"<<endl;
+            }
+
+        }while(!(std::find(this->regions.begin(), this->regions.end(), regionRedeploy) != this->regions.end()));
+
+       //number of tokens to place on the region.
+        int tokenPlacement;
+
+        do{
+            cout<<"You have "<< tokenNumber << " tokens left to place"<<endl;
+            cout<<"How many tokens would you like to place?"<<endl;
+            cin>>tokenPlacement;
+
+            if(tokenPlacement>tokenNumber)
+            {
+                cout<<"You do not have this many tokens to place"<<endl;
+            }
+        }while(tokenPlacement>tokenNumber);
+
+        map->addTokens(regionRedeploy,tokenPlacement);
+
+        tokenNumber -= tokenPlacement;
+
+
+    }while(tokenNumber>0);
+
+
 }
 
 // Awards player 1 coin for every region they possess

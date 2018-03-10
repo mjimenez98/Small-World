@@ -19,6 +19,7 @@ int main() {
 
     p1.picks_race();
     p1.firstConquer(map);
+    p1.redeploy(map);
     p1.scores();
 
     cout << p1.toString();
