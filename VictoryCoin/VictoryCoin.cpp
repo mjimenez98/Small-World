@@ -51,7 +51,7 @@ string printCoins(vector<VictoryCoin> coins, vector<int> positions) {
 }
 
 // Prints a description of all the Victory Coins created
-string VictoryCoin::demoVictoryCoins(vector<VictoryCoin> coins) {
+string VictoryCoin::demoVictoryCoins(vector<VictoryCoin>& coins) {
 
     if(coins.empty()) {
         return "ERROR";
@@ -74,24 +74,24 @@ string VictoryCoin::demoVictoryCoins(vector<VictoryCoin> coins) {
 }
 
 // Sets up victory coins. The stock version of Small World has 35 1's, 20 3's, 24 5's and 30 10's
-vector<VictoryCoin> VictoryCoin::createVictoryCoins(int numOfOnes, int numOfThrees, int numOfFives, int numOfTens) {
+vector<VictoryCoin>* VictoryCoin::createVictoryCoins(int numOfOnes, int numOfThrees, int numOfFives, int numOfTens) {
 
-    vector<VictoryCoin> coins;
+    auto * coins = new vector<VictoryCoin>;
 
     for(int i=0; i<numOfOnes; i++) {
-        coins.emplace_back(VictoryCoin(1));
+        (*coins).emplace_back(VictoryCoin(1));
     }
 
     for(int i=0; i<numOfThrees; i++) {
-        coins.emplace_back(VictoryCoin(3));
+        (*coins).emplace_back(VictoryCoin(3));
     }
 
     for(int i=0; i<numOfFives; i++) {
-        coins.emplace_back(VictoryCoin(5));
+        (*coins).emplace_back(VictoryCoin(5));
     }
 
     for(int i=0; i<numOfTens; i++) {
-        coins.emplace_back(VictoryCoin(10));
+        (*coins).emplace_back(VictoryCoin(10));
     }
 
     return coins;

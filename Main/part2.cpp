@@ -2,13 +2,15 @@
 // Created by Miguel Jimenez on 3/1/18.
 //
 
-#include "GameTurn.h"
+#include "../GameTurn/GameTurn.h"
 #include "../Player/Player.h"
 #include "../VictoryCoin/VictoryCoin.h"
 
 using namespace std;
 
 int main() {
+
+    vector<FantasyRaceBanner>* raceBanners = FantasyRaceBanner::createFantasyRaceBanners();
 
     Map map = loadMap("../textMaps/2Players.txt");
 
@@ -21,7 +23,7 @@ int main() {
     cout << endl;
 
     cout << "///  PARTS 2 and 3  ///" << endl;
-    (*player1).picks_race();
+    (*player1).picks_race(*raceBanners);
 
     cout << "///  PART 4  ///" << endl;
     cout << "Regions with Lost Tribes:" << endl;
@@ -47,7 +49,7 @@ int main() {
 
     // When each player is created, 5 coins of value 1 are automatically given. See Player().
     cout << "///  PART 6  ///" << endl;
-    cout << VictoryCoin::demoVictoryCoins(player1->getCoins());
+    cout << VictoryCoin::demoVictoryCoins(*player1->getCoins());
 
     return 0;
 

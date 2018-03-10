@@ -30,8 +30,8 @@ public:
     string getType();
 
     // Other functions
-    static string demoGamePieces(vector<GamePiece> gamePieces);
-    static vector<GamePiece> createGamePieces(int numOfDragons, int numOfEncampments, int numOfFortresses, int numOfHeroes,
+    static string demoGamePieces(vector<GamePiece>& gamePieces);
+    static vector<GamePiece>* createGamePieces(int numOfDragons, int numOfEncampments, int numOfFortresses, int numOfHeroes,
                                       int numOfMountains, int numOfTrollLairs, int numOfHolesInTheGround);
 
 private:

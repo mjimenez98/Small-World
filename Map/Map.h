@@ -1,7 +1,9 @@
 #pragma once
 
+#include "../FantasyRaceBanner/FantasyRaceBanner.h"
 #include "../LostTribeToken/LostTribeToken.h"
 #include "../GamePiece/GamePiece.h"
+#include "../VictoryCoin/VictoryCoin.h"
 
 #include <string>
 
@@ -12,13 +14,15 @@ class Map
 
 public:
 	// Constructors
-	Map(int newNumOfRegions);
+    Map();
+    explicit Map(int newNumOfRegions);
 
 	// Getters
 	int getNumOfRegions();
 	int getTokens(int region);
 	string getRegionPlayer(int region);
 	char getRegionType(int region);
+	string getTokensType(int region);
 
 	// Setters
 	void setCavern(int region, bool state);
@@ -28,7 +32,9 @@ public:
 	void setMagic(int region, bool state);
 	void setRegionPlayer(int region, string player);
 	void setRegionType(int region, char type);
-	void setTokens(int, int);
+	void setTokensType(string type, int region);
+	void setTokens(int region, int tokens);
+	void addTokens(int region, int tokens);
 
 	// Is
 	bool isCavern(int region);
@@ -38,13 +44,14 @@ public:
 	bool isMine(int region);
 
 	// Has
+	bool hasFortress(int region);
 	bool hasMountains(int region);
 	bool hasLostTribes(int region);
 
 	// Other functions
 	void addEdge(int region1, int region2);
 
-	// Deconstructors
+	// Destructor
 	~Map();
 
 private:
@@ -57,3 +64,4 @@ private:
 
 Map loadMap(string mapName);
 bool checkConnect(Map);
+void createGame();
