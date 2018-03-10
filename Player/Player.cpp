@@ -146,6 +146,7 @@ void Player::picks_race(vector<FantasyRaceBanner>& raceBanners) {
 // Allows the player to conquer regions by using their race tokens, on the first turn of the game
 void Player::firstConquer(Map*map) {
 
+    // NOTE: Must be set later in this function when player conquers
     setNonEmptyRegionsConqueredInTurn(0);
 
     //keep track of how many regions the player is picking
