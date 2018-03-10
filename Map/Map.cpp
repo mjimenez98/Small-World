@@ -11,13 +11,14 @@ using namespace std;
 struct Map::Region {
 
     int tokens =0;
+    string token_type;
     string player;
     char regionType;
     /* H = hill
-     * W = Water
-     * S = Swamp
-     * F = field
-     * T = trees
+     * W = sea
+     * S = swamp
+     * F = farmland
+     * T = forest
      * M = mountain
     */
 
@@ -54,6 +55,11 @@ char Map::getRegionType(int region)
 int Map::getTokens(int region)
 {
     return regions[region].tokens;
+}
+
+string Map::getTokensType(int region)
+{
+    return regions[region].token_type;
 }
 
 string Map::getRegionPlayer(int region)
@@ -105,17 +111,21 @@ void Map::setRegionType(int region, char type)
         regions[region].gamePiece = new GamePiece("Mountain");
 }
 
-void Map::setTokens(int n,int tokens)
+void Map::setTokensType(string type, int region)
 {
-    regions[n].tokens = tokens;
+    regions[region].token_type = type;
+}
+
+void Map::setTokens(int region, int tokens)
+{
+    regions[region].tokens = tokens;
 }
 
 //add tokens to current amount of tokens
-void Map::addTokens(int n,int tokens)
+void Map::addTokens(int region, int tokens)
 {
-    regions[n].tokens += tokens;
+    regions[region].tokens += tokens;
 }
-
 
 // Is
 bool Map::isCavern(int region)
@@ -155,6 +165,15 @@ bool Map::hasLostTribes(int region)
     if(regions[region].lostTribeToken != nullptr) {
         return true;
     }
+    return false;
+}
+
+bool Map::hasFortress(int region)
+{
+    if(regions[region].gamePiece != nullptr && regions[region].gamePiece->getType() == "Fortress") {
+        return true;
+    }
+
     return false;
 }
 

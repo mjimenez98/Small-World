@@ -7,6 +7,7 @@
 
 #include "../Dice/Dice.h"
 #include "../FantasyRaceBanner/FantasyRaceBanner.h"
+#include "../GameTurn/GameTurn.h"
 #include "../Map/Map.h"
 #include "../SummarySheet/SummarySheet.h"
 #include "../VictoryCoin/VictoryCoin.h"
@@ -21,6 +22,8 @@ class Player {
 public:
     // Constructors
     Player();
+    explicit Player(Map& gameMap);
+    Player(Map& gameMap, GameTurn& gameTurn);
 
     // Getters
     Dice getDice();
@@ -28,6 +31,10 @@ public:
     SummarySheet getSummarySheet();
     vector<VictoryCoin>* getCoins();
     int getTotalCoinsValue();
+    int getNonEmptyRegionsConqueredInTurn();
+
+    // Setters
+    void setNonEmptyRegionsConqueredInTurn(int newNonEmptyRegionsConqueredInTurn);
 
     // Other functions
     string toString();
@@ -37,15 +44,20 @@ public:
     void scores();
 
 private:
+    Map* map;
+    GameTurn* turn;
     Dice dice;
     FantasyRaceBanner raceBanner;
     vector<int> regions;
     SummarySheet summarySheet;
     vector<VictoryCoin> coins;
 
+    int nonEmptyRegionsConqueredInTurn;
+
     int giveBadgeCoins();
     int giveRaceCoins();
     void distributeCoins(int toBeAwarded);
+    vector<int> getRegionsWithType(char type);
 
 };
 

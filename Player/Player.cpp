@@ -13,6 +13,28 @@ Player::Player() {
     raceBanner = FantasyRaceBanner();
     summarySheet = SummarySheet();
     coins = vector<VictoryCoin>();
+    map = nullptr;
+
+}
+
+Player::Player(Map& gameMap) {
+
+    dice = Dice();
+    raceBanner = FantasyRaceBanner();
+    summarySheet = SummarySheet();
+    coins = vector<VictoryCoin>();
+    (*map) = gameMap;
+
+}
+
+Player::Player(Map& gameMap, GameTurn& gameTurn) {
+
+    dice = Dice();
+    raceBanner = FantasyRaceBanner();
+    summarySheet = SummarySheet();
+    coins = vector<VictoryCoin>();
+    (*map) = gameMap;
+    (*turn) = gameTurn;
 
 }
 
@@ -49,6 +71,18 @@ int Player::getTotalCoinsValue() {
         sum += coin.getValue();
 
     return sum;
+
+}
+
+int Player::getNonEmptyRegionsConqueredInTurn() {
+
+    return nonEmptyRegionsConqueredInTurn;
+
+}
+
+void Player::setNonEmptyRegionsConqueredInTurn(int newNonEmptyRegionsConqueredInTurn) {
+
+    nonEmptyRegionsConqueredInTurn = newNonEmptyRegionsConqueredInTurn;
 
 }
 
@@ -112,6 +146,8 @@ void Player::picks_race(vector<FantasyRaceBanner>& raceBanners) {
 // Allows the player to conquer regions by using their race tokens, on the first turn of the game
 void Player::firstConquer(Map*map) {
 
+    setNonEmptyRegionsConqueredInTurn(0);
+
     //keep track of how many regions the player is picking
         int regionTotal = 0;
 
@@ -121,6 +157,7 @@ void Player::firstConquer(Map*map) {
 
             vector<int> availableRegions;
 
+            // Display region options
             for (int i = 0; i < map->getNumOfRegions(); i++) {
 
                 if (map->isExterior(i)) {
@@ -191,6 +228,7 @@ void Player::firstConquer(Map*map) {
                     if(map->hasMountains(regionSelection))
                         ++tokenAmount;
                     map->setTokens(regionSelection, tokenAmount);
+                    map->setTokensType(raceBanner.getRaceToken().getType(), regionSelection);
 
                 } else {
 
@@ -376,53 +414,100 @@ void Player::distributeCoins(int toBeAwarded) {
 
 }
 
+// Returns a vector containing the regions with terrain @param type that are owned by the player
+vector<int> Player::getRegionsWithType(char type) {
+
+    vector<int> regionsWithType;
+
+    for(int region : regions) {
+
+        if((*map).getRegionType(region) == type)
+            regionsWithType.push_back(region);
+
+    }
+
+    return regionsWithType;
+
+}
+
 // Give Victory Coins to player determined by the Matching Race
 int Player::giveRaceCoins() {
 
     // NOTE: could be done with switch and enum instead of string. Revise for a future release.
-    if(raceBanner.getRaceToken().getType() == "Dwarves")
-        return 0;   // Each mine region occupied by dwarves
+
+    if(raceBanner.getRaceToken().getType() == "Dwarves") {
+
+        int minesWithDwarves = 0;
+
+        // Each mine region occupied by dwarves
+        for(int region : regions) {
+
+            if((*map).isMine(region) && (*map).getTokensType(region) == "Dwarves")
+                minesWithDwarves++;
+
+        }
+
+        return minesWithDwarves;
+
+    }
     else if(raceBanner.getRaceToken().getType() == "Humans")
-        return 0; // 1 bonus victory coin for every farmland region
+        return (int) getRegionsWithType('F').size();    // 1 bonus victory coin for every farmland region
     else if(raceBanner.getRaceToken().getType() == "Orcs")
-        return 0; // Each not empty Region your Orcs conquered this turn is worth 1 bonus Victory coin
-    else if(raceBanner.getRaceToken().getType() == "Wizards")
-        return 0; // Each Magic Region your Wizards occupy is worth 1 bonus Victory coin
-    else
-        return 0;
+        return getNonEmptyRegionsConqueredInTurn();     // Each not-empty conquered by orcs in this turn is worth 1 coin
+    else if(raceBanner.getRaceToken().getType() == "Wizards") {
+
+        int magicWithWizards = 0;
+
+        // Each Magic Region your Wizards occupy is worth 1 bonus Victory coin
+        for(int region : regions) {
+
+            if((*map).isMine(region) && (*map).getTokensType(region) == "Wizards")
+                magicWithWizards++;
+
+        }
+
+        return magicWithWizards;
+
+    }
+    return 0;
 }
 
 // Give Victory Coins to player determined by the Special Power Badge
 int Player::giveBadgeCoins() {
 
     // NOTE: could be done with switch and enum instead of string. Revise for a future release.
+
     if(raceBanner.getPowerBadge().getType() == "Alchemist")
         return 2;
     else if(raceBanner.getPowerBadge().getType() == "Forest")
-        return 0; // 1 bonus victory coin for every forest region
-    else if(raceBanner.getPowerBadge().getType() == "Fortified")
-        return 0;   // 1 if player has a fortress
-    else if(raceBanner.getPowerBadge().getType() == "Hill")
-        return 0; // 1 bonus victory coin for every hill region
-    else if(raceBanner.getPowerBadge().getType() == "Merchant") {
+        return (int) getRegionsWithType('T').size();     // 1 bonus victory coin for every forest region
+    else if(raceBanner.getPowerBadge().getType() == "Fortified") {
 
-        // If player has at least 1 region
-        if (regions.size() > 0)
-            return 1;
+        // 1 coin if player has a fortress
+        for(int region : regions) {
+
+            if((*map).hasFortress(region))
+                return 1;
+
+        }
         return 0;
 
     }
+    else if(raceBanner.getPowerBadge().getType() == "Hill")
+        return (int) getRegionsWithType('H').size();     // 1 bonus victory coin for every hill region
+    else if(raceBanner.getPowerBadge().getType() == "Merchant")
+        return (int) regions.size();                     // 1 for every region
     else if(raceBanner.getPowerBadge().getType() == "Pillaging")
-        return 0; // 1 bonus Victory Coin for every non-empty conquered region in this turn
+        return getNonEmptyRegionsConqueredInTurn();      // 1 bonus Victory Coin for every non-empty conquered region in this turn
     else if(raceBanner.getPowerBadge().getType() == "Swamp")
-        return 0; // 1 bonus victory coin for every swamp region
+        return (int) getRegionsWithType('S').size();     // 1 bonus victory coin for every swamp region
     else if(raceBanner.getPowerBadge().getType() == "Wealthy") {
 
         // If it is the first turn
-        if(1)
+        if((*turn).getTurn() == 1)
             return 7;
-        else
-            return 0;
+
+        return 0;
 
     }
     return 0;
@@ -440,8 +525,8 @@ void Player::scores() {
     // Special Power
     distributeCoins(giveBadgeCoins());
 
-    // Special Power
-    distributeCoins(giveBadgeCoins());
+    // Race Power
+    distributeCoins(giveRaceCoins());
 
     cout << "Player has been awarded " << to_string(getTotalCoinsValue()-oldScore) << " coins\n" << endl;
 

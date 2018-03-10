@@ -15,13 +15,14 @@ class Map
 public:
 	// Constructors
     Map();
-    Map(int newNumOfRegions);
+    explicit Map(int newNumOfRegions);
 
 	// Getters
 	int getNumOfRegions();
 	int getTokens(int region);
 	string getRegionPlayer(int region);
 	char getRegionType(int region);
+	string getTokensType(int region);
 
 	// Setters
 	void setCavern(int region, bool state);
@@ -31,8 +32,9 @@ public:
 	void setMagic(int region, bool state);
 	void setRegionPlayer(int region, string player);
 	void setRegionType(int region, char type);
-	void setTokens(int, int);
-	void addTokens(int,int);
+	void setTokensType(string type, int region);
+	void setTokens(int region, int tokens);
+	void addTokens(int region, int tokens);
 
 	// Is
 	bool isCavern(int region);
@@ -42,6 +44,7 @@ public:
 	bool isMine(int region);
 
 	// Has
+	bool hasFortress(int region);
 	bool hasMountains(int region);
 	bool hasLostTribes(int region);
 
