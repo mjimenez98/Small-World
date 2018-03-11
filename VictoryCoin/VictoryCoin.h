@@ -30,7 +30,6 @@ public:
     void setValue(int newValue);
 
     // Other functions
-    void givePlayerCoins();
     static string demoVictoryCoins(vector<VictoryCoin>& coins);
     static vector<VictoryCoin>* createVictoryCoins(int numOfOnes, int numOfThrees, int numOfFives, int numOfTens);
 

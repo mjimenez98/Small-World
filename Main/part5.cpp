@@ -11,6 +11,7 @@ int main() {
 
     Map m1 = loadMap("../textMaps/2Players.txt");
     Map* map = &m1;
+    GameTurn* gameTurn = new GameTurn();
 
     vector<FantasyRaceBanner>* raceBanners = FantasyRaceBanner::createFantasyRaceBanners();
 
@@ -22,6 +23,9 @@ int main() {
     p1.scores();
 
     cout << p1.toString();
+
+    gameTurn->setTurn(gameTurn->getTurn()+1);
+    delete gameTurn;
 
     return 0;
 };

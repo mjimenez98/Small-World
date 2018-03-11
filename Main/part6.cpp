@@ -21,6 +21,7 @@ int main() {
 
     cout << p1.toString();
 
+    gameTurn->setTurn(gameTurn->getTurn()+1);
     delete gameTurn;
 
     return 0;

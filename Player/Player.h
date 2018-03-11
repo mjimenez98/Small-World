@@ -58,6 +58,7 @@ private:
     int giveBadgeCoins();
     int giveRaceCoins();
     void distributeCoins(int toBeAwarded);
+    void finalizeConquer(int regionSelection, int tokenSelection);
     vector<int> getRegionsWithType(char type);
 
 };

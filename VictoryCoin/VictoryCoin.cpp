@@ -28,47 +28,45 @@ void VictoryCoin::setValue(int newValue) {
 
 }
 
-void VictoryCoin::givePlayerCoins() {
-
-    // TBD
-
-}
-
-// Helper method to print and demonstrate different Victory Coins and their values
-string printCoins(vector<VictoryCoin> coins, vector<int> positions) {
-
-    string demo;
-    int previous = 0;
-
-    for(int position : positions) {
-        demo += "\n- " + to_string(position-previous) + " of value " + to_string(coins[position-1].getValue());
-        previous = position;
-    }
-    demo += "\n";
-
-    return demo;
-
-}
-
 // Prints a description of all the Victory Coins created
 string VictoryCoin::demoVictoryCoins(vector<VictoryCoin>& coins) {
 
     if(coins.empty()) {
-        return "ERROR";
+        return "ERROR: no coins";
     }
     else {
-        vector<int> positions;
 
-        for(int i=1; i<coins.size(); i++) {
+        int ones = 0;
+        int threes = 0;
+        int fives = 0;
+        int tens = 0;
+        string demo = "Victory Coins:\n";
 
-            if(coins[i].getValue() != coins[i-1].getValue()) {
-                positions.push_back(i);
+        for(VictoryCoin coin : coins) {
+
+            switch(coin.getValue()) {
+
+                case 1: ones++; break;
+                case 3: threes++; break;
+                case 5: fives++; break;
+                case 10: tens++; break;
+                default: break;
+
             }
 
         }
-        positions.push_back((int) coins.size());
 
-        return "Victory Coins:" + printCoins(coins, positions);
+        if(tens > 0)
+            demo += "- " + to_string(tens) + " of value 10\n";
+        if(fives > 0)
+            demo += "- " + to_string(fives) + " of value 5\n";
+        if(threes > 0)
+            demo += "- " + to_string(threes) + " of value 3\n";
+        if(ones > 0)
+            demo += "- " + to_string(ones) + " of value 1\n";
+
+        return demo;
+
     }
 
 }
