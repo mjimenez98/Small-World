@@ -3,7 +3,6 @@
 //
 
 #include "MainLoop.h"
-#include <iostream>
 
 void  MainLoop::playGame()
 {

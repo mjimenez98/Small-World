@@ -500,6 +500,8 @@ void Player::redeploy(Map*map)
 
 void Player::distributeCoins(int toBeAwarded) {
 
+    // NOTE: BROKEN, to be fixed.
+
     while(toBeAwarded > 0) {
 
         if(toBeAwarded > 10 && toBeAwarded % 10 < 10) {

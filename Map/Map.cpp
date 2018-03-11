@@ -312,6 +312,9 @@ Map loadMap(string mapName)
 //check if map is connected
 bool checkConnect(Map map)
 {
+
+    // NOTE: To be completed. Traverse the graph and make sure all the regions are connected.
+
     int size = map.getNumOfRegions();
     // Mark all the vertices as not visited
     int *visited = new int[size];
