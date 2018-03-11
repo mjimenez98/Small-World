@@ -19,7 +19,7 @@ FantasyRaceBanner::FantasyRaceBanner(MatchingRaceToken& newRaceToken, SpecialPow
 
 MatchingRaceToken FantasyRaceBanner::getRaceToken() {
 
-    return raceToken;
+    return  raceToken;
 
 }
 

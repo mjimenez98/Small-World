@@ -2,7 +2,12 @@
 // Created by Miguel Jimenez on 2/4/18.
 //
 
+#include <limits>
 #include "Player.h"
+#include <random>   // Default random engine
+#include<chrono>
+#include <algorithm>
+#include <iostream>
 #include "../GameTurn/GameTurn.h"
 
 using namespace std;
@@ -18,13 +23,13 @@ Player::Player() {
 
 }
 
-Player::Player(Map& gameMap) {
+Player::Player(Map* gameMap) {
 
     dice = Dice();
     raceBanner = FantasyRaceBanner();
     summarySheet = SummarySheet();
     coins = vector<VictoryCoin>();
-    map = &gameMap;
+    map = gameMap;
 
 }
 
@@ -168,89 +173,13 @@ void Player::finalizeConquer(int regionSelection, int tokenSelection) {
     //The lost tribes do not stay if a player conquer
     map->setTokens(regionSelection, tokenAmount);
 
-    cout << "Your conquer on this turn has ended!" << endl << endl;
 
 }
 
-// Allows the player to conquer regions by using their race tokens, on the first turn of the game
-void Player::firstConquer(Map*map) {
-
-    // NOTE: Lost tribes are being checked by region.tokens. LosTribeToken class should be used instead for a future release.
-
-    setNonEmptyRegionsConqueredInTurn(0);
-    vector<int> availableRegions;
-
-    int regionSelection = -1;
-    int tokenSelection = -1;
-
-
-    // INTRODUCTION AND DISPLAY OF REGIONS
-
-    cout << "It is time for you to conquer!\n" <<
-            "The first region you pick must be at the edge of the board or an external sea." <<
-            "\nThese are your options:" << endl;
-
-    // Display exterior regions
-    for (int i = 0; i < map->getNumOfRegions(); i++) {
-
-        if (map->isExterior(i)) {
-            availableRegions.push_back(i);
-            cout << "Region " + to_string(i) + ", " + map->getRegionType(i)
-                 <<", "<<map->getTokens(i)<<" tokens"<<endl;
-        }
-
-    }
-    cout << "\nRegions require 2 tokens to conquer, plus 1 for every token they currently have." << endl << endl << endl;
-
-
-    // FIRST REGION SELECTION AND TOKEN PLACEMENT
-
-    cout << "You have " << raceBanner.getRaceToken().getNumOfTokens() << " tokens" << endl;
-
-    // If player has tokens available
-    if (raceBanner.getRaceToken().getNumOfTokens() > 0) {
-
-        // Check for a valid region selection. For first turn, selection must be a region at the edge or an external sea.
-        do {
-
-            cout << "Pick a region" << endl;
-            cin >> regionSelection;
-            cout << "Region " + to_string(regionSelection) + ": ";
-
-            if (!map->isExterior(regionSelection)) {
-                cout << "Invalid input. Number must belong to one of the options" << endl;
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            }
-
-        } while (!map->isExterior(regionSelection));
-
-        // Check for a valid token selection
-        do {
-
-            cout << "You have " + to_string(raceBanner.getRaceToken().getNumOfTokens()) + " tokens left" << endl;
-            cout << "This region has " << map->getTokens(regionSelection) << " token(s) on it." << endl;
-            cout << "How many would you like to place on this region? ";
-            cin >> tokenSelection;
-
-            if (tokenSelection < 0 || tokenSelection > raceBanner.getRaceToken().getNumOfTokens()
-                || tokenSelection<(map->getTokens(regionSelection)+2)) {
-                cout << "Invalid input. You need 2 tokens plus the number of tokens on the region to conquer." << endl;
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            }
-
-        } while (tokenSelection < 0 || tokenSelection > raceBanner.getRaceToken().getNumOfTokens()
-                 ||tokenSelection<(map->getTokens(regionSelection)+2));
-
-        cout << endl;
-
-        finalizeConquer(regionSelection, tokenSelection);
-
-    } else
-        cout << "You have no tokens left" << endl;
-
-
+void Player::conquer()
+{
+    int regionSelection;
+    int tokenSelection;
     // CONQUER ADJACENT REGIONS
 
     if (raceBanner.getRaceToken().getNumOfTokens() > 0) {
@@ -273,7 +202,7 @@ void Player::firstConquer(Map*map) {
                     cout << "Here are your options" << endl;
 
                     //if previous chosen value is in list of adjacent regions, remove it
-                    if ((find(adjRegions.begin(), adjRegions.end(), regionSelection) != adjRegions.end()))
+                    if (find(adjRegions.begin(), adjRegions.end(), regionSelection) != adjRegions.end())
                         adjRegions.erase(remove(adjRegions.begin(), adjRegions.end(), regionSelection),
                                          adjRegions.end());
 
@@ -368,8 +297,9 @@ void Player::firstConquer(Map*map) {
                 cout << endl;
                 finalizeConquer(regionSelection, tokenSelection);
 
-            } else
+            } else {
                 cout << "You have no tokens left" << endl;
+            }
 
         }
 
@@ -377,9 +307,93 @@ void Player::firstConquer(Map*map) {
 
 }
 
-void Player::redeploy(Map*map)
+// Allows the player to conquer regions by using their race tokens, on the first turn of the game
+void Player::firstConquer() {
+
+    // NOTE: Lost tribes are being checked by region.tokens. LosTribeToken class should be used instead for a future release.
+
+    setNonEmptyRegionsConqueredInTurn(0);
+    vector<int> availableRegions;
+
+    int regionSelection = -1;
+    int tokenSelection = -1;
+
+
+    // INTRODUCTION AND DISPLAY OF REGIONS
+
+    cout << "It is time for you to conquer!\n" <<
+            "The first region you pick must be at the edge of the board or an external sea." <<
+            "\nThese are your options:" << endl;
+
+    // Display exterior regions
+    for (int i = 0; i < map->getNumOfRegions(); i++) {
+
+        if (map->isExterior(i)) {
+            availableRegions.push_back(i);
+            cout << "Region " + to_string(i) + ", " + map->getRegionType(i)
+                 <<", "<<map->getTokens(i)<<" tokens"<<endl;
+        }
+
+    }
+    cout << "\nRegions require 2 tokens to conquer, plus 1 for every token they currently have." << endl << endl << endl;
+
+
+    // FIRST REGION SELECTION AND TOKEN PLACEMENT
+
+    cout << "You have " << raceBanner.getRaceToken().getNumOfTokens() << " tokens" << endl;
+
+    // If player has tokens available
+    if (raceBanner.getRaceToken().getNumOfTokens() > 0) {
+
+        // Check for a valid region selection. For first turn, selection must be a region at the edge or an external sea.
+        do {
+
+            cout << "Pick a region" << endl;
+            cin >> regionSelection;
+            cout << "Region " + to_string(regionSelection) + ": ";
+
+            if (!map->isExterior(regionSelection)) {
+                cout << "Invalid input. Number must belong to one of the options" << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+
+        } while (!map->isExterior(regionSelection));
+
+        // Check for a valid token selection
+        do {
+
+            cout << "You have " + to_string(raceBanner.getRaceToken().getNumOfTokens()) + " tokens left" << endl;
+            cout << "This region has " << map->getTokens(regionSelection) << " token(s) on it." << endl;
+            cout << "How many would you like to place on this region? ";
+            cin >> tokenSelection;
+
+            if (tokenSelection < 0 || tokenSelection > raceBanner.getRaceToken().getNumOfTokens()
+                || tokenSelection<(map->getTokens(regionSelection)+2)) {
+                cout << "Invalid input. You need 2 tokens plus the number of tokens on the region to conquer." << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+
+        } while (tokenSelection < 0 || tokenSelection > raceBanner.getRaceToken().getNumOfTokens()
+                 ||tokenSelection<(map->getTokens(regionSelection)+2));
+
+        cout << endl;
+
+        finalizeConquer(regionSelection, tokenSelection);
+
+    } else {
+        cout << "You have no tokens left" << endl;
+    }
+
+    conquer();
+
+
+}
+
+void Player::redeploy()
 {
-    char redeploy;
+    char redeploy ='x';
 
     //ask player if they want to redeploy
     while(redeploy!='y'&& redeploy!='n') {
@@ -482,6 +496,134 @@ void Player::redeploy(Map*map)
 
 
     }while(tokenNumber>0);
+
+
+}
+
+
+//return number of tokens player removed
+void Player::readyTroops()
+{
+    cout<<"You may now remove tokens from your regions, that can be used to conquer."<<endl;
+    //'remove' keeps track of wether player wants to select another region to remove tokens from
+    char remove;
+
+    //total number of removed tokens
+    int availableTokens = 0;
+    do {
+        //region that tokens will be removed from
+        int regionRedeploy;
+
+        //let player choose a region to remove tokens from
+        do {
+            cout << "Your regions are:" << endl;
+
+            for (int j = 0; j < this->regions.size(); ++j) {
+                cout << "Region " << this->regions[j] << endl;
+            }
+
+            cout << "Select a region to remove tokens from." << endl;
+            cin >> regionRedeploy;
+
+            //check if chosen value is owned by the player
+            if (!(std::find(this->regions.begin(), this->regions.end(), regionRedeploy) != this->regions.end())) {
+                cout << "You do not own this region" << endl;
+            }
+        } while (!(std::find(this->regions.begin(), this->regions.end(), regionRedeploy) != this->regions.end()));
+
+        cout << "This region has " << map->getTokens(regionRedeploy) << " tokens on it" << endl;
+
+        int tokenNumber;
+
+        //let player choose how many tokens to remove
+        do {
+            cout << "How many tokens would you like to remove?" << endl;
+            cin >> tokenNumber;
+
+            if ((tokenNumber < 0 || tokenNumber >= map->getTokens(regionRedeploy))) {
+                cout << "You must leave at least one token on the region" << endl;
+            }
+
+        } while (tokenNumber < 0 || tokenNumber >= map->getTokens(regionRedeploy));
+
+        //remove tokens
+        map->setTokens(regionRedeploy, map->getTokens(regionRedeploy) - tokenNumber);
+
+        availableTokens += tokenNumber;
+
+
+        while (remove != 'y' && remove != 'n') {
+
+            cout << "Would you like to remove more tokens?(y/n)" << endl;
+            cin >> remove;
+            tolower(remove);//makes input lower case
+            if (remove != 'y' && remove != 'n')//make sure input is valid
+            {
+                cout << "Invalid input, enter 'y' or 'n'." << endl;
+                continue;
+            }
+            if (remove == 'n') {
+                //add removed tokens to player's available tokens
+                raceBanner.setNumOfTokens(raceBanner.getRaceToken().getNumOfTokens()+availableTokens);
+                return;
+            }
+        }
+
+    }while(remove=='y');
+
+
+
+}
+
+
+void Player::abandonRegion()
+{
+
+    //region that will be abandoned
+    int regionAbandon;
+
+    //let player choose a region to abandon
+    do {
+        cout << "Your regions are:" << endl;
+
+        for (int j = 0; j < this->regions.size(); ++j) {
+            cout << "Region " << this->regions[j] << endl;
+        }
+
+        cout << "Select a region to abandon" << endl;
+        cin >> regionAbandon;
+
+        //check if chosen value is owned by the player
+        if (!(std::find(this->regions.begin(), this->regions.end(), regionAbandon) != this->regions.end())) {
+            cout << "You do not own this region" << endl;
+        }
+    } while (!(std::find(this->regions.begin(), this->regions.end(), regionAbandon) != this->regions.end()));
+
+    //tokens player removed from region
+    int removedTokens;
+
+    //if region is a mountain, leave 1 token
+    if(map->getRegionType(regionAbandon)=='M') {
+        //tokens player removed from region
+        removedTokens = map->getTokens(regionAbandon)-1;
+
+        map->setTokens(regionAbandon,1);
+    }
+        //if it isnt a mountain, remove all tokens
+    else{
+        //tokens player removed from region
+        removedTokens = map->getTokens(regionAbandon);
+
+        map->setTokens(regionAbandon,0);
+    }
+
+    //remove the region from the player's owned regions
+    regions.erase(remove(regions.begin(), regions.end(), regionAbandon),
+                     regions.end());
+
+
+    //add removed tokens to player's available tokens
+    raceBanner.setNumOfTokens(raceBanner.getRaceToken().getNumOfTokens()+removedTokens);
 
 
 }
@@ -616,6 +758,37 @@ int Player::giveBadgeCoins() {
     }
     return 0;
 
+}
+
+//lets player decide what they want to do on their turn
+void Player::playerTurn()
+{
+
+    //keeps looping until player chooses 'end your turn'
+    while(true) {
+        int choice;
+        do {
+            cout << "Would you like to \n1:Ready your troops\n2:Conquer\n3:Go into decline\n4:Abandon a region \n5:End your turn" << endl;
+            cin>>choice;
+
+            if (choice < 1 || choice > 5)
+                cout << "Invalid input" << endl;
+
+        } while (choice < 1 || choice > 5);
+
+        switch (choice) {
+            case 1:
+                readyTroops();
+                break;
+            case 2:
+                conquer();
+                break;
+            case 3:
+                break;//add decline method
+            case 4:abandonRegion();break;
+            default: return;
+        }
+    }
 }
 
 // Awards player 1 coin for every region they possess and a determined amount by their Race and/or Special Power

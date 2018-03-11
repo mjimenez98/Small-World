@@ -8,7 +8,7 @@ using namespace std;
 int main() {
 
     MainLoop m;
-    m.playGame();
+    m.playGameTest();
 
     return 0;
 };

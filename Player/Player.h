@@ -22,7 +22,7 @@ class Player {
 public:
     // Constructors
     Player();
-    explicit Player(Map& gameMap);
+    explicit Player(Map* gameMap);
     Player(Map& gameMap, GameTurn& gameTurn);
 
     // Getters
@@ -40,9 +40,13 @@ public:
     string toString();
     bool hasSummarySheet();
     void picks_race(vector<FantasyRaceBanner>& availableBanners);
-    void firstConquer(Map*map);
-    void redeploy(Map*map);
+    void firstConquer();
+    void conquer();
+    void redeploy();
     void scores();
+    void readyTroops();
+    void abandonRegion();
+    void playerTurn();
 
 private:
     Map* map;

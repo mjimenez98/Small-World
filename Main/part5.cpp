@@ -15,11 +15,11 @@ int main() {
 
     vector<FantasyRaceBanner>* raceBanners = FantasyRaceBanner::createFantasyRaceBanners();
 
-    Player p1 = Player();
+    Player p1 = Player(map);
 
     p1.picks_race(*raceBanners);
-    p1.firstConquer(map);
-    p1.redeploy(map);
+    p1.firstConquer();
+    p1.redeploy();
     p1.scores();
 
     cout << p1.toString();
