@@ -53,7 +53,7 @@ void  MainLoop::playGameTest()
 
 }
 //real version of playGame
-void  MainLoop::playGame()
+void  MainLoop::playGame(vector<FantasyRaceBanner>& raceBanners)
 {
 
    int playerNum = numberOfPlayers;
@@ -78,11 +78,11 @@ void  MainLoop::playGame()
             cout<<"Player "<<j<<" :"<<endl;
             switch(j)
             {
-                case 1: player1->playerTurn();break;
-                case 2: player2->playerTurn();break;
-                case 3: player3->playerTurn();break;
-                case 4: player4->playerTurn();break;
-                case 5: player5->playerTurn();break;
+                case 1: player1->playerTurn(raceBanners);break;
+                case 2: player2->playerTurn(raceBanners);break;
+                case 3: player3->playerTurn(raceBanners);break;
+                case 4: player4->playerTurn(raceBanners);break;
+                case 5: player5->playerTurn(raceBanners);break;
 
             }
 

@@ -16,7 +16,7 @@ int main() {
     Player p1 = Player(*map, *gameTurn);
 
     p1.picks_race(*raceBanners);
-    p1.firstConquer(map);
+    p1.firstConquer();
     p1.scores();
 
     cout << p1.toString();

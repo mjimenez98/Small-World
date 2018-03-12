@@ -47,6 +47,7 @@ class MatchingRaceToken {
 public:
     // Constructors
     MatchingRaceToken();
+    explicit MatchingRaceToken(string newType);
     MatchingRaceToken(string newType, int newNumOfTokens);
 
     // Getters

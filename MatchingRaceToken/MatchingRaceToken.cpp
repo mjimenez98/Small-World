@@ -19,6 +19,14 @@ MatchingRaceToken::MatchingRaceToken() {
 
 }
 
+MatchingRaceToken::MatchingRaceToken(string newType) {
+
+    type = newType;
+    numOfTokens = -1;
+    taken = false;
+
+}
+
 MatchingRaceToken::MatchingRaceToken(string newType, int newNumOfTokens) {
 
     type = newType;

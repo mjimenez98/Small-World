@@ -27,6 +27,8 @@ struct Map::Region {
     bool magic = false;
     bool exterior = false;
 
+    bool inDecline = false;
+
     GamePiece* gamePiece = nullptr;
     LostTribeToken* lostTribeToken = nullptr;
 
@@ -81,6 +83,11 @@ void Map::setCavern(int region, bool state)
 void Map::setExterior(int region, bool state)
 {
     regions[region].exterior = state;
+}
+
+void Map::setInDecline(int region, bool state)
+{
+    regions[region].inDecline = state;
 }
 
 void Map::setLostTribes(int region, LostTribeToken newToken)
@@ -157,6 +164,11 @@ bool Map::isMagic(int region)
 bool Map::isMine(int region)
 {
     return regions[region].mine;
+}
+
+bool Map::isInDecline(int region)
+{
+    return regions[region].inDecline;
 }
 
 // Has

@@ -21,6 +21,8 @@ Player::Player() {
     map = nullptr;
     turn = nullptr;
 
+    selectNewRace = false;
+
 }
 
 Player::Player(Map* gameMap) {
@@ -30,6 +32,8 @@ Player::Player(Map* gameMap) {
     summarySheet = SummarySheet();
     coins = vector<VictoryCoin>();
     map = gameMap;
+
+    selectNewRace = false;
 
 }
 
@@ -147,6 +151,36 @@ void Player::picks_race(vector<FantasyRaceBanner>& raceBanners) {
 
     cout << "You have picked the badge " << getRaceBanner().getPowerBadge().getType() << " and the token " <<
          getRaceBanner().getRaceToken().getType() << endl << endl;
+
+}
+
+// Decline a turn
+void Player::decline() {
+
+    for(int region : regions) {
+
+        // Erase all previous tokens in decline
+        if((*map).isInDecline(region)) {
+
+            (*map).setTokens(region, (*map).getTokens(region)-1);
+            (*map).setInDecline(region, false);
+
+        }
+
+        // Decrease the number of your declining race's tokens in each region to 1
+        if((*map).getTokensType(region) == raceBanner.getRaceToken().getType()) {
+
+            (*map).setTokens(region, 1);
+            (*map).setInDecline(region, true);
+
+        }
+
+    }
+
+    cout << endl << "Any previous races in decline have been erased and the number of your declining race's tokens "
+            << "in each region has been set to 1." << endl << "A new race will be picked on the next turn." << endl << endl;
+
+    selectNewRace = true;
 
 }
 
@@ -494,12 +528,9 @@ void Player::redeploy()
 
         tokenNumber -= tokenPlacement;
 
-
     }while(tokenNumber>0);
 
-
 }
-
 
 //return number of tokens player removed
 void Player::readyTroops()
@@ -571,10 +602,7 @@ void Player::readyTroops()
 
     }while(remove=='y');
 
-
-
 }
-
 
 void Player::abandonRegion()
 {
@@ -625,7 +653,6 @@ void Player::abandonRegion()
     //add removed tokens to player's available tokens
     raceBanner.setNumOfTokens(raceBanner.getRaceToken().getNumOfTokens()+removedTokens);
 
-
 }
 
 // Determines which coin should be given to the player. It will always go for the biggest possible.
@@ -653,8 +680,6 @@ void Player::distributeCoins(int toBeAwarded) {
             toBeAwarded = 0;
             cout << "\nERROR at assigning Victory Coins" << endl << endl;
         }
-
-
 
     }
 
@@ -718,6 +743,48 @@ int Player::giveRaceCoins() {
     return 0;
 }
 
+// NOTE: TEMP
+int Player::giveRaceCoins(string type) {
+
+    // NOTE: could be done with switch and enum instead of string. Revise for a future release.
+
+    if(type == "Dwarves") {
+
+        int minesWithDwarves = 0;
+
+        // Each mine region occupied by dwarves
+        for(int region : regions) {
+
+            if((*map).isMine(region) && (*map).getTokensType(region) == "Dwarves")
+                minesWithDwarves++;
+
+        }
+
+        return minesWithDwarves;
+
+    }
+    else if(type == "Humans")
+        return (int) getRegionsWithType('F').size();    // 1 bonus victory coin for every farmland region
+    else if(type == "Orcs")
+        return getNonEmptyRegionsConqueredInTurn();     // Each not-empty conquered by orcs in this turn is worth 1 coin
+    else if(type == "Wizards") {
+
+        int magicWithWizards = 0;
+
+        // Each Magic Region your Wizards occupy is worth 1 bonus Victory coin
+        for(int region : regions) {
+
+            if((*map).isMine(region) && (*map).getTokensType(region) == "Wizards")
+                magicWithWizards++;
+
+        }
+
+        return magicWithWizards;
+
+    }
+    return 0;
+}
+
 // Give Victory Coins to player determined by the Special Power Badge
 int Player::giveBadgeCoins() {
 
@@ -761,34 +828,49 @@ int Player::giveBadgeCoins() {
 }
 
 //lets player decide what they want to do on their turn
-void Player::playerTurn()
+void Player::playerTurn(vector<FantasyRaceBanner>& raceBanners)
 {
 
-    //keeps looping until player chooses 'end your turn'
-    while(true) {
-        int choice;
-        do {
-            cout << "Would you like to \n1:Ready your troops\n2:Conquer\n3:Go into decline\n4:Abandon a region \n5:End your turn" << endl;
-            cin>>choice;
+    if(selectNewRace) {
 
-            if (choice < 1 || choice > 5)
-                cout << "Invalid input" << endl;
+        picks_race(raceBanners);
 
-        } while (choice < 1 || choice > 5);
+        selectNewRace = false;
 
-        switch (choice) {
-            case 1:
-                readyTroops();
-                break;
-            case 2:
-                conquer();
-                break;
-            case 3:
-                break;//add decline method
-            case 4:abandonRegion();break;
-            default: return;
-        }
     }
+
+    else {
+
+        //keeps looping until player chooses 'end your turn'
+        while(true) {
+            int choice;
+            do {
+                cout << "Would you like to \n1:Ready your troops\n2:Conquer\n3:Go into decline\n4:Abandon a region \n5:End your turn" << endl;
+                cin>>choice;
+
+                if (choice < 1 || choice > 5)
+                    cout << "Invalid input" << endl;
+
+            } while (choice < 1 || choice > 5);
+
+            switch (choice) {
+                case 1:
+                    readyTroops();
+                    break;
+                case 2:
+                    conquer();
+                    break;
+                case 3:
+                    decline();
+                    return;
+                case 4:abandonRegion();break;
+                default: return;
+            }
+        }
+
+    }
+
+
 }
 
 // Awards player 1 coin for every region they possess and a determined amount by their Race and/or Special Power
@@ -813,6 +895,17 @@ void Player::scores() {
     distributeCoins(newCoins);
     cout << "Player has been awarded " + to_string(newCoins) + " coin(s) because of the " + raceBanner.getRaceToken().getType()
          << " race" << endl;
+
+    // Regions in decline
+    newCoins = 0;
+    for(int region : regions) {
+
+        if((*map).isInDecline(region))
+            newCoins += giveRaceCoins((*map).getTokensType(region));
+
+    }
+    distributeCoins(newCoins);
+    cout << "Player has been awarded " + to_string(newCoins) + " coin(s) because of races in decline" << endl;
 
     cout << "Player has been awarded a total of " << to_string(getTotalCoinsValue()-oldScore) << " coin(s)\n" << endl;
 

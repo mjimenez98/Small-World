@@ -45,8 +45,7 @@ int main() {
             p2.redeploy();
             p2.scores();
             MainLoop play(&p1,&p2);
-            play.playGame();
-
+            play.playGame(*raceBanners);
             break;
         }
         case 3:
@@ -75,7 +74,7 @@ int main() {
             p3.redeploy();
             p3.scores();
             MainLoop play(&p1,&p2,&p3);
-            play.playGame();
+            play.playGame(*raceBanners);
             break;
         }
         case 4:
@@ -110,7 +109,7 @@ int main() {
             p4.redeploy();
             p4.scores();
             MainLoop play(&p1,&p2,&p3,&p4);
-            play.playGame();
+            play.playGame(*raceBanners);
             break;
         }
         case 5:
@@ -151,7 +150,7 @@ int main() {
             p5.redeploy();
             p5.scores();
             MainLoop play(&p1,&p2,&p3,&p4,&p5);
-            play.playGame();
+            play.playGame(*raceBanners);
             break;
         }
         default: cout << "switch error" << endl; break;

@@ -46,7 +46,7 @@ public:
     void scores();
     void readyTroops();
     void abandonRegion();
-    void playerTurn();
+    void playerTurn(vector<FantasyRaceBanner>& raceBanners);
 
 private:
     Map* map;
@@ -57,12 +57,17 @@ private:
     SummarySheet summarySheet;
     vector<VictoryCoin> coins;
 
+    //TEMP
+    bool selectNewRace;
+
     int nonEmptyRegionsConqueredInTurn;
 
     int giveBadgeCoins();
     int giveRaceCoins();
+    int giveRaceCoins(string type);
     void distributeCoins(int toBeAwarded);
     void finalizeConquer(int regionSelection, int tokenSelection);
+    void decline();
     vector<int> getRegionsWithType(char type);
 
 };
