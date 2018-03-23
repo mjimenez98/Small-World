@@ -4,6 +4,7 @@
 
 #include "MainLoop.h"
 #include "../Player/Player.h"
+#include "../Observer/Observer.h"
 
 //only used for demo
 void  MainLoop::playGameTest()
@@ -67,15 +68,16 @@ void  MainLoop::playGame(vector<FantasyRaceBanner>& raceBanners)
     if(playerNum==5) {
         MainLoop::numberOfTurns = 8;
     }
-    //current turn
+    //current turn (first turn is done using firstConquer() )
     int turn = 2;
 
     //the number of turns left in the game
     while(turn<=numberOfTurns){
         cout<<"It is turn "<<turn<<endl;
-        //gives each player a
+        //gives each player a turn
         for(int j =1 ; j<= MainLoop::numberOfPlayers;++j) {
             cout<<"Player "<<j<<" :"<<endl;
+            Observer::notifyPlayer(j);
             switch(j)
             {
                 case 1: player1->playerTurn(raceBanners);break;

@@ -22,4 +22,5 @@ add_executable(Small-World
         #Main/part5.cpp
         #Main/part6.cpp
         Main/part7.cpp
-        MainLoop/MainLoop.cpp MainLoop/MainLoop.h)
+        MainLoop/MainLoop.cpp MainLoop/MainLoop.h
+        Observer/Observer.cpp Observer/Observer.h)
