@@ -55,7 +55,7 @@ void Observer::notifyRegionsOwned(int regionsOwned)
     }
 }
 
-//the graph goes in increments of 5%, therefore only values above 5% will show up
+//the graph goes in increments of 2%, therefore only values above 2% will show up
 void Observer::printGraph()
 {
     //percentage of regions owned;
@@ -73,15 +73,15 @@ void Observer::printGraph()
 
     switch(numberOfPlayers)
     {
-        case 2: for(int j = 20 ; j>0; --j)
+        case 2: for(int j = 50 ; j>0; --j)
             {
-               if(percent1>=j*5) { cout<< "|   |\t";}
+               if(percent1>=j*2) { cout<< "|   |\t";}
                else{ cout<< "\t \t";}
 
-                if(percent2>=j*5) { cout<< "\t|   |\t";}
+                if(percent2>=j*2) { cout<< "\t|   |\t";}
                 else{ cout<< "\t \t\t";}
 
-                if(unclaimed>=j*5) { cout<< "\t|   |\t";}
+                if(unclaimed>=j*2) { cout<< "\t|   |\t";}
                 else{ cout<< "\t \t\t";}
                 cout<<endl;
 
@@ -92,18 +92,18 @@ void Observer::printGraph()
             cout<<"player1"<<"\t\tplayer2"<<"\t\tunclaimed"<<endl;
             break;
         case 3:
-            for(int j = 20 ; j>0; --j)
+            for(int j = 50 ; j>0; --j)
             {
-                if(percent1>=j*5) { cout<< "|   |\t";}
+                if(percent1>=j*2) { cout<< "|   |\t";}
                 else{ cout<< "\t \t";}
 
-                if(percent2>=j*5) { cout<< "\t|   |\t";}
+                if(percent2>=j*2) { cout<< "\t|   |\t";}
                 else{ cout<< "\t \t\t";}
 
-                if(percent3>=j*5) { cout<< "\t|   |\t";}
+                if(percent3>=j*2) { cout<< "\t|   |\t";}
                 else{ cout<< "\t \t\t";}
 
-                if(unclaimed>=j*5) { cout<< "\t|   |\t";}
+                if(unclaimed>=j*2) { cout<< "\t|   |\t";}
                 else{ cout<< "\t \t\t";}
                 cout<<endl;
 
@@ -114,21 +114,21 @@ void Observer::printGraph()
             cout<<"player1"<<"\t\tplayer2"<<"\t\tplayer3"<<"\t\tunclaimed"<<endl;
             break;
         case 4:
-            for(int j = 20 ; j>0; --j)
+            for(int j = 50 ; j>0; --j)
             {
-                if(percent1>=j*5) { cout<< "|   |\t";}
+                if(percent1>=j*2) { cout<< "|   |\t";}
                 else{ cout<< "\t \t";}
 
-                if(percent2>=j*5) { cout<< "\t|   |\t";}
+                if(percent2>=j*2) { cout<< "\t|   |\t";}
                 else{ cout<< "\t \t\t";}
 
-                if(percent3>=j*5) { cout<< "\t|   |\t";}
+                if(percent3>=j*2) { cout<< "\t|   |\t";}
                 else{ cout<< "\t \t\t";}
 
-                if(percent4>=j*5) { cout<< "\t|   |\t";}
+                if(percent4>=j*2) { cout<< "\t|   |\t";}
                 else{ cout<< "\t \t\t";}
 
-                if(unclaimed>=j*5) { cout<< "\t|   |\t";}
+                if(unclaimed>=j*2) { cout<< "\t|   |\t";}
                 else{ cout<< "\t \t\t";}
                 cout<<endl;
 
@@ -138,24 +138,24 @@ void Observer::printGraph()
 
             cout<<"player1"<<"\t\tplayer2"<<"\t\tplayer3"<<"\t\tplayer4"<<"\t\tunclaimed"<<endl;
             break;
-        case 5: for(int j = 20 ; j>0; --j)
+        case 5: for(int j = 50 ; j>0; --j)
             {
-                if(percent1>=j*5) { cout<< "|   |\t";}
+                if(percent1>=j*2) { cout<< "|   |\t";}
                 else{ cout<< "\t \t";}
 
-                if(percent2>=j*5) { cout<< "\t|   |\t";}
+                if(percent2>=j*2) { cout<< "\t|   |\t";}
                 else{ cout<< "\t \t\t";}
 
-                if(percent3>=j*5) { cout<< "\t|   |\t";}
+                if(percent3>=j*2) { cout<< "\t|   |\t";}
                 else{ cout<< "\t \t\t";}
 
-                if(percent4>=j*5) { cout<< "\t|   |\t";}
+                if(percent4>=j*2) { cout<< "\t|   |\t";}
                 else{ cout<< "\t \t\t";}
 
-                if(percent5>=j*5) { cout<< "\t|   |\t";}
+                if(percent5>=j*2) { cout<< "\t|   |\t";}
                 else{ cout<< "\t \t\t";}
 
-                if(unclaimed>=j*5) { cout<< "\t|   |\t";}
+                if(unclaimed>=j*2) { cout<< "\t|   |\t";}
                 else{ cout<< "\t \t\t";}
                 cout<<endl;
 
