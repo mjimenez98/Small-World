@@ -4,6 +4,7 @@
 
 #include "../Player/Player.h"
 #include"../MainLoop/MainLoop.h"
+#include "../Observer/Observer.h"
 
 using namespace std;
 
@@ -23,6 +24,9 @@ int main() {
             loop = false;
     }
 
+    //notify Observer of number of players
+    Observer::notifyNumberOfPlayers(numOfPlayers);
+
     switch(numOfPlayers)
     {
         case 2:
@@ -34,12 +38,12 @@ int main() {
             Player p1 = Player(map);
             Player p2 = Player(map);
             cout << "Loaded the 2 player map and created 2 players" << endl << endl;
-            cout << "Player 1: ";
+            Observer::notifyPlayer(1);
             p1.picks_race(*raceBanners);
             p1.firstConquer();
             p1.redeploy();
             p1.scores();
-            cout << "Player 2: ";
+            Observer::notifyPlayer(2);
             p2.picks_race(*raceBanners);
             p2.firstConquer();
             p2.redeploy();
@@ -58,17 +62,17 @@ int main() {
             Player p2 = Player(map);
             Player p3 = Player(map);
             cout << "Loaded the 3 player map and created 3 players" << endl << endl;
-            cout << "Player 1: ";
+            Observer::notifyPlayer(1);
             p1.picks_race(*raceBanners);
             p1.firstConquer();
             p1.redeploy();
             p1.scores();
-            cout << "Player 2: ";
+            Observer::notifyPlayer(2);
             p2.picks_race(*raceBanners);
             p2.firstConquer();
             p2.redeploy();
             p2.scores();
-            cout << "Player 3: ";
+            Observer::notifyPlayer(3);
             p3.picks_race(*raceBanners);
             p3.firstConquer();
             p3.redeploy();
@@ -88,22 +92,22 @@ int main() {
             Player p3 = Player(map);
             Player p4 = Player(map);
             cout << "Loaded the 4 player map and created 4 players" << endl << endl;
-            cout << "Player 1: ";
+            Observer::notifyPlayer(1);
             p1.picks_race(*raceBanners);
             p1.firstConquer();
             p1.redeploy();
             p1.scores();
-            cout << "Player 2: ";
+            Observer::notifyPlayer(2);
             p2.picks_race(*raceBanners);
             p2.firstConquer();
             p2.redeploy();
             p2.scores();
-            cout << "Player 3: ";
+            Observer::notifyPlayer(3);
             p3.picks_race(*raceBanners);
             p3.firstConquer();
             p3.redeploy();
             p3.scores();
-            cout << "Player 4: ";
+            Observer::notifyPlayer(4);
             p4.picks_race(*raceBanners);
             p4.firstConquer();
             p4.redeploy();
@@ -124,27 +128,27 @@ int main() {
             Player p4 = Player(map);
             Player p5 = Player(map);
             cout << "Loaded 5 player map and created 5 players" << endl << endl;
-            cout << "Player 1: ";
+            Observer::notifyPlayer(1);
             p1.picks_race(*raceBanners);
             p1.firstConquer();
             p1.redeploy();
             p1.scores();
-            cout << "Player 2: ";
+            Observer::notifyPlayer(2);
             p2.picks_race(*raceBanners);
             p2.firstConquer();
             p2.redeploy();
             p2.scores();
-            cout << "Player 3: ";
+            Observer::notifyPlayer(3);
             p3.picks_race(*raceBanners);
             p3.firstConquer();
             p3.redeploy();
             p3.scores();
-            cout << "Player 4: ";
+            Observer::notifyPlayer(4);
             p4.picks_race(*raceBanners);
             p4.firstConquer();
             p4.redeploy();
             p4.scores();
-            cout << "Player 5: ";
+            Observer::notifyPlayer(5);
             p5.picks_race(*raceBanners);
             p5.firstConquer();
             p5.redeploy();

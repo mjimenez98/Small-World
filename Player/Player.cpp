@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <iostream>
 #include "../GameTurn/GameTurn.h"
+#include "../Observer/Observer.h"
 
 using namespace std;
 
@@ -108,6 +109,8 @@ bool Player::hasSummarySheet() {
 // Allows player to pick a race
 void Player::picks_race(vector<FantasyRaceBanner>& raceBanners) {
 
+    //notify observer
+    Observer::notifyAction("is picking race");
     int race = -1;
     vector<FantasyRaceBanner> availableBanners;
 
@@ -157,6 +160,8 @@ void Player::picks_race(vector<FantasyRaceBanner>& raceBanners) {
 // Decline a turn
 void Player::decline() {
 
+    //notify observer
+    Observer::notifyAction("is going into decline");
     for(int region : regions) {
 
         // Erase all previous tokens in decline
@@ -192,6 +197,8 @@ void Player::finalizeConquer(int regionSelection, int tokenSelection) {
 
     // Add region selected to the player
     regions.emplace_back(regionSelection);
+    //notify Observer of change in number of regions
+    Observer::notifyRegionsOwned(regions.size());
 
     // If the region was non-empty, set the property to +1
     if(map->getTokens(regionSelection) == 1)
@@ -212,6 +219,9 @@ void Player::finalizeConquer(int regionSelection, int tokenSelection) {
 
 void Player::conquer()
 {
+
+    //notify observer
+    Observer::notifyAction("is conquering");
     int regionSelection;
     int tokenSelection;
     // CONQUER ADJACENT REGIONS
@@ -314,7 +324,8 @@ void Player::conquer()
                         cout << "How many would you like to place on this region? ";
                         cin >> tokenSelection;
 
-                        if (tokenSelection < 0 || tokenSelection > raceBanner.getRaceToken().getNumOfTokens()) {
+                        if (tokenSelection < 0 || tokenSelection > raceBanner.getRaceToken().getNumOfTokens()
+                        ||tokenSelection<(map->getTokens(regionSelection)+2)) {
 
                             cout
                                     << "Invalid input. You need 2 tokens plus the number of tokens on the region, to conquer."
@@ -324,7 +335,8 @@ void Player::conquer()
 
                         }
 
-                    } while (tokenSelection < 0 || tokenSelection > raceBanner.getRaceToken().getNumOfTokens());
+                    } while (tokenSelection < 0 || tokenSelection > raceBanner.getRaceToken().getNumOfTokens()
+                                                   ||tokenSelection<(map->getTokens(regionSelection)+2));
 
                 } while (tokenSelection < 0 || tokenSelection > raceBanner.getRaceToken().getNumOfTokens());
 
@@ -343,7 +355,8 @@ void Player::conquer()
 
 // Allows the player to conquer regions by using their race tokens, on the first turn of the game
 void Player::firstConquer() {
-
+    //notify observer
+    Observer::notifyAction("is conquering");
     // NOTE: Lost tribes are being checked by region.tokens. LosTribeToken class should be used instead for a future release.
 
     setNonEmptyRegionsConqueredInTurn(0);
@@ -427,6 +440,9 @@ void Player::firstConquer() {
 
 void Player::redeploy()
 {
+
+    //notify observer
+    Observer::notifyAction("is redeploying");
     char redeploy ='x';
 
     //ask player if they want to redeploy
@@ -535,6 +551,10 @@ void Player::redeploy()
 //return number of tokens player removed
 void Player::readyTroops()
 {
+
+    //notify observer
+    Observer::notifyAction("is readying troops");
+
     cout<<"You may now remove tokens from your regions, that can be used to conquer."<<endl;
     //'remove' keeps track of wether player wants to select another region to remove tokens from
     char remove;
@@ -606,7 +626,8 @@ void Player::readyTroops()
 
 void Player::abandonRegion()
 {
-
+    //notify observer
+    Observer::notifyAction("is abandoning a region");
     //region that will be abandoned
     int regionAbandon;
 
@@ -648,6 +669,8 @@ void Player::abandonRegion()
     //remove the region from the player's owned regions
     regions.erase(remove(regions.begin(), regions.end(), regionAbandon),
                      regions.end());
+    //notify Observer of change in number of regions
+    Observer::notifyRegionsOwned(regions.size());
 
 
     //add removed tokens to player's available tokens

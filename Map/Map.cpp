@@ -243,7 +243,7 @@ Map loadMap(string mapName)
     size += s.at(0);
     size += s.at(1);
     int sizenum = stoi(size);
-    Map m1(sizenum+5);
+    Map m1(sizenum+1);
 
     //count keeps track of line number
     int count = 1;
