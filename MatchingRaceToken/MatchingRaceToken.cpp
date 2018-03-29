@@ -2,6 +2,7 @@
 // Created by Miguel Jimenez on 2/6/18.
 //
 
+
 #include "MatchingRaceToken.h"
 
 #include <random>   // Default random engine
@@ -13,6 +14,14 @@ using namespace std;
 MatchingRaceToken::MatchingRaceToken() {
 
     type = "";
+    numOfTokens = -1;
+    taken = false;
+
+}
+
+MatchingRaceToken::MatchingRaceToken(string newType) {
+
+    type = newType;
     numOfTokens = -1;
     taken = false;
 

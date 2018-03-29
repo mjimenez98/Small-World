@@ -1,14 +1,14 @@
 //
-// Created by Miguel Jimenez on 2/4/18.
+// Created by Jean-Loup on 2018-03-09
 //
 
-#include "../Player/Player.h"
-#include <iostream>
-
+#include "../MainLoop/MainLoop.h"
 using namespace std;
 
 int main() {
 
+    MainLoop m;
+    m.playGameTest();
 
     return 0;
 };

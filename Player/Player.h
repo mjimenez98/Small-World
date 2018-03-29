@@ -22,7 +22,7 @@ class Player {
 public:
     // Constructors
     Player();
-    explicit Player(Map& gameMap);
+    explicit Player(Map* gameMap);
     Player(Map& gameMap, GameTurn& gameTurn);
 
     // Getters
@@ -40,8 +40,13 @@ public:
     string toString();
     bool hasSummarySheet();
     void picks_race(vector<FantasyRaceBanner>& availableBanners);
-    void firstConquer(Map*map);
+    void firstConquer();
+    void conquer();
+    void redeploy();
     void scores();
+    void readyTroops();
+    void abandonRegion();
+    void playerTurn(vector<FantasyRaceBanner>& raceBanners);
 
 private:
     Map* map;
@@ -52,11 +57,17 @@ private:
     SummarySheet summarySheet;
     vector<VictoryCoin> coins;
 
+    //TEMP
+    bool selectNewRace;
+
     int nonEmptyRegionsConqueredInTurn;
 
     int giveBadgeCoins();
     int giveRaceCoins();
+    int giveRaceCoins(string type);
     void distributeCoins(int toBeAwarded);
+    void finalizeConquer(int regionSelection, int tokenSelection);
+    void decline();
     vector<int> getRegionsWithType(char type);
 
 };

@@ -25,8 +25,10 @@ public:
 	string getTokensType(int region);
 
 	// Setters
+	void addTokens(int region, int tokens);
 	void setCavern(int region, bool state);
 	void setExterior(int region, bool state);
+	void setInDecline(int region, bool state);
 	void setLostTribes(int region, LostTribeToken newToken);
 	void setMine(int region, bool state);
 	void setMagic(int region, bool state);
@@ -34,7 +36,6 @@ public:
 	void setRegionType(int region, char type);
 	void setTokensType(string type, int region);
 	void setTokens(int region, int tokens);
-	void addTokens(int region, int tokens);
 
 	// Is
 	bool isCavern(int region);
@@ -42,6 +43,7 @@ public:
 	bool isExterior(int region);
 	bool isMagic(int region);
 	bool isMine(int region);
+	bool isInDecline(int region);
 
 	// Has
 	bool hasFortress(int region);

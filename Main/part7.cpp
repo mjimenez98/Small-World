@@ -3,6 +3,8 @@
 //
 
 #include "../Player/Player.h"
+#include"../MainLoop/MainLoop.h"
+#include "../Observer/Observer.h"
 
 using namespace std;
 
@@ -22,85 +24,146 @@ int main() {
             loop = false;
     }
 
+    //notify Observer of number of players
+    Observer::notifyNumberOfPlayers(numOfPlayers);
+
     switch(numOfPlayers)
     {
         case 2:
         {
-            Map map = loadMap("../textMaps/2Players.txt");
-            if (!checkConnect(map))
+            Map m1 = loadMap("../textMaps/2Players.txt");
+            Map* map = &m1;
+            if (!checkConnect(m1))
                 return (0);
-            Player player1;
-            Player player2;
+            Player p1 = Player(map);
+            Player p2 = Player(map);
             cout << "Loaded the 2 player map and created 2 players" << endl << endl;
-            cout << "Player 1: ";
-            player1.picks_race(*raceBanners);
-            cout << "Player 2: ";
-            player2.picks_race(*raceBanners);
+            Observer::notifyPlayer(1);
+            p1.picks_race(*raceBanners);
+            p1.firstConquer();
+            p1.redeploy();
+            p1.scores();
+            Observer::notifyPlayer(2);
+            p2.picks_race(*raceBanners);
+            p2.firstConquer();
+            p2.redeploy();
+            p2.scores();
+            MainLoop play(&p1,&p2);
+            play.playGame(*raceBanners);
             break;
         }
         case 3:
         {
-            Map map = loadMap("../textMaps/3Players.txt");
-            if(!checkConnect(map))
+            Map m1 = loadMap("../textMaps/3Players.txt");
+            Map* map = &m1;
+            if(!checkConnect(m1))
                 return(0);
-            Player player1;
-            Player player2;
-            Player player3;
+            Player p1 = Player(map);
+            Player p2 = Player(map);
+            Player p3 = Player(map);
             cout << "Loaded the 3 player map and created 3 players" << endl << endl;
-            cout << "Player 1: ";
-            player1.picks_race(*raceBanners);
-            cout << "Player 2: ";
-            player2.picks_race(*raceBanners);
-            cout << "Player 3: ";
-            player3.picks_race(*raceBanners);
+            Observer::notifyPlayer(1);
+            p1.picks_race(*raceBanners);
+            p1.firstConquer();
+            p1.redeploy();
+            p1.scores();
+            Observer::notifyPlayer(2);
+            p2.picks_race(*raceBanners);
+            p2.firstConquer();
+            p2.redeploy();
+            p2.scores();
+            Observer::notifyPlayer(3);
+            p3.picks_race(*raceBanners);
+            p3.firstConquer();
+            p3.redeploy();
+            p3.scores();
+            MainLoop play(&p1,&p2,&p3);
+            play.playGame(*raceBanners);
             break;
         }
         case 4:
         {
-            Map map = loadMap("../textMaps/4Players.txt");
-            if(!checkConnect(map))
+            Map m1 = loadMap("../textMaps/4Players.txt");
+            Map* map = &m1;
+            if(!checkConnect(m1))
                 return(0);
-            Player player1;
-            Player player2;
-            Player player3;
-            Player player4;
+            Player p1 = Player(map);
+            Player p2 = Player(map);
+            Player p3 = Player(map);
+            Player p4 = Player(map);
             cout << "Loaded the 4 player map and created 4 players" << endl << endl;
-            cout << "Player 1: ";
-            player1.picks_race(*raceBanners);
-            cout << "Player 2: ";
-            player2.picks_race(*raceBanners);
-            cout << "Player 3: ";
-            player3.picks_race(*raceBanners);
-            cout << "Player 4: ";
-            player4.picks_race(*raceBanners);
+            Observer::notifyPlayer(1);
+            p1.picks_race(*raceBanners);
+            p1.firstConquer();
+            p1.redeploy();
+            p1.scores();
+            Observer::notifyPlayer(2);
+            p2.picks_race(*raceBanners);
+            p2.firstConquer();
+            p2.redeploy();
+            p2.scores();
+            Observer::notifyPlayer(3);
+            p3.picks_race(*raceBanners);
+            p3.firstConquer();
+            p3.redeploy();
+            p3.scores();
+            Observer::notifyPlayer(4);
+            p4.picks_race(*raceBanners);
+            p4.firstConquer();
+            p4.redeploy();
+            p4.scores();
+            MainLoop play(&p1,&p2,&p3,&p4);
+            play.playGame(*raceBanners);
             break;
         }
         case 5:
         {
-            Map map = loadMap("../textMaps/5Players.txt");
-            if(!checkConnect(map))
+            Map m1 = loadMap("../textMaps/5Players.txt");
+            Map* map = &m1;
+            if(!checkConnect(m1))
                 return(0);
-            Player player1;
-            Player player2;
-            Player player3;
-            Player player4;
-            Player player5;
+            Player p1 = Player(map);
+            Player p2 = Player(map);
+            Player p3 = Player(map);
+            Player p4 = Player(map);
+            Player p5 = Player(map);
             cout << "Loaded 5 player map and created 5 players" << endl << endl;
-            cout << "Player 1: ";
-            player1.picks_race(*raceBanners);
-            cout << "Player 2: ";
-            player2.picks_race(*raceBanners);
-            cout << "Player 3: ";
-            player3.picks_race(*raceBanners);
-            cout << "Player 4: ";
-            player4.picks_race(*raceBanners);
-            cout << "Player 5: ";
-            player5.picks_race(*raceBanners);
+            Observer::notifyPlayer(1);
+            p1.picks_race(*raceBanners);
+            p1.firstConquer();
+            p1.redeploy();
+            p1.scores();
+            Observer::notifyPlayer(2);
+            p2.picks_race(*raceBanners);
+            p2.firstConquer();
+            p2.redeploy();
+            p2.scores();
+            Observer::notifyPlayer(3);
+            p3.picks_race(*raceBanners);
+            p3.firstConquer();
+            p3.redeploy();
+            p3.scores();
+            Observer::notifyPlayer(4);
+            p4.picks_race(*raceBanners);
+            p4.firstConquer();
+            p4.redeploy();
+            p4.scores();
+            Observer::notifyPlayer(5);
+            p5.picks_race(*raceBanners);
+            p5.firstConquer();
+            p5.redeploy();
+            p5.scores();
+            MainLoop play(&p1,&p2,&p3,&p4,&p5);
+            play.playGame(*raceBanners);
             break;
         }
         default: cout << "switch error" << endl; break;
 
     }
+
+
+
+
 
     return 0;
 };

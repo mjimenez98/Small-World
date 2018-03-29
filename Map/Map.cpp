@@ -27,6 +27,8 @@ struct Map::Region {
     bool magic = false;
     bool exterior = false;
 
+    bool inDecline = false;
+
     GamePiece* gamePiece = nullptr;
     LostTribeToken* lostTribeToken = nullptr;
 
@@ -81,6 +83,11 @@ void Map::setCavern(int region, bool state)
 void Map::setExterior(int region, bool state)
 {
     regions[region].exterior = state;
+}
+
+void Map::setInDecline(int region, bool state)
+{
+    regions[region].inDecline = state;
 }
 
 void Map::setLostTribes(int region, LostTribeToken newToken)
@@ -159,6 +166,11 @@ bool Map::isMine(int region)
     return regions[region].mine;
 }
 
+bool Map::isInDecline(int region)
+{
+    return regions[region].inDecline;
+}
+
 // Has
 bool Map::hasLostTribes(int region)
 {
@@ -231,7 +243,7 @@ Map loadMap(string mapName)
     size += s.at(0);
     size += s.at(1);
     int sizenum = stoi(size);
-    Map m1(sizenum+5);
+    Map m1(sizenum+1);
 
     //count keeps track of line number
     int count = 1;
@@ -312,6 +324,9 @@ Map loadMap(string mapName)
 //check if map is connected
 bool checkConnect(Map map)
 {
+
+    // NOTE: To be completed. Traverse the graph and make sure all the regions are connected.
+
     int size = map.getNumOfRegions();
     // Mark all the vertices as not visited
     int *visited = new int[size];

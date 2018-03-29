@@ -19,7 +19,7 @@ FantasyRaceBanner::FantasyRaceBanner(MatchingRaceToken& newRaceToken, SpecialPow
 
 MatchingRaceToken FantasyRaceBanner::getRaceToken() {
 
-    return raceToken;
+    return  raceToken;
 
 }
 
@@ -90,12 +90,12 @@ string FantasyRaceBanner::demoFantasyRaceBanner(vector<FantasyRaceBanner>& raceB
 // Creates all the Fantasy Race Banners with their respective Race Tokens and Power Badge chosen by the player
 vector<FantasyRaceBanner>* FantasyRaceBanner::createFantasyRaceBanners() {
 
-    vector<MatchingRaceToken>* raceTokens = MatchingRaceToken::createMatchingRaceTokens(AMAZONS_TOKENS, DWARVES_TOKENS,
-                                                                                        ELVES_TOKENS, GHOULS_TOKENS, GIANTS_TOKENS,
-                                                                                        HALFLINGS_TOKENS, HUMANS_TOKENS,
-                                                                                        ORCS_TOKENS, RATMEN_TOKENS, SKELETONS_TOKENS,
-                                                                                        SORCERERS_TOKENS, TRITONS_TOKENS,
-                                                                                        TROLLS_TOKENS, WIZARDS_TOKENS);
+    vector<MatchingRaceToken>* raceTokens = MatchingRaceToken::createMatchingRaceTokens(AMAZONS_START, DWARVES_START,
+                                                                                        ELVES_START, GHOULS_START, GIANTS_START,
+                                                                                        HALFLINGS_START, HUMANS_START,
+                                                                                        ORCS_START, RATMEN_START, SKELETONS_START,
+                                                                                        SORCERERS_START, TRITONS_START,
+                                                                                        TROLLS_START, WIZARDS_START);
 
     vector<SpecialPowerBadge>* powerBadges = SpecialPowerBadge::createSpecialPowerBadges(ALCHEMIST_TOKENS, BERSERK_TOKENS,
                                                                                          BIVOUACKING_TOKENS, COMMANDO_TOKENS,
