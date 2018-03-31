@@ -9,7 +9,7 @@
 #include <algorithm>
 #include <iostream>
 #include "../GameTurn/GameTurn.h"
-#include "../Observer/Observer.h"
+#include "../../Patterns/Observer/Observer.h"
 
 using namespace std;
 

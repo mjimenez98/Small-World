@@ -2,9 +2,9 @@
 // Created by Miguel Jimenez on 3/7/18.
 //
 
-#include "../Player/Player.h"
+#include "../Objects/Player/Player.h"
 #include"../MainLoop/MainLoop.h"
-#include "../Observer/Observer.h"
+#include "../Patterns/Observer/Observer.h"
 
 using namespace std;
 

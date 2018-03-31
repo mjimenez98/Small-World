@@ -11,13 +11,14 @@
 #include "../Map/Map.h"
 #include "../SummarySheet/SummarySheet.h"
 #include "../VictoryCoin/VictoryCoin.h"
+#include "DefaultPlayer.h"
 
 #include <iostream>
 #include <string>
 
 using namespace std;
 
-class Player {
+class Player: public DefaultPlayer {
 
 public:
     // Constructors
@@ -39,16 +40,16 @@ public:
     // Other functions
     string toString();
     bool hasSummarySheet();
-    void picks_race(vector<FantasyRaceBanner>& availableBanners);
+    void picks_race(vector<FantasyRaceBanner>& availableBanners) override;
     void firstConquer();
-    void conquer();
+    void conquer() override;
     void redeploy();
-    void scores();
+    void scores() override;
     void readyTroops();
     void abandonRegion();
     void playerTurn(vector<FantasyRaceBanner>& raceBanners);
 
-private:
+protected:
     Map* map;
     GameTurn* turn;
     Dice dice;

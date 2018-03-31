@@ -3,8 +3,8 @@
 //
 
 #include "MainLoop.h"
-#include "../Player/Player.h"
-#include "../Observer/Observer.h"
+#include "../Objects/Player/Player.h"
+#include "../Patterns/Observer/Observer.h"
 
 //only used for demo
 void  MainLoop::playGameTest()
@@ -85,6 +85,7 @@ void  MainLoop::playGame(vector<FantasyRaceBanner>& raceBanners)
                 case 3: player3->playerTurn(raceBanners);break;
                 case 4: player4->playerTurn(raceBanners);break;
                 case 5: player5->playerTurn(raceBanners);break;
+                default: break;
 
             }
 

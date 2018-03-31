@@ -32,7 +32,7 @@ void VictoryCoin::setValue(int newValue) {
 string VictoryCoin::demoVictoryCoins(vector<VictoryCoin>& coins) {
 
     if(coins.empty()) {
-        return "ERROR: no coins";
+        return "0 coins";
     }
     else {
 
