@@ -44,7 +44,7 @@ int main() {
         case 1:
         {
             Aggressive p2 = Aggressive(map);
-            cout << "Loaded the 2 player map and created 2 players" << endl << endl;
+            cout << "Loaded the 2 player map and created 2 players" << endl;
 
             Observer::notifyPlayer(1);
             p1.picks_race(*raceBanners);

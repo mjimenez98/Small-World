@@ -54,7 +54,7 @@ void  MainLoop::playGameTest()
 
 }
 //real version of playGame
-void  MainLoop::playGame(vector<FantasyRaceBanner>& raceBanners)
+void MainLoop::playGame(vector<FantasyRaceBanner>& raceBanners)
 {
 
    int playerNum = numberOfPlayers;
@@ -76,7 +76,7 @@ void  MainLoop::playGame(vector<FantasyRaceBanner>& raceBanners)
         cout<<"It is turn "<<turn<<endl;
         //gives each player a turn
         for(int j =1 ; j<= MainLoop::numberOfPlayers;++j) {
-            cout<<"Player "<<j<<" :"<<endl;
+            cout<<"Player "<<j<<":"<<endl;
             Observer::notifyPlayer(j);
             switch(j)
             {

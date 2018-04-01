@@ -197,8 +197,9 @@ void Player::finalizeConquer(int regionSelection, int tokenSelection) {
 
     // Add region selected to the player
     regions.emplace_back(regionSelection);
+
     //notify Observer of change in number of regions
-    Observer::notifyRegionsOwned(regions.size());
+    Observer::notifyRegionsOwned((int) regions.size());
 
     // If the region was non-empty, set the property to +1
     if(map->getTokens(regionSelection) == 1)
@@ -214,7 +215,6 @@ void Player::finalizeConquer(int regionSelection, int tokenSelection) {
     //The lost tribes do not stay if a player conquer
     map->setTokens(regionSelection, tokenAmount);
 
-
 }
 
 void Player::conquer()
@@ -222,8 +222,10 @@ void Player::conquer()
 
     //notify observer
     Observer::notifyAction("is conquering");
-    int regionSelection;
-    int tokenSelection;
+    int regionSelection = -1;
+    int tokenSelection = -1;
+
+
     // CONQUER ADJACENT REGIONS
 
     if (raceBanner.getRaceToken().getNumOfTokens() > 0) {
@@ -271,6 +273,7 @@ void Player::conquer()
                              << ", " << map->getTokens(adjRegion) << " tokens" << endl;
                     }
 
+                    // Choose a region
                     while (!(find(adjRegions.begin(), adjRegions.end(), regionSelection) != adjRegions.end())) {
 
                         cout << "Pick a region" << endl;
@@ -327,9 +330,7 @@ void Player::conquer()
                         if (tokenSelection < 0 || tokenSelection > raceBanner.getRaceToken().getNumOfTokens()
                         ||tokenSelection<(map->getTokens(regionSelection)+2)) {
 
-                            cout
-                                    << "Invalid input. You need 2 tokens plus the number of tokens on the region, to conquer."
-                                    << endl;
+                            cout << "Invalid input. You need 2 tokens plus the number of tokens on the region, to conquer." << endl;
                             cin.clear();
                             cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
@@ -434,7 +435,6 @@ void Player::firstConquer() {
     }
 
     conquer();
-
 
 }
 

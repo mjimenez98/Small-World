@@ -5,12 +5,6 @@
 #ifndef SMALL_WORLD_PLAYER_H
 #define SMALL_WORLD_PLAYER_H
 
-#include "../Dice/Dice.h"
-#include "../FantasyRaceBanner/FantasyRaceBanner.h"
-#include "../GameTurn/GameTurn.h"
-#include "../Map/Map.h"
-#include "../SummarySheet/SummarySheet.h"
-#include "../VictoryCoin/VictoryCoin.h"
 #include "DefaultPlayer.h"
 
 #include <iostream>
@@ -41,7 +35,7 @@ public:
     string toString();
     bool hasSummarySheet();
     void picks_race(vector<FantasyRaceBanner>& availableBanners) override;
-    void firstConquer();
+    void firstConquer() override;
     void conquer() override;
     void redeploy();
     void scores() override;
