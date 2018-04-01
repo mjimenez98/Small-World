@@ -11,6 +11,7 @@
 #include "../Map/Map.h"
 #include "../SummarySheet/SummarySheet.h"
 #include "../VictoryCoin/VictoryCoin.h"
+#include "../Observer/Observer.h"
 
 #include <iostream>
 #include <string>
@@ -27,14 +28,17 @@ public:
 
     // Getters
     Dice getDice();
+    Observer* getObserver();
     FantasyRaceBanner getRaceBanner();
     SummarySheet getSummarySheet();
     vector<VictoryCoin>* getCoins();
     int getTotalCoinsValue();
     int getNonEmptyRegionsConqueredInTurn();
+    void selectObserver();
 
     // Setters
     void setNonEmptyRegionsConqueredInTurn(int newNonEmptyRegionsConqueredInTurn);
+    void setObserver(Observer*);
 
     // Other functions
     string toString();
@@ -56,6 +60,11 @@ private:
     vector<int> regions;
     SummarySheet summarySheet;
     vector<VictoryCoin> coins;
+    Observer * obs;
+
+    //Determines if player wants the option to choose an Observer
+    bool observerSelection = true;
+
 
     //TEMP
     bool selectNewRace;
@@ -69,6 +78,7 @@ private:
     void finalizeConquer(int regionSelection, int tokenSelection);
     void decline();
     vector<int> getRegionsWithType(char type);
+
 
 };
 
