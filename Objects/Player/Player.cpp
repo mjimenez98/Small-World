@@ -164,19 +164,32 @@ void Player::decline() {
     Observer::notifyAction("is going into decline");
     for(int region : regions) {
 
-        // Erase all previous tokens in decline
+        // Erase all previous tokens from previous races in decline
         if((*map).isInDecline(region)) {
 
-            (*map).setTokens(region, (*map).getTokens(region)-1);
-            (*map).setInDecline(region, false);
+            if((*map).hadGhouls(region)) {
+                (*map).setTokens(region, 1);
+                (*map).setHadGhouls(region, false);
+            }
+            else {
+                (*map).setTokens(region, (*map).getTokens(region) - 1);
+                (*map).setInDecline(region, false);
+            }
 
         }
 
-        // Decrease the number of your declining race's tokens in each region to 1
-        if((*map).getTokensType(region) == raceBanner.getRaceToken().getType()) {
+        else {
 
-            (*map).setTokens(region, 1);
-            (*map).setInDecline(region, true);
+            // Decrease the number of declining race's tokens in each region to 1
+            if((*map).getTokensType(region) == raceBanner.getRaceToken().getType()) {
+
+                if(raceBanner.getRaceToken().getType() != "Ghouls") {
+                    (*map).setTokens(region, 1);
+                }
+
+                (*map).setInDecline(region, true);
+
+            }
 
         }
 
@@ -211,6 +224,10 @@ void Player::finalizeConquer(int regionSelection, int tokenSelection) {
     //player places tokens, the mountain stays
     if(map->hasMountains(regionSelection))
         ++tokenAmount;
+
+    // Set that the region has Ghoul tokens so when put in decline they stay there for another round
+    if(raceBanner.getRaceToken().getType() == "Ghouls")
+        map->setHadGhouls(regionSelection, true);
 
     //The lost tribes do not stay if a player conquer
     map->setTokens(regionSelection, tokenAmount);
@@ -351,6 +368,9 @@ void Player::conquer()
         }
 
     }   // End of if tokens > 0
+    else {
+        cout << "Player does not have tokens to conquer with" << endl;
+    }
 
 }
 
@@ -556,7 +576,7 @@ void Player::readyTroops()
     Observer::notifyAction("is readying troops");
 
     cout<<"You may now remove tokens from your regions, that can be used to conquer."<<endl;
-    //'remove' keeps track of wether player wants to select another region to remove tokens from
+    //'remove' keeps track of whether player wants to select another region to remove tokens from
     char remove;
 
     //total number of removed tokens
@@ -860,6 +880,8 @@ void Player::playerTurn(vector<FantasyRaceBanner>& raceBanners)
 
         selectNewRace = false;
 
+        firstConquer();
+
     }
 
     else {
@@ -910,7 +932,7 @@ void Player::scores() {
     // Special Power
     newCoins = giveBadgeCoins();
     distributeCoins(newCoins);
-    cout << "Player has been awarded " + to_string(newCoins) + "  coin(s) because of the " + raceBanner.getPowerBadge().getType()
+    cout << "Player has been awarded " + to_string(newCoins) + " coin(s) because of the " + raceBanner.getPowerBadge().getType()
          << " power badge" << endl;
 
     // Race Power

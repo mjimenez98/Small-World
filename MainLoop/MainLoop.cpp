@@ -57,7 +57,7 @@ void  MainLoop::playGameTest()
 void MainLoop::playGame(vector<FantasyRaceBanner>& raceBanners)
 {
 
-   int playerNum = numberOfPlayers;
+    int playerNum = numberOfPlayers;
 
     if(playerNum==2 || playerNum==3) {
         MainLoop::numberOfTurns = 10;
@@ -73,7 +73,7 @@ void MainLoop::playGame(vector<FantasyRaceBanner>& raceBanners)
 
     //the number of turns left in the game
     while(turn<=numberOfTurns){
-        cout<<"It is turn "<<turn<<endl;
+        cout << endl << "It is turn " <<turn << endl << endl;
         //gives each player a turn
         for(int j =1 ; j<= MainLoop::numberOfPlayers;++j) {
             cout<<"Player "<<j<<":"<<endl;
@@ -92,14 +92,14 @@ void MainLoop::playGame(vector<FantasyRaceBanner>& raceBanners)
         }
         ++turn;
     }
+
     cout<<"Game ends"<<endl;
 
 }
 
-
-
 //constructors
-MainLoop::MainLoop(){};
+MainLoop::MainLoop() {};
+
 MainLoop::MainLoop(Player *p1, Player *p2) {
     player1 = p1;
     player2 = p2;

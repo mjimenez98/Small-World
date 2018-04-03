@@ -13,7 +13,7 @@
 #include "../VictoryCoin/VictoryCoin.h"
 #include "../../Patterns/Observer/Observer.h"
 
-class DefaultPlayer {
+class PlayerBehavior {
 
 public:
     virtual void picks_race(vector<FantasyRaceBanner>& raceBanners) = 0;
@@ -21,6 +21,8 @@ public:
     virtual void scores() = 0;
     virtual void firstConquer() = 0;
     virtual void redeploy() = 0;
+    virtual void playerTurn(vector<FantasyRaceBanner>& raceBanners) = 0;
+    virtual void readyTroops() = 0;
 
 };
 

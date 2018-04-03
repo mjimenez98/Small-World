@@ -36,6 +36,7 @@ public:
 	void setRegionType(int region, char type);
 	void setTokensType(string type, int region);
 	void setTokens(int region, int tokens);
+	void setHadGhouls(int region, bool state);
 
 	// Is
 	bool isCavern(int region);
@@ -49,6 +50,7 @@ public:
 	bool hasFortress(int region);
 	bool hasMountains(int region);
 	bool hasLostTribes(int region);
+	bool hadGhouls(int region);
 
 	// Other functions
 	void addEdge(int region1, int region2);

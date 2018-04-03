@@ -15,7 +15,11 @@ public:
 
     void picks_race(vector<FantasyRaceBanner>& availableBanners) override;
     void conquer() override;
-    void scores() override;
+    void firstConquer() override;
+    void redeploy() override;
+    void playerTurn(vector<FantasyRaceBanner>& raceBanners) override;
+    void readyTroops() override;
+
 
 };
 

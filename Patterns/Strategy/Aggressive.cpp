@@ -155,6 +155,7 @@ void Aggressive::picks_race(vector<FantasyRaceBanner> &raceBanners) {
     cout << "Your opponent will pick a race from the following list" << endl;
     cout << FantasyRaceBanner::demoFantasyRaceBanner(availableBanners) << endl;
 
+    // Choose race
     do {
 
         race = distributionBanner(generator);
@@ -193,9 +194,9 @@ void Aggressive::firstConquer() {
 
     // INTRODUCTION AND DISPLAY OF REGIONS
 
-    cout << "It is time for your opponent to conquer!\n" <<
-         "The first region picked must be at the edge of the board or an external sea." <<
-         "\nThese are their options:" << endl;
+    cout << "It is time for your opponent to conquer!\n"
+         << "The first region picked must be at the edge of the board or an external sea."
+         << "\nThese are their options:" << endl;
 
     // Display exterior regions
     for (int i = 0; i < map->getNumOfRegions(); i++) {
@@ -259,8 +260,13 @@ void Aggressive::redeploy() {
 
     //notify observer
     Observer::notifyAction("is redeploying");
-    char redeploy ='x';
 
     cout << "Player has decided not to redeploy" << endl;
+
+}
+
+void Aggressive::playerTurn(vector<FantasyRaceBanner>& raceBanners) {
+
+    cout << "Your opponent has decided to keep decided to keep their regions intact and, in consequence, skip the turn" << endl;
 
 }

@@ -28,6 +28,7 @@ struct Map::Region {
     bool exterior = false;
 
     bool inDecline = false;
+    bool hadGhouls = false;
 
     GamePiece* gamePiece = nullptr;
     LostTribeToken* lostTribeToken = nullptr;
@@ -128,6 +129,12 @@ void Map::setTokens(int region, int tokens)
     regions[region].tokens = tokens;
 }
 
+void Map::setHadGhouls(int region, bool state) {
+
+    regions[region].hadGhouls = state;
+
+}
+
 //add tokens to current amount of tokens
 void Map::addTokens(int region, int tokens)
 {
@@ -192,6 +199,15 @@ bool Map::hasFortress(int region)
 bool Map::hasMountains(int region)
 {
     if(regions[region].gamePiece != nullptr && regions[region].gamePiece->getType() == "Mountain") {
+        return true;
+    }
+
+    return false;
+}
+
+bool Map::hadGhouls(int region) {
+
+    if(regions[region].hadGhouls == true) {
         return true;
     }
 

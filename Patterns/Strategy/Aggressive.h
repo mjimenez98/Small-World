@@ -12,8 +12,6 @@
 
 #include "../../Objects/Player/Player.h"
 
-#include <random>
-
 class Aggressive: public Player {
 
 public:
@@ -24,6 +22,7 @@ public:
     void conquer() override;
     void firstConquer() override;
     void redeploy() override;
+    void playerTurn(vector<FantasyRaceBanner>& raceBanners) override;
 
 };
 

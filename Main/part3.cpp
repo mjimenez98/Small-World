@@ -19,6 +19,8 @@ int main() {
     int opponentType = 0;
     bool loop = true;
 
+    cout << "WELCOME TO SMALL WORLD!" << endl << endl;
+
     while(loop) {
         cout << "Choose your opponent:" << endl
              << "1. Aggressive" << endl
@@ -39,12 +41,15 @@ int main() {
 
     Player p1 = Player(map);
 
+    //notify Observer of number of players
+    Observer::notifyNumberOfPlayers(2);
+
     switch(opponentType)
     {
         case 1:
         {
             Aggressive p2 = Aggressive(map);
-            cout << "Loaded the 2 player map and created 2 players" << endl;
+            cout << "Loaded the 2 player map and created 2 players" << endl << endl;
 
             Observer::notifyPlayer(1);
             p1.picks_race(*raceBanners);

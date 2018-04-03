@@ -12,7 +12,7 @@ add_executable(Small-World
         Objects/LostTribeToken/LostTribeToken.cpp Objects/LostTribeToken/LostTribeToken.h
         Objects/Map/Map.cpp Objects/Map/Map.h Map/
         Objects/MatchingRaceToken/MatchingRaceToken.cpp Objects/MatchingRaceToken/MatchingRaceToken.h
-        Objects/Player/DefaultPlayer.h
+        Objects/Player/PlayerBehavior.h
         Objects/Player/Player.h Objects/Player/Player.cpp
         Objects/SpecialPowerBadge/SpecialPowerBadge.cpp Objects/SpecialPowerBadge/SpecialPowerBadge.h
         Objects/SummarySheet/SummarySheet.cpp Objects/SummarySheet/SummarySheet.h

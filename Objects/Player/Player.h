@@ -5,14 +5,15 @@
 #ifndef SMALL_WORLD_PLAYER_H
 #define SMALL_WORLD_PLAYER_H
 
-#include "DefaultPlayer.h"
+#include "PlayerBehavior.h"
 
 #include <iostream>
 #include <string>
+#include <random>
 
 using namespace std;
 
-class Player: public DefaultPlayer {
+class Player: public PlayerBehavior {
 
 public:
     // Constructors
@@ -37,11 +38,11 @@ public:
     void picks_race(vector<FantasyRaceBanner>& availableBanners) override;
     void firstConquer() override;
     void conquer() override;
-    void redeploy();
+    void redeploy() override;
     void scores() override;
-    void readyTroops();
+    void readyTroops() override;
     void abandonRegion();
-    void playerTurn(vector<FantasyRaceBanner>& raceBanners);
+    void playerTurn(vector<FantasyRaceBanner>& raceBanners) override;
 
 protected:
     Map* map;
