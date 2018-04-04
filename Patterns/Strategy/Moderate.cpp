@@ -115,7 +115,7 @@ void Moderate::conquer() {
                     }
 
                     cout << "Player has decided to place " << to_string(tokenSelection) << " tokens on region "
-                         << to_string(tokenSelection) << endl << endl;
+                         << regionSelection << endl << endl;
 
                 } while (tokenSelection < 0 || tokenSelection > raceBanner.getRaceToken().getNumOfTokens());
 
@@ -250,7 +250,7 @@ void Moderate::firstConquer() {
             --tokenSelection;
         }
 
-        cout << "Player has decided to place " << to_string(tokenSelection) << " tokens on region " << to_string(tokenSelection)
+        cout << "Player has decided to place " << to_string(tokenSelection) << " tokens on region " << regionSelection
              << endl << endl;
 
         finalizeConquer(regionSelection, tokenSelection);
