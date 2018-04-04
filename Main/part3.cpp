@@ -14,6 +14,7 @@ using namespace std;
 
 int main() {
 
+    Observer obs;
     vector<FantasyRaceBanner>* raceBanners = FantasyRaceBanner::createFantasyRaceBanners();
 
     int opponentType = 0;
@@ -42,7 +43,7 @@ int main() {
     Player p1 = Player(map);
 
     //notify Observer of number of players
-    Observer::notifyNumberOfPlayers(2);
+    obs.notifyNumberOfPlayers(2);
 
     switch(opponentType)
     {
@@ -51,13 +52,13 @@ int main() {
             Aggressive p2 = Aggressive(map);
             cout << "Loaded the 2 player map and created 2 players" << endl << endl;
 
-            Observer::notifyPlayer(1);
+            p1.getObserver()->notifyPlayer(1);
             p1.picks_race(*raceBanners);
             p1.firstConquer();
             p1.redeploy();
             p1.scores();
 
-            Observer::notifyPlayer(2);
+            p2.getObserver()->notifyPlayer(2);
             p2.picks_race(*raceBanners);
             p2.firstConquer();
             p2.redeploy();
@@ -72,13 +73,13 @@ int main() {
             Defensive p2 = Defensive(map);
             cout << "Loaded the 2 player map and created 2 players" << endl << endl;
 
-            Observer::notifyPlayer(1);
+            p1.getObserver()->notifyPlayer(1);
             p1.picks_race(*raceBanners);
             p1.firstConquer();
             p1.redeploy();
             p1.scores();
 
-            Observer::notifyPlayer(2);
+            p2.getObserver()->notifyPlayer(2);
             p2.picks_race(*raceBanners);
             p2.firstConquer();
             p2.redeploy();
@@ -93,13 +94,13 @@ int main() {
             Moderate p2 = Moderate(map);
             cout << "Loaded the 2 player map and created 2 players" << endl << endl;
 
-            Observer::notifyPlayer(1);
+            p1.getObserver()->notifyPlayer(1);
             p1.picks_race(*raceBanners);
             p1.firstConquer();
             p1.redeploy();
             p1.scores();
 
-            Observer::notifyPlayer(2);
+            p2.getObserver()->notifyPlayer(2);
             p2.picks_race(*raceBanners);
             p2.firstConquer();
             p2.redeploy();
@@ -114,13 +115,13 @@ int main() {
             Random p2 = Random(map);
             cout << "Loaded the 2 player map and created 2 players" << endl << endl;
 
-            Observer::notifyPlayer(1);
+            p1.getObserver()->notifyPlayer(1);
             p1.picks_race(*raceBanners);
             p1.firstConquer();
             p1.redeploy();
             p1.scores();
 
-            Observer::notifyPlayer(2);
+            p2.getObserver()->notifyPlayer(2);
             p2.picks_race(*raceBanners);
             p2.firstConquer();
             p2.redeploy();

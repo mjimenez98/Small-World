@@ -23,14 +23,17 @@ public:
 
     // Getters
     Dice getDice();
+    Observer* getObserver();
     FantasyRaceBanner getRaceBanner();
     SummarySheet getSummarySheet();
     vector<VictoryCoin>* getCoins();
     int getTotalCoinsValue();
     int getNonEmptyRegionsConqueredInTurn();
+    void selectObserver();
 
     // Setters
     void setNonEmptyRegionsConqueredInTurn(int newNonEmptyRegionsConqueredInTurn);
+    void setObserver(Observer* newObserver);
 
     // Other functions
     string toString();
@@ -43,6 +46,10 @@ public:
     void readyTroops() override;
     void abandonRegion();
     void playerTurn(vector<FantasyRaceBanner>& raceBanners) override;
+    Observer* obs;
+
+    //Determines if player wants the option to choose an Observer
+    bool observerSelection = true;
 
 protected:
     Map* map;

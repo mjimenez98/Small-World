@@ -18,8 +18,8 @@ add_executable(Small-World
         Objects/SummarySheet/SummarySheet.cpp Objects/SummarySheet/SummarySheet.h
         Objects/VictoryCoin/VictoryCoin.cpp Objects/VictoryCoin/VictoryCoin.h
         #MAIN
-        #Main/parts1_2.cpp
-        Main/part3.cpp
+        Main/parts1_2_4.cpp
+        #Main/part3.cpp
         MainLoop/MainLoop.cpp MainLoop/MainLoop.h
         #PATTERNS
         Patterns/Observer/Observer.cpp Patterns/Observer/Observer.h

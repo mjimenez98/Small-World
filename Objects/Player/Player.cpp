@@ -21,6 +21,7 @@ Player::Player() {
     coins = vector<VictoryCoin>();
     map = nullptr;
     turn = nullptr;
+    obs = new Observer();
 
     selectNewRace = false;
 
@@ -35,6 +36,7 @@ Player::Player(Map* gameMap) {
     map = gameMap;
 
     selectNewRace = false;
+    obs = new Observer();
 
 }
 
@@ -46,12 +48,25 @@ Player::Player(Map& gameMap, GameTurn& gameTurn) {
     coins = vector<VictoryCoin>();
     map = &gameMap;
     turn = &gameTurn;
+    obs = new Observer();
 
 }
 
 Dice Player::getDice() {
 
     return dice;
+
+}
+
+Observer* Player::getObserver() {
+
+     return obs;
+
+}
+
+void Player::setObserver(Observer * newObserver) {
+
+    obs = newObserver;
 
 }
 
@@ -110,7 +125,8 @@ bool Player::hasSummarySheet() {
 void Player::picks_race(vector<FantasyRaceBanner>& raceBanners) {
 
     //notify observer
-    Observer::notifyAction("is picking race");
+    this->getObserver()->notifyAction("is picking race");
+
     int race = -1;
     vector<FantasyRaceBanner> availableBanners;
 
@@ -155,13 +171,17 @@ void Player::picks_race(vector<FantasyRaceBanner>& raceBanners) {
     cout << "You have picked the badge " << getRaceBanner().getPowerBadge().getType() << " and the token " <<
          getRaceBanner().getRaceToken().getType() << endl << endl;
 
+    string printHand =  getRaceBanner().getPowerBadge().getType()+ " " + getRaceBanner().getRaceToken().getType();
+    //notify Observer of player's choices
+    this->getObserver()->notifyHand(printHand);
+
 }
 
 // Decline a turn
 void Player::decline() {
 
     //notify observer
-    Observer::notifyAction("is going into decline");
+    this->getObserver()->notifyRegionsOwned(regions.size());
     for(int region : regions) {
 
         // Erase all previous tokens from previous races in decline
@@ -212,7 +232,7 @@ void Player::finalizeConquer(int regionSelection, int tokenSelection) {
     regions.emplace_back(regionSelection);
 
     //notify Observer of change in number of regions
-    Observer::notifyRegionsOwned((int) regions.size());
+    this->getObserver()->notifyRegionsOwned(regions.size());
 
     // If the region was non-empty, set the property to +1
     if(map->getTokens(regionSelection) == 1)
@@ -238,7 +258,8 @@ void Player::conquer()
 {
 
     //notify observer
-    Observer::notifyAction("is conquering");
+    this->getObserver()->notifyAction("is conquering");
+
     int regionSelection = -1;
     int tokenSelection = -1;
 
@@ -377,7 +398,7 @@ void Player::conquer()
 // Allows the player to conquer regions by using their race tokens, on the first turn of the game
 void Player::firstConquer() {
     //notify observer
-    Observer::notifyAction("is conquering");
+    this->getObserver()->notifyAction("is conquering");
     // NOTE: Lost tribes are being checked by region.tokens. LosTribeToken class should be used instead for a future release.
 
     setNonEmptyRegionsConqueredInTurn(0);
@@ -462,7 +483,8 @@ void Player::redeploy()
 {
 
     //notify observer
-    Observer::notifyAction("is redeploying");
+    this->getObserver()->notifyAction("is redeploying");
+
     char redeploy ='x';
 
     //ask player if they want to redeploy
@@ -573,7 +595,7 @@ void Player::readyTroops()
 {
 
     //notify observer
-    Observer::notifyAction("is readying troops");
+    this->getObserver()->notifyAction("is readying troops");
 
     cout<<"You may now remove tokens from your regions, that can be used to conquer."<<endl;
     //'remove' keeps track of whether player wants to select another region to remove tokens from
@@ -647,7 +669,7 @@ void Player::readyTroops()
 void Player::abandonRegion()
 {
     //notify observer
-    Observer::notifyAction("is abandoning a region");
+    this->getObserver()->notifyAction("is abandoning a region");
     //region that will be abandoned
     int regionAbandon;
 
@@ -690,8 +712,7 @@ void Player::abandonRegion()
     regions.erase(remove(regions.begin(), regions.end(), regionAbandon),
                      regions.end());
     //notify Observer of change in number of regions
-    Observer::notifyRegionsOwned(regions.size());
-
+    this->getObserver()->notifyRegionsOwned(regions.size());
 
     //add removed tokens to player's available tokens
     raceBanner.setNumOfTokens(raceBanner.getRaceToken().getNumOfTokens()+removedTokens);
@@ -874,6 +895,8 @@ int Player::giveBadgeCoins() {
 void Player::playerTurn(vector<FantasyRaceBanner>& raceBanners)
 {
 
+    this->selectObserver();
+
     if(selectNewRace) {
 
         picks_race(raceBanners);
@@ -918,6 +941,56 @@ void Player::playerTurn(vector<FantasyRaceBanner>& raceBanners)
 
 }
 
+void Player::selectObserver()
+{
+    if (!observerSelection)
+    {
+        return;
+    }
+
+    this->getObserver()->notifyAction("is selecting what to display");
+    int selection;
+    cout<<"You may choose what you want displayed.\n"<<
+            "1: Basic turn number and game events\n"<<
+            "2: Percentage of regions owned by all players\n"<<
+            "3: Cards owned by every player\n"<<
+            "4: Victory coins earned by players\n"<<
+            "5: Do not display this menu anymore(Option 1 default if no previous selection)"<<endl;
+
+    do{
+        cin>>selection;
+        if(selection<1||selection>5)
+        {
+            cout<<"Invalid selection, try again"<<endl;
+        }
+    }while(selection<1||selection>5);
+
+    if(selection == 2)
+    {
+        Observer *ob = new GraphObserver((this->getObserver()));
+        //give this player a graph Observer
+        this->setObserver(ob);
+    }
+    if(selection == 3)
+    {
+        Observer *ob = new HandObserver((this->getObserver()));
+        //give this player a graph Observer
+        this->setObserver(ob);
+    }
+    if(selection == 4)
+    {
+        Observer *ob = new CoinObserver((this->getObserver()));
+        //give this player a graph Observer
+        this->setObserver(ob);
+    }
+
+    if(selection == 5)
+    {
+        observerSelection = false;
+    }
+
+}
+
 // Awards player 1 coin for every region they possess and a determined amount by their Race and/or Special Power
 void Player::scores() {
 
@@ -953,6 +1026,9 @@ void Player::scores() {
     cout << "Player has been awarded " + to_string(newCoins) + " coin(s) because of races in decline" << endl;
 
     cout << "Player has been awarded a total of " << to_string(getTotalCoinsValue()-oldScore) << " coin(s)\n" << endl;
+
+    //notify of Observer of coins
+    this->getObserver()->notifyCoins(getTotalCoinsValue());
 
 }
 

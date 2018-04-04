@@ -7,7 +7,8 @@
 void Defensive::conquer() {
 
     //notify observer
-    Observer::notifyAction("is conquering");
+    this->getObserver()->notifyAction("is conquering");
+
     int regionSelection = -1;
     int tokenSelection = -1;
 
@@ -134,7 +135,8 @@ void Defensive::conquer() {
 void Defensive::picks_race(vector<FantasyRaceBanner> &raceBanners) {
 
     //notify observer
-    Observer::notifyAction("is picking race");
+    this->getObserver()->notifyAction("is picking race");
+
     int race = -1;
     vector<FantasyRaceBanner> availableBanners;
 
@@ -185,9 +187,9 @@ void Defensive::firstConquer() {
     gameTurn = 1;
 
     //notify observer
-    Observer::notifyAction("is conquering");
-    // NOTE: Lost tribes are being checked by region.tokens. LosTribeToken class should be used instead for a future release.
+    this->getObserver()->notifyAction("is conquering");
 
+    // NOTE: Lost tribes are being checked by region.tokens. LosTribeToken class should be used instead for a future release.
     setNonEmptyRegionsConqueredInTurn(0);
     vector<int> availableRegions;
 
@@ -262,7 +264,7 @@ void Defensive::firstConquer() {
 void Defensive::redeploy() {
 
     //notify observer
-    Observer::notifyAction("is redeploying");
+    this->getObserver()->notifyAction("is redeploying");
 
     cout << "Player has decided not to redeploy" << endl;
 
@@ -289,7 +291,7 @@ void Defensive::readyTroops() {
     default_random_engine generator;
 
     //notify observer
-    Observer::notifyAction("is readying troops");
+    this->getObserver()->notifyAction("is readying troops");
 
     cout<<"Your opponent may now remove tokens from your regions that can be used to conquer"<<endl;
     //'remove' keeps track of whether player wants to select another region to remove tokens from

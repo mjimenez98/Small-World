@@ -7,7 +7,7 @@
 void Aggressive::conquer() {
 
     //notify observer
-    Observer::notifyAction("is conquering");
+    this->getObserver()->notifyAction("is conquering");
     int regionSelection = -1;
     int tokenSelection = -1;
 
@@ -134,7 +134,7 @@ void Aggressive::conquer() {
 void Aggressive::picks_race(vector<FantasyRaceBanner> &raceBanners) {
 
     //notify observer
-    Observer::notifyAction("is picking race");
+    this->getObserver()->notifyAction("is picking race");
     int race = -1;
     vector<FantasyRaceBanner> availableBanners;
 
@@ -182,7 +182,7 @@ void Aggressive::picks_race(vector<FantasyRaceBanner> &raceBanners) {
 void Aggressive::firstConquer() {
 
     //notify observer
-    Observer::notifyAction("is conquering");
+    this->getObserver()->notifyAction("is conquering");
     // NOTE: Lost tribes are being checked by region.tokens. LosTribeToken class should be used instead for a future release.
 
     setNonEmptyRegionsConqueredInTurn(0);
@@ -259,7 +259,7 @@ void Aggressive::firstConquer() {
 void Aggressive::redeploy() {
 
     //notify observer
-    Observer::notifyAction("is redeploying");
+    this->getObserver()->notifyAction("is redeploying");
 
     cout << "Player has decided not to redeploy" << endl;
 

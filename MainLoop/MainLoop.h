@@ -18,12 +18,11 @@ public:
     MainLoop(Player* p1,Player* p2,Player * p3);
     MainLoop(Player* p1,Player* p2,Player * p3,Player * p4);
     MainLoop(Player* p1,Player* p2,Player * p3,Player * p4,Player*p5);
-    void playGameTest();
     void playGame(vector<FantasyRaceBanner>& raceBanners);
 
 private:
     int numberOfPlayers;
-    int numberOfTurns ;
+    int numberOfTurns;
     Player * player1;
     Player * player2;
     Player * player3;

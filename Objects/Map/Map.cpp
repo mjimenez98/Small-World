@@ -348,6 +348,7 @@ bool checkConnect(Map map)
     int *visited = new int[size];
     *visited ={0};
 
+    /* NOTE: In need of fix
     for(int j=2; j<=size; ++j) {
         if (map.isConnected(1, j));
         {
@@ -355,6 +356,7 @@ bool checkConnect(Map map)
             visited[j] = 1;
         }
     }
+    */
 
     for(int k = 1; k<=size; ++k)
     {
