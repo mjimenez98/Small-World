@@ -7,7 +7,6 @@
 #define SMALL_WORLD_OBSERVER_H
 
 #include <string>
-#include <initguid.h>
 #include <vector>
 
 
@@ -43,12 +42,12 @@ public:
 //concrete basic Observer
 class Observer: public ObserverInterface {
 public:
-     void notifyAction(std::string) override;
-     void notifyPlayer(int) override;
-     void notifyRegionsOwned(int) override;
-     void notifyNumberOfPlayers(int) override;
-     void notifyHand(string) override ;
-     void notifyCoins(int) override ;
+    void notifyAction(std::string) override;
+    void notifyPlayer(int) override;
+    void notifyRegionsOwned(int) override;
+    void notifyNumberOfPlayers(int) override;
+    void notifyHand(string) override ;
+    void notifyCoins(int) override ;
 
 
     //Current player
@@ -72,7 +71,7 @@ public:
 class Decorator : public Observer
 {
 public:
-    Decorator(Observer * tempObs);
+    explicit Decorator(Observer * tempObs);
 
     void notifyAction(std::string) override ;
     void notifyPlayer(int) override;
@@ -89,7 +88,7 @@ protected:
 class GraphObserver: public Decorator{
 
 public:
-    GraphObserver(Observer*w): Decorator(w){}
+    explicit GraphObserver(Observer*w): Decorator(w){}
     void printGraph();
     void notifyRegionsOwned(int) override ;
 
@@ -98,7 +97,7 @@ public:
 class HandObserver: public Decorator{
 
 public:
-    HandObserver(Observer*w): Decorator(w){}
+    explicit HandObserver(Observer*w): Decorator(w){}
     void notifyHand(string) override ;
 
 };
@@ -106,7 +105,7 @@ public:
 class CoinObserver: public Decorator{
 
 public:
-    CoinObserver(Observer*w): Decorator(w){}
+    explicit CoinObserver(Observer*w): Decorator(w){}
     void notifyCoins(int) override ;
 
 };

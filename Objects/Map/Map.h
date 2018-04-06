@@ -1,9 +1,12 @@
 #pragma once
 
+
 #include "../FantasyRaceBanner/FantasyRaceBanner.h"
 #include "../LostTribeToken/LostTribeToken.h"
 #include "../GamePiece/GamePiece.h"
 #include "../VictoryCoin/VictoryCoin.h"
+
+
 
 #include <string>
 
@@ -20,7 +23,7 @@ public:
 	// Getters
 	int getNumOfRegions();
 	int getTokens(int region);
-	string getRegionPlayer(int region);
+	int getRegionPlayer(int region);
 	char getRegionType(int region);
 	string getTokensType(int region);
 
@@ -32,10 +35,12 @@ public:
 	void setLostTribes(int region, LostTribeToken newToken);
 	void setMine(int region, bool state);
 	void setMagic(int region, bool state);
-	void setRegionPlayer(int region, string player);
+	void setRegionPlayer(int region, int player);
 	void setRegionType(int region, char type);
 	void setTokensType(string type, int region);
 	void setTokens(int region, int tokens);
+	void setHadGhouls(int region, bool state);
+
 
 	// Is
 	bool isCavern(int region);
@@ -49,6 +54,7 @@ public:
 	bool hasFortress(int region);
 	bool hasMountains(int region);
 	bool hasLostTribes(int region);
+	bool hadGhouls(int region);
 
 	// Other functions
 	void addEdge(int region1, int region2);

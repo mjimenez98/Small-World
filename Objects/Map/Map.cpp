@@ -5,6 +5,7 @@
 #include <string>
 #include <list>
 
+
 using namespace std;
 
 // Subclass: Region in map
@@ -12,7 +13,7 @@ struct Map::Region {
 
     int tokens =0;
     string token_type;
-    string player;
+    int  player = 0;
     char regionType;
     /* H = hill
      * W = sea
@@ -28,6 +29,7 @@ struct Map::Region {
     bool exterior = false;
 
     bool inDecline = false;
+    bool hadGhouls = false;
 
     GamePiece* gamePiece = nullptr;
     LostTribeToken* lostTribeToken = nullptr;
@@ -64,7 +66,7 @@ string Map::getTokensType(int region)
     return regions[region].token_type;
 }
 
-string Map::getRegionPlayer(int region)
+int Map::getRegionPlayer(int region)
 {
     return regions[region].player;
 }
@@ -105,9 +107,9 @@ void Map::setMine(int region, bool state)
     regions[region].mine = state;
 }
 
-void Map::setRegionPlayer(int region, string player)
+void Map::setRegionPlayer(int region, int p1)
 {
-    regions[region].player = player;
+    regions[region].player = p1;
 }
 
 void Map::setRegionType(int region, char type)
@@ -127,6 +129,13 @@ void Map::setTokens(int region, int tokens)
 {
     regions[region].tokens = tokens;
 }
+
+void Map::setHadGhouls(int region, bool state) {
+
+    regions[region].hadGhouls = state;
+
+}
+
 
 //add tokens to current amount of tokens
 void Map::addTokens(int region, int tokens)
@@ -198,6 +207,15 @@ bool Map::hasMountains(int region)
     return false;
 }
 
+bool Map::hadGhouls(int region) {
+
+    if(regions[region].hadGhouls == true) {
+        return true;
+    }
+
+    return false;
+}
+
 // Other
 void Map::addEdge(int region1, int region2)
 {
@@ -228,7 +246,7 @@ Map loadMap(string mapName)
 
     try {
         file.open(mapName);
-    }catch(int e)
+    }catch(...)
     {
         cout<<"Failed to open file."<<endl;
     }
@@ -332,6 +350,7 @@ bool checkConnect(Map map)
     int *visited = new int[size];
     *visited ={0};
 
+    /* NOTE: In need of fix
     for(int j=2; j<=size; ++j) {
         if (map.isConnected(1, j));
         {
@@ -339,6 +358,7 @@ bool checkConnect(Map map)
             visited[j] = 1;
         }
     }
+    */
 
     for(int k = 1; k<=size; ++k)
     {

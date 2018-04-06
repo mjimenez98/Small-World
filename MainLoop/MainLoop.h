@@ -6,8 +6,7 @@
 #define SMALL_WORLD_MAINLOOP_H
 
 #include <iostream>
-#include "../Player/Player.h"
-
+#include "../Objects/Player/Player.h"
 
 using namespace std;
 
@@ -20,11 +19,11 @@ public:
     MainLoop(Player* p1,Player* p2,Player * p3,Player * p4);
     MainLoop(Player* p1,Player* p2,Player * p3,Player * p4,Player*p5);
     void playGame(vector<FantasyRaceBanner>& raceBanners);
-
+    void declareWinner();
 
 private:
     int numberOfPlayers;
-    int numberOfTurns ;
+    int numberOfTurns;
     Player * player1;
     Player * player2;
     Player * player3;

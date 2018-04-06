@@ -2,27 +2,30 @@
 // Created by Miguel Jimenez on 3/7/18.
 //
 
-#include "../Player/Player.h"
+#include "../Objects/Player/Player.h"
 #include"../MainLoop/MainLoop.h"
-#include "../Observer/Observer.h"
+#include "../Patterns/Observer/Observer.h"
 
 using namespace std;
 
 int main() {
+
     Observer obs;
     vector<FantasyRaceBanner>* raceBanners = FantasyRaceBanner::createFantasyRaceBanners();
 
     int numOfPlayers = 0;
-    bool loop = true;
 
-    while(loop) {
+
+    do {
         cout << "How many people will be playing?" << endl;
         cin >> numOfPlayers;
-        if (numOfPlayers < 2 || numOfPlayers > 5)
+        if (numOfPlayers < 2 || numOfPlayers > 5) {
             cout << "Invalid number of players." << endl;
-        else
-            loop = false;
-    }
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(),'\n');
+        }
+
+    }while(numOfPlayers < 2 || numOfPlayers > 5);
 
     //notify Observer of number of players
     obs.notifyNumberOfPlayers(numOfPlayers);
@@ -187,10 +190,6 @@ int main() {
         default: cout << "switch error" << endl; break;
 
     }
-
-
-
-
 
     return 0;
 };

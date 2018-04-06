@@ -1,24 +1,19 @@
 //
 // Created by Miguel Jimenez on 2/4/18.
 //
-
+#pragma once
 #ifndef SMALL_WORLD_PLAYER_H
 #define SMALL_WORLD_PLAYER_H
 
-#include "../Dice/Dice.h"
-#include "../FantasyRaceBanner/FantasyRaceBanner.h"
-#include "../GameTurn/GameTurn.h"
-#include "../Map/Map.h"
-#include "../SummarySheet/SummarySheet.h"
-#include "../VictoryCoin/VictoryCoin.h"
-#include "../Observer/Observer.h"
+#include "PlayerBehavior.h"
 
 #include <iostream>
 #include <string>
+#include <random>
 
 using namespace std;
 
-class Player {
+class Player: public PlayerBehavior {
 
 public:
     // Constructors
@@ -38,21 +33,25 @@ public:
 
     // Setters
     void setNonEmptyRegionsConqueredInTurn(int newNonEmptyRegionsConqueredInTurn);
-    void setObserver(Observer*);
+    void setObserver(Observer* newObserver);
 
     // Other functions
     string toString();
     bool hasSummarySheet();
-    void picks_race(vector<FantasyRaceBanner>& availableBanners);
-    void firstConquer();
-    void conquer();
-    void redeploy();
-    void scores();
-    void readyTroops();
+    void picks_race(vector<FantasyRaceBanner>& availableBanners) override;
+    void firstConquer() override;
+    void conquer() override;
+    void redeploy() override;
+    void scores() override;
+    void readyTroops() override;
     void abandonRegion();
-    void playerTurn(vector<FantasyRaceBanner>& raceBanners);
+    void playerTurn(vector<FantasyRaceBanner>& raceBanners) override;
+    Observer* obs;
 
-private:
+    //Determines if player wants the option to choose an Observer
+    bool observerSelection = true;
+
+protected:
     Map* map;
     GameTurn* turn;
     Dice dice;
@@ -60,12 +59,9 @@ private:
     vector<int> regions;
     SummarySheet summarySheet;
     vector<VictoryCoin> coins;
-    Observer * obs;
-
-    //Determines if player wants the option to choose an Observer
-    bool observerSelection = true;
-
-
+    static vector<Player*> players;
+    static int playerIdTracker;
+    int playerId;
     //TEMP
     bool selectNewRace;
 
@@ -78,7 +74,6 @@ private:
     void finalizeConquer(int regionSelection, int tokenSelection);
     void decline();
     vector<int> getRegionsWithType(char type);
-
 
 };
 

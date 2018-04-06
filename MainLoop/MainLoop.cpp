@@ -3,15 +3,14 @@
 //
 
 #include "MainLoop.h"
-#include "../Player/Player.h"
-#include "../Observer/Observer.h"
-
+#include "../Objects/Player/Player.h"
+#include "../Patterns/Observer/Observer.h"
 
 //real version of playGame
-void  MainLoop::playGame(vector<FantasyRaceBanner>& raceBanners)
+void MainLoop::playGame(vector<FantasyRaceBanner>& raceBanners)
 {
 
-   int playerNum = numberOfPlayers;
+    int playerNum = numberOfPlayers;
 
     if(playerNum==2 || playerNum==3) {
         MainLoop::numberOfTurns = 10;
@@ -27,10 +26,10 @@ void  MainLoop::playGame(vector<FantasyRaceBanner>& raceBanners)
 
     //the number of turns left in the game
     while(turn<=numberOfTurns){
-        cout<<"It is turn "<<turn<<endl;
+        cout << endl << "It is turn " <<turn << endl << endl;
         //gives each player a turn
         for(int j =1 ; j<= MainLoop::numberOfPlayers;++j) {
-            cout<<"Player "<<j<<" :"<<endl;
+            cout<<"Player "<<j<<":"<<endl;
             switch(j)
             {
                 case 1: player1->playerTurn(raceBanners);break;
@@ -38,20 +37,102 @@ void  MainLoop::playGame(vector<FantasyRaceBanner>& raceBanners)
                 case 3: player3->playerTurn(raceBanners);break;
                 case 4: player4->playerTurn(raceBanners);break;
                 case 5: player5->playerTurn(raceBanners);break;
+                default: break;
 
             }
 
         }
         ++turn;
     }
+
     cout<<"Game ends"<<endl;
 
 }
+void MainLoop::declareWinner()
+{
+        Player winner;
+        int winnerNum;
+        vector<Player> players;
+    switch(numberOfPlayers)
+    {
+        case 2: players.push_back(*player1);
+                players.push_back(*player2);
+                    winner = *player1;
+                    winnerNum = 1;
+                    for(int j = 0; j<2;++j)
+                    {
 
+                        if(players[j].getCoins()>winner.getCoins())
+                        {
+                            players[j] = winner;
+                            winnerNum = j+1;
+                        }
+                    }
+                    break;
+        case 3: players.push_back(*player1);
+                players.push_back(*player2);
+                players.push_back(*player3);
+            winner = *player1;
+            winnerNum = 1;
+            for(int j = 0; j<3;++j)
+            {
+
+                if(players[j].getCoins()>winner.getCoins())
+                {
+                    players[j] = winner;
+                    winnerNum = j+1;
+                }
+            }
+                    break;
+        case 4: players.push_back(*player1);
+                players.push_back(*player2);
+                players.push_back(*player3);
+                players.push_back(*player4);
+            winner = *player1;
+            winnerNum = 1;
+            for(int j = 0; j<4;++j)
+            {
+
+                if(players[j].getCoins()>winner.getCoins())
+                {
+                    players[j] = winner;
+                    winnerNum = j+1;
+                }
+            }
+                    break;
+        case 5: players.push_back(*player1);
+                players.push_back(*player2);
+                players.push_back(*player3);
+                players.push_back(*player4);
+                players.push_back(*player5);
+            winner = *player1;
+            winnerNum = 1;
+            for(int j = 0; j<5;++j)
+            {
+
+                if(players[j].getCoins()>winner.getCoins())
+                {
+                    players[j] = winner;
+                    winnerNum = j+1;
+                }
+            }
+            break;
+        default: break;
+
+    }
+
+    for(int j =0; j<numberOfPlayers;++j)
+    {
+        player1->getCoins();
+    }
+
+    cout<<"Player "<<winnerNum<<" wins"<<endl;
+}
 
 
 //constructors
-MainLoop::MainLoop(){};
+MainLoop::MainLoop() {};
+
 MainLoop::MainLoop(Player *p1, Player *p2) {
     player1 = p1;
     player2 = p2;

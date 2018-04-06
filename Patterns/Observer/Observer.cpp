@@ -18,13 +18,13 @@ int Observer::regions3;
 int Observer::regions4;
 int Observer::regions5;
 
- vector<string> Observer::playerhands ;
- vector<int> Observer::playerCoins;
+vector<string> Observer::playerhands ;
+vector<int> Observer::playerCoins;
 
 //print player's current action
 void Observer::notifyAction(string phase)
 {
-cout<<"\nPlayer "<<playerNumber<<" "<<phase<<endl;
+    cout<<"\nPlayer "<<playerNumber<<" "<<phase<<endl;
 }
 
 //notifies Observer which player's turn it is
@@ -124,8 +124,8 @@ void GraphObserver::printGraph()
     {
         case 2: for(int j = 50 ; j>0; --j)
             {
-               if(percent1>=j*2) { cout<< "|---|\t";}
-               else{ cout<< "\t \t";}
+                if(percent1>=j*2) { cout<< "|---|\t";}
+                else{ cout<< "\t \t";}
 
                 if(percent2>=j*2) { cout<< "\t|---|\t";}
                 else{ cout<< "\t \t\t";}
@@ -211,7 +211,7 @@ void GraphObserver::printGraph()
             }
             //setprecision used to print decimal even if number is round ex: 0.00 instead of 0
             cout<<setprecision(2)<<fixed<<percent1<<"%\t\t"<<percent2<<"%\t\t"<<percent3<<"%\t\t"<<percent4<<"%\t\t"
-                    <<percent5<<"%\t\t"<<unclaimed<<"%\t\t"<<endl;
+                <<percent5<<"%\t\t"<<unclaimed<<"%\t\t"<<endl;
 
             cout<<"player1"<<"\t\tplayer2"<<"\t\tplayer3"<<"\t\tplayer4"<<"\t\tplayer5"<<"\t\tunclaimed"<<endl;
             break;

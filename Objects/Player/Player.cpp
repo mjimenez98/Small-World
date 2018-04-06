@@ -9,10 +9,12 @@
 #include <algorithm>
 #include <iostream>
 #include "../GameTurn/GameTurn.h"
-#include "../Observer/Observer.h"
+#include "../../Patterns/Observer/Observer.h"
 
 using namespace std;
-
+//static variables
+int Player::playerIdTracker = 1;
+vector<Player*> Player::players;
 Player::Player() {
 
     dice = Dice();
@@ -21,7 +23,10 @@ Player::Player() {
     coins = vector<VictoryCoin>();
     map = nullptr;
     turn = nullptr;
-    obs = new  Observer();
+    obs = new Observer();
+    players.push_back(this);
+    playerId = playerIdTracker;
+    playerIdTracker++;
 
     selectNewRace = false;
 
@@ -36,8 +41,10 @@ Player::Player(Map* gameMap) {
     map = gameMap;
 
     selectNewRace = false;
-    obs = new  Observer();
-
+    obs = new Observer();
+    players.push_back(this);
+    playerId = playerIdTracker;
+    playerIdTracker++;
 }
 
 Player::Player(Map& gameMap, GameTurn& gameTurn) {
@@ -48,8 +55,10 @@ Player::Player(Map& gameMap, GameTurn& gameTurn) {
     coins = vector<VictoryCoin>();
     map = &gameMap;
     turn = &gameTurn;
-    obs = new  Observer();
-
+    obs = new Observer();
+    players.push_back(this);
+    playerId = playerIdTracker;
+    playerIdTracker++;
 }
 
 Dice Player::getDice() {
@@ -60,16 +69,15 @@ Dice Player::getDice() {
 
 Observer* Player::getObserver() {
 
-    return  obs;
+     return obs;
 
 }
 
-void Player::setObserver(Observer * tempObs)
-{
-    obs = tempObs;
+void Player::setObserver(Observer * newObserver) {
+
+    obs = newObserver;
+
 }
-
-
 
 FantasyRaceBanner Player::getRaceBanner() {
 
@@ -101,6 +109,7 @@ int Player::getTotalCoinsValue() {
 
 }
 
+
 int Player::getNonEmptyRegionsConqueredInTurn() {
 
     return nonEmptyRegionsConqueredInTurn;
@@ -127,6 +136,7 @@ void Player::picks_race(vector<FantasyRaceBanner>& raceBanners) {
 
     //notify observer
     this->getObserver()->notifyAction("is picking race");
+
     int race = -1;
     vector<FantasyRaceBanner> availableBanners;
 
@@ -181,22 +191,35 @@ void Player::picks_race(vector<FantasyRaceBanner>& raceBanners) {
 void Player::decline() {
 
     //notify observer
-    this->getObserver()->notifyAction("is going into decline");
+    this->getObserver()->notifyRegionsOwned(regions.size());
     for(int region : regions) {
 
-        // Erase all previous tokens in decline
+        // Erase all previous tokens from previous races in decline
         if((*map).isInDecline(region)) {
 
-            (*map).setTokens(region, (*map).getTokens(region)-1);
-            (*map).setInDecline(region, false);
+            if((*map).hadGhouls(region)) {
+                (*map).setTokens(region, 1);
+                (*map).setHadGhouls(region, false);
+            }
+            else {
+                (*map).setTokens(region, (*map).getTokens(region) - 1);
+                (*map).setInDecline(region, false);
+            }
 
         }
 
-        // Decrease the number of your declining race's tokens in each region to 1
-        if((*map).getTokensType(region) == raceBanner.getRaceToken().getType()) {
+        else {
 
-            (*map).setTokens(region, 1);
-            (*map).setInDecline(region, true);
+            // Decrease the number of declining race's tokens in each region to 1
+            if((*map).getTokensType(region) == raceBanner.getRaceToken().getType()) {
+
+                if(raceBanner.getRaceToken().getType() != "Ghouls") {
+                    (*map).setTokens(region, 1);
+                }
+
+                (*map).setInDecline(region, true);
+
+            }
 
         }
 
@@ -217,6 +240,19 @@ void Player::finalizeConquer(int regionSelection, int tokenSelection) {
 
     // Add region selected to the player
     regions.emplace_back(regionSelection);
+
+    int previousPlayer = map->getRegionPlayer(regionSelection);
+    //if someone else owned this region
+    if (previousPlayer!=0 ) {
+        //remove region from previous player
+        players[previousPlayer-1]->regions.erase(std::remove(players[previousPlayer-1]->regions.begin(),
+                                                             players[previousPlayer-1]->regions.end(), regionSelection),
+                                                 players[previousPlayer-1]->regions.end());
+    }
+    //set owner of region on the map
+    map->setRegionPlayer(regionSelection,playerId);
+
+
     //notify Observer of change in number of regions
     this->getObserver()->notifyRegionsOwned(regions.size());
 
@@ -231,9 +267,12 @@ void Player::finalizeConquer(int regionSelection, int tokenSelection) {
     if(map->hasMountains(regionSelection))
         ++tokenAmount;
 
+    // Set that the region has Ghoul tokens so when put in decline they stay there for another round
+    if(raceBanner.getRaceToken().getType() == "Ghouls")
+        map->setHadGhouls(regionSelection, true);
+
     //The lost tribes do not stay if a player conquer
     map->setTokens(regionSelection, tokenAmount);
-
 
 }
 
@@ -242,8 +281,11 @@ void Player::conquer()
 
     //notify observer
     this->getObserver()->notifyAction("is conquering");
-    int regionSelection;
-    int tokenSelection;
+
+    int regionSelection = -1;
+    int tokenSelection = -1;
+
+
     // CONQUER ADJACENT REGIONS
 
     if (raceBanner.getRaceToken().getNumOfTokens() > 0) {
@@ -291,6 +333,7 @@ void Player::conquer()
                              << ", " << map->getTokens(adjRegion) << " tokens" << endl;
                     }
 
+                    // Choose a region
                     while (!(find(adjRegions.begin(), adjRegions.end(), regionSelection) != adjRegions.end())) {
 
                         cout << "Pick a region" << endl;
@@ -347,9 +390,7 @@ void Player::conquer()
                         if (tokenSelection < 0 || tokenSelection > raceBanner.getRaceToken().getNumOfTokens()
                         ||tokenSelection<(map->getTokens(regionSelection)+2)) {
 
-                            cout
-                                    << "Invalid input. You need 2 tokens plus the number of tokens on the region, to conquer."
-                                    << endl;
+                            cout << "Invalid input. You need 2 tokens plus the number of tokens on the region, to conquer." << endl;
                             cin.clear();
                             cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
@@ -370,6 +411,9 @@ void Player::conquer()
         }
 
     }   // End of if tokens > 0
+    else {
+        cout << "Player does not have tokens to conquer with" << endl;
+    }
 
 }
 
@@ -455,7 +499,6 @@ void Player::firstConquer() {
 
     conquer();
 
-
 }
 
 void Player::redeploy()
@@ -463,6 +506,7 @@ void Player::redeploy()
 
     //notify observer
     this->getObserver()->notifyAction("is redeploying");
+
     char redeploy ='x';
 
     //ask player if they want to redeploy
@@ -474,6 +518,8 @@ void Player::redeploy()
         if (redeploy != 'y' && redeploy != 'n')//make sure input is valid
         {
             cout << "Invalid input, enter 'y' or 'n'."<<endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(),'\n');
             continue;
         }
         if(redeploy=='n')
@@ -542,6 +588,8 @@ void Player::redeploy()
             if(!(std::find(this->regions.begin(), this->regions.end(), regionRedeploy) != this->regions.end()))
             {
                 cout<<"This is not your region"<<endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(),'\n');
             }
 
         }while(!(std::find(this->regions.begin(), this->regions.end(), regionRedeploy) != this->regions.end()));
@@ -557,6 +605,8 @@ void Player::redeploy()
             if(tokenPlacement>tokenNumber)
             {
                 cout<<"You do not have this many tokens to place"<<endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(),'\n');
             }
         }while(tokenPlacement>tokenNumber);
 
@@ -571,12 +621,18 @@ void Player::redeploy()
 //return number of tokens player removed
 void Player::readyTroops()
 {
+    //return if player has no regions
+    if(this->regions.empty())
+    {
+        cout<<"No regions to ready troops from \n"<<endl;
+        return;
+    }
 
     //notify observer
     this->getObserver()->notifyAction("is readying troops");
 
     cout<<"You may now remove tokens from your regions, that can be used to conquer."<<endl;
-    //'remove' keeps track of wether player wants to select another region to remove tokens from
+    //'remove' keeps track of whether player wants to select another region to remove tokens from
     char remove;
 
     //total number of removed tokens
@@ -599,6 +655,8 @@ void Player::readyTroops()
             //check if chosen value is owned by the player
             if (!(std::find(this->regions.begin(), this->regions.end(), regionRedeploy) != this->regions.end())) {
                 cout << "You do not own this region" << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(),'\n');
             }
         } while (!(std::find(this->regions.begin(), this->regions.end(), regionRedeploy) != this->regions.end()));
 
@@ -613,6 +671,8 @@ void Player::readyTroops()
 
             if ((tokenNumber < 0 || tokenNumber >= map->getTokens(regionRedeploy))) {
                 cout << "You must leave at least one token on the region" << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(),'\n');
             }
 
         } while (tokenNumber < 0 || tokenNumber >= map->getTokens(regionRedeploy));
@@ -631,6 +691,8 @@ void Player::readyTroops()
             if (remove != 'y' && remove != 'n')//make sure input is valid
             {
                 cout << "Invalid input, enter 'y' or 'n'." << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(),'\n');
                 continue;
             }
             if (remove == 'n') {
@@ -665,6 +727,8 @@ void Player::abandonRegion()
         //check if chosen value is owned by the player
         if (!(std::find(this->regions.begin(), this->regions.end(), regionAbandon) != this->regions.end())) {
             cout << "You do not own this region" << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(),'\n');
         }
     } while (!(std::find(this->regions.begin(), this->regions.end(), regionAbandon) != this->regions.end()));
 
@@ -691,7 +755,6 @@ void Player::abandonRegion()
                      regions.end());
     //notify Observer of change in number of regions
     this->getObserver()->notifyRegionsOwned(regions.size());
-
 
     //add removed tokens to player's available tokens
     raceBanner.setNumOfTokens(raceBanner.getRaceToken().getNumOfTokens()+removedTokens);
@@ -873,12 +936,16 @@ int Player::giveBadgeCoins() {
 //lets player decide what they want to do on their turn
 void Player::playerTurn(vector<FantasyRaceBanner>& raceBanners)
 {
+
     this->selectObserver();
+
     if(selectNewRace) {
 
         picks_race(raceBanners);
 
         selectNewRace = false;
+
+        firstConquer();
 
     }
 
@@ -918,6 +985,7 @@ void Player::playerTurn(vector<FantasyRaceBanner>& raceBanners)
 
 void Player::selectObserver()
 {
+    //return if player previously chose to not see this menu
     if (!observerSelection)
     {
         return;
@@ -937,6 +1005,8 @@ void Player::selectObserver()
         if(selection<1||selection>5)
         {
             cout<<"Invalid selection, try again"<<endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(),'\n');
         }
     }while(selection<1||selection>5);
 
@@ -980,7 +1050,7 @@ void Player::scores() {
     // Special Power
     newCoins = giveBadgeCoins();
     distributeCoins(newCoins);
-    cout << "Player has been awarded " + to_string(newCoins) + "  coin(s) because of the " + raceBanner.getPowerBadge().getType()
+    cout << "Player has been awarded " + to_string(newCoins) + " coin(s) because of the " + raceBanner.getPowerBadge().getType()
          << " power badge" << endl;
 
     // Race Power
