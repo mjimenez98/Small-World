@@ -44,7 +44,7 @@ void MainLoop::playGame(vector<FantasyRaceBanner>& raceBanners)
         }
         ++turn;
     }
-
+    declareWinner();
     cout<<"Game ends"<<endl;
 
 }
