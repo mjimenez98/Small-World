@@ -4,6 +4,7 @@ project(Small-World)
 set(CMAKE_CXX_STANDARD 11)
 
 add_executable(Small-World
+
         #OBJECTS
         Objects/Dice/Dice.cpp Objects/Dice/Dice.h
         Objects/FantasyRaceBanner/FantasyRaceBanner.cpp Objects/FantasyRaceBanner/FantasyRaceBanner.h
@@ -15,13 +16,21 @@ add_executable(Small-World
         Objects/Player/PlayerBehavior.h
         Objects/Player/Player.h Objects/Player/Player.cpp
         Objects/SpecialPowerBadge/SpecialPowerBadge.cpp Objects/SpecialPowerBadge/SpecialPowerBadge.h
-        Objects/SummarySheet/SummarySheet.cpp Objects/SummarySheet/SummarySheet.h
         Objects/VictoryCoin/VictoryCoin.cpp Objects/VictoryCoin/VictoryCoin.h
+
         #MAIN
         Main/main.cpp
         MainLoop/MainLoop.cpp MainLoop/MainLoop.h
+
         #PATTERNS
-        Patterns/Observer/Observer.cpp Patterns/Observer/Observer.h
+        #Observer
+        Patterns/Observer/Observer/ObserverInterface.h
+        Patterns/Observer/Observer/Observer.cpp Patterns/Observer/Observer/Observer.h
+        Patterns/Observer/Decorator/Decorator.cpp Patterns/Observer/Decorator/Decorator.h
+        Patterns/Observer/Decorator/CoinObserver/CoinObserver.cpp Patterns/Observer/Decorator/CoinObserver/CoinObserver.h
+        Patterns/Observer/Decorator/HandObserver/HandObserver.cpp Patterns/Observer/Decorator/HandObserver/HandObserver.h
+        Patterns/Observer/Decorator/GraphObserver/GraphObserver.cpp Patterns/Observer/Decorator/GraphObserver/GraphObserver.h
+        #Strategy
         Patterns/Strategy/Aggressive.cpp Patterns/Strategy/Aggressive.h
         Patterns/Strategy/Defensive.cpp Patterns/Strategy/Defensive.h
         Patterns/Strategy/Moderate.cpp Patterns/Strategy/Moderate.h

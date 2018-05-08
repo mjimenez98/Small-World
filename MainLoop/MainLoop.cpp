@@ -4,7 +4,7 @@
 
 #include "MainLoop.h"
 #include "../Objects/Player/Player.h"
-#include "../Patterns/Observer/Observer.h"
+#include "../Patterns/Observer/Observer/Observer.h"
 
 //real version of playGame
 void MainLoop::playGame(vector<FantasyRaceBanner>& raceBanners)

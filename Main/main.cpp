@@ -4,7 +4,7 @@
 
 #include "../Objects/Player/Player.h"
 #include"../MainLoop/MainLoop.h"
-#include "../Patterns/Observer/Observer.h"
+#include "../Patterns/Observer/Observer/Observer.h"
 #include "../Patterns/Strategy/Aggressive.h"
 #include "../Patterns/Strategy/Defensive.h"
 #include "../Patterns/Strategy/Moderate.h"

@@ -1,7 +1,7 @@
 //
 // Created by Miguel Jimenez on 2/4/18.
 //
-#pragma once
+
 #ifndef SMALL_WORLD_PLAYER_H
 #define SMALL_WORLD_PLAYER_H
 
@@ -25,7 +25,6 @@ public:
     Dice getDice();
     Observer* getObserver();
     FantasyRaceBanner getRaceBanner();
-    SummarySheet getSummarySheet();
     vector<VictoryCoin>* getCoins();
     int getTotalCoinsValue();
     int getNonEmptyRegionsConqueredInTurn();
@@ -37,7 +36,6 @@ public:
 
     // Other functions
     string toString();
-    bool hasSummarySheet();
     void picks_race(vector<FantasyRaceBanner>& availableBanners) override;
     void firstConquer() override;
     void conquer() override;
@@ -57,7 +55,6 @@ protected:
     Dice dice;
     FantasyRaceBanner raceBanner;
     vector<int> regions;
-    SummarySheet summarySheet;
     vector<VictoryCoin> coins;
     static vector<Player*> players;
     static int playerIdTracker;

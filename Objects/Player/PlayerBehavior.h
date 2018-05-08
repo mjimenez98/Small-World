@@ -9,9 +9,13 @@
 #include "../FantasyRaceBanner/FantasyRaceBanner.h"
 #include "../GameTurn/GameTurn.h"
 #include "../Map/Map.h"
-#include "../SummarySheet/SummarySheet.h"
 #include "../VictoryCoin/VictoryCoin.h"
-#include "../../Patterns/Observer/Observer.h"
+#include "../../Patterns/Observer/Observer/Observer.h"
+#include "../GameTurn/GameTurn.h"
+#include "../../Patterns/Observer/Observer/Observer.h"
+#include "../../Patterns/Observer/Decorator/HandObserver/HandObserver.h"
+#include "../../Patterns/Observer/Decorator/GraphObserver/GraphObserver.h"
+#include "../../Patterns/Observer/Decorator/CoinObserver/CoinObserver.h"
 
 class PlayerBehavior {
 

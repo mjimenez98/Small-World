@@ -5,21 +5,20 @@
 #include <limits>
 #include "Player.h"
 #include <random>   // Default random engine
-#include<chrono>
+#include <chrono>
 #include <algorithm>
 #include <iostream>
-#include "../GameTurn/GameTurn.h"
-#include "../../Patterns/Observer/Observer.h"
 
 using namespace std;
+
 //static variables
 int Player::playerIdTracker = 1;
 vector<Player*> Player::players;
+
 Player::Player() {
 
     dice = Dice();
     raceBanner = FantasyRaceBanner();
-    summarySheet = SummarySheet();
     coins = vector<VictoryCoin>();
     map = nullptr;
     turn = nullptr;
@@ -36,7 +35,6 @@ Player::Player(Map* gameMap) {
 
     dice = Dice();
     raceBanner = FantasyRaceBanner();
-    summarySheet = SummarySheet();
     coins = vector<VictoryCoin>();
     map = gameMap;
 
@@ -51,7 +49,6 @@ Player::Player(Map& gameMap, GameTurn& gameTurn) {
 
     dice = Dice();
     raceBanner = FantasyRaceBanner();
-    summarySheet = SummarySheet();
     coins = vector<VictoryCoin>();
     map = &gameMap;
     turn = &gameTurn;
@@ -85,12 +82,6 @@ FantasyRaceBanner Player::getRaceBanner() {
 
 }
 
-SummarySheet Player::getSummarySheet() {
-
-    return summarySheet;
-
-}
-
 vector<VictoryCoin>* Player::getCoins() {
 
     return &coins;
@@ -119,15 +110,6 @@ int Player::getNonEmptyRegionsConqueredInTurn() {
 void Player::setNonEmptyRegionsConqueredInTurn(int newNonEmptyRegionsConqueredInTurn) {
 
     nonEmptyRegionsConqueredInTurn = newNonEmptyRegionsConqueredInTurn;
-
-}
-
-bool Player::hasSummarySheet() {
-
-    if(getSummarySheet().exists())
-        return true;
-
-    return false;
 
 }
 
@@ -1086,8 +1068,7 @@ string Player::toString() {
 
     description += "\nTokens: " + getRaceBanner().getRaceToken().getType() + ", " +
             to_string(getRaceBanner().getRaceToken().getNumOfTokens()) + "\nBadge: " + getRaceBanner().getPowerBadge().getType() +
-            "\nSummary Sheet: " + to_string(hasSummarySheet()) + "\nScore: " + to_string(getTotalCoinsValue()) +
-            "\n" + VictoryCoin::demoVictoryCoins(*getCoins());
+                   "\nScore: " + to_string(getTotalCoinsValue()) + "\n" + VictoryCoin::demoVictoryCoins(*getCoins());
 
     return description;
 

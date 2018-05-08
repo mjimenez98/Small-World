@@ -29,3 +29,7 @@ using namespace std;
 		}
 		 
 	}
+
+	int Dice::getTotalRolls() {
+	    return totalRolls;
+	}
