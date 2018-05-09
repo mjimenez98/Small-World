@@ -4,37 +4,44 @@
 
 #include "Decorator.h"
 
-Decorator::Decorator(Observer *tempObs)
-{
+Decorator::Decorator(Observer *tempObs) {
+
     obs = tempObs;
+
 }
 
-void Decorator::notifyAction(string action)
-{
+void Decorator::notifyAction(string action) {
+
     obs->notifyAction(action);
+
 }
 
-void Decorator::notifyPlayer(int playerNum)
-{
+void Decorator::notifyPlayer(int playerNum) {
+
     obs->notifyPlayer(playerNum);
+
 }
 
-void Decorator::notifyRegionsOwned(int regionsOwned)
-{
+void Decorator::notifyRegionsOwned(int regionsOwned) {
+
     obs->notifyRegionsOwned(regionsOwned);
+
 }
 
-void Decorator::notifyNumberOfPlayers(int numberOfPlayers)
-{
+void Decorator::notifyNumberOfPlayers(int numberOfPlayers) {
+
     obs->notifyNumberOfPlayers(numberOfPlayers);
+
 }
 
-void Decorator::notifyHand(string hand)
-{
+void Decorator::notifyHand(string hand) {
+
     obs->notifyHand(hand);
+
 }
 
-void Decorator::notifyCoins(int coins)
-{
+void Decorator::notifyCoins(int coins) {
+
     obs->notifyCoins(coins);
+
 }

@@ -1018,6 +1018,12 @@ void Player::selectObserver()
 
 }
 
+int Player::getPlayerID() {
+
+    return playerId;
+
+}
+
 // Awards player 1 coin for every region they possess and a determined amount by their Race and/or Special Power
 void Player::scores() {
 

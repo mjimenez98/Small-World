@@ -46,12 +46,6 @@ void SpecialPowerBadge::setTaken(bool isTaken) {
 
 }
 
-void SpecialPowerBadge::activate() {
-
-    //TBD
-
-}
-
 // Prints a description of all the Power Badges created
 string SpecialPowerBadge::demoSpecialPowerBadges(vector<SpecialPowerBadge>& badges) {
 

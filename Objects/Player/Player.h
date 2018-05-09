@@ -29,6 +29,7 @@ public:
     int getTotalCoinsValue();
     int getNonEmptyRegionsConqueredInTurn();
     void selectObserver();
+    int getPlayerID();
 
     // Setters
     void setNonEmptyRegionsConqueredInTurn(int newNonEmptyRegionsConqueredInTurn);

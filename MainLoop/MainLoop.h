@@ -13,11 +13,10 @@ using namespace std;
 class MainLoop {
 
 public:
-    MainLoop();
-    MainLoop(Player* p1,Player* p2);
-    MainLoop(Player* p1,Player* p2,Player * p3);
-    MainLoop(Player* p1,Player* p2,Player * p3,Player * p4);
-    MainLoop(Player* p1,Player* p2,Player * p3,Player * p4,Player*p5);
+    MainLoop(Player* p1,Player* p2, vector<FantasyRaceBanner>& raceBanners);
+    MainLoop(Player* p1,Player* p2,Player * p3, vector<FantasyRaceBanner>& raceBanners);
+    MainLoop(Player* p1,Player* p2,Player * p3,Player * p4, vector<FantasyRaceBanner>& raceBanners);
+    MainLoop(Player* p1,Player* p2,Player * p3,Player * p4,Player*p5, vector<FantasyRaceBanner>& raceBanners);
     void playGame(vector<FantasyRaceBanner>& raceBanners);
     void declareWinner();
 
@@ -29,6 +28,7 @@ private:
     Player * player3;
     Player * player4;
     Player * player5;
+
 };
 
 

@@ -5,13 +5,12 @@
 #include <string>
 #include <list>
 
-
 using namespace std;
 
 // Subclass: Region in map
 struct Map::Region {
 
-    int tokens =0;
+    int tokens = 0;
     string token_type;
     int  player = 0;
     char regionType;
@@ -223,174 +222,131 @@ void Map::addEdge(int region1, int region2)
     connections[region2][region1] = 1;
 }
 
-/* First element of each line is region type
- * H = hill
- * W = Water
- * S = Swamp
- * F = field
- * T = trees
- * M = mountain
- * Second letter is special area in region
- * c = cavern
- * m = mine
- * s = source of magic
- * x = cavern and mine
- * n = none
- * Third letter is lost tribe token
- * T = true
- * F = false
-*/
-Map loadMap(string mapName)
-{
+Map loadMap(string mapName) {
+
+    /*
+     * MAP FORMAT:
+     *
+     * Line 1: Number of regions
+     *
+     * Lines 2 - end:
+     *      First character: region type
+     *          H = hill
+     *          W = Water
+     *          S = Swamp
+     *          F = field
+     *          T = trees
+     *          M = mountain
+     *      Second character: special area in region
+     *          c = cavern
+     *          m = mine
+     *          s = source of magic
+     *          x = cavern and mine
+     *          n = none
+     *      Third character: presence of tribe tokens
+     *          T = true
+     *          F = false
+     *      Fourth character: exterior or interior
+     *          E = exterior
+     *          I = interior
+     *      Subsequent numbers: Adjacent regions
+     *
+     */
+
     ifstream file;
 
     try {
         file.open(mapName);
-    }catch(...)
-    {
-        cout<<"Failed to open file."<<endl;
+    }
+    catch(...) {
+        cerr << "ERROR: Failed to open file" << endl;
     }
 
+    string line;
+    getline(file, line);
 
-    string s;
-    getline(file, s);
+    // Get number of regions
+    string size;
+    size += line.at(0);
+    size += line.at(1);
 
-    //first line of the file is the number of regions
-    //create a map of the appropriate size
-    string size = "";
-    size += s.at(0);
-    size += s.at(1);
-    int sizenum = stoi(size);
-    Map m1(sizenum+1);
+    Map map(stoi(size)+1);
 
-    //count keeps track of line number
-    int count = 1;
-    //each line is the current Region, all values on the line are connected regions
-    //separated by commas
-    while (!file.eof())
-    {
-        string s1;
-        getline(file, s1);
+    int region = 1;
 
-        //set region
-        char regionType = s1.at(0);
-        m1.setRegionType(count, regionType);
-        //add a token to the region if it has a mountain
-        if(m1.getRegionType(count)=='M')
-            m1.addTokens(count,1);
+    while (!file.eof()) {
+
+        getline(file, line);
+
+        // Set region type
+        char regionType = line.at(0);
+        map.setRegionType(region, regionType);
+
+        // Add a token to the region if it has a mountain
+        if(map.getRegionType(region)=='M')
+            map.addTokens(region,1);
 
 
-        //set special
-        char special = s1.at(1);
+        // Set special
+        char special = line.at(1);
 
         if (special == 'm')
-            m1.setMine(count, true);
+            map.setMine(region, true);
 
         else if(special=='c')
-            m1.setCavern(count, true);
+            map.setCavern(region, true);
 
         else if(special=='s')
-            m1.setMagic(count, true);
+            map.setMagic(region, true);
 
         else if (special == 'x')
         {
-            m1.setCavern(count, true);
-            m1.setMine(count, true);
+            map.setCavern(region, true);
+            map.setMine(region, true);
         }
+
 
         // Set lost tribes
-        char tribe = s1.at(2);
+        char tribe = line.at(2);
 
         if(tribe == 'T') {
-            m1.setLostTribes(count, LostTribeToken());
+            map.setLostTribes(region, LostTribeToken());
 
-            m1.addTokens(count,1);
+            map.addTokens(region,1);
         }
 
+
         // Set exterior
-        char ext = s1.at(3);
+        char ext = line.at(3);
+
         if (ext == 'E')
-            m1.setExterior(count, true);
+            map.setExterior(region, true);
 
-        string number = "";
-        for (int k = 4; k < s1.length(); ++k)
-        {
 
-            char c = s1.at(k);
+        string number;
+        for (int k = 4; k < line.length(); ++k) {
 
-            if (c == ',')
-            {
-                //convert string to integer
+            char c = line.at((unsigned long) k);
+
+            // If there is an adjacent region, add edge
+            if (c == ',') {
+
                 int val = stoi(number);
 
-                m1.addEdge(count, val);
-
+                map.addEdge(region, val);
                 number = "";
+
                 continue;
+
             }
             number += c;
         }
-        ++count;
-    }
+        ++region;
 
+    }   // End of while
 
     file.close();
-    return m1;
-
-}
-
-//check if map is connected
-bool checkConnect(Map map)
-{
-
-    // NOTE: To be completed. Traverse the graph and make sure all the regions are connected.
-
-    int size = map.getNumOfRegions();
-    // Mark all the vertices as not visited
-    int *visited = new int[size];
-    *visited ={0};
-
-    /* NOTE: In need of fix
-    for(int j=2; j<=size; ++j) {
-        if (map.isConnected(1, j));
-        {
-
-            visited[j] = 1;
-        }
-    }
-    */
-
-    for(int k = 1; k<=size; ++k)
-    {
-    }
-    if(map.getNumOfRegions()==30) {
-        cout << "invalid map" << endl;
-        return false;
-    }
-
-    return true;
-
-}
-
-// Prints a description of the Small World deck
-void demoGame(vector<VictoryCoin>& coins, vector<GamePiece>& gamePieces, vector<LostTribeToken>& lostTribes,
-              vector<FantasyRaceBanner>& raceBanners, vector<MatchingRaceToken>& raceTokens, vector<SpecialPowerBadge>& badges)
-{
-
-    if(coins.empty() || gamePieces.empty() || lostTribes.empty() || raceBanners.empty() ||
-            raceTokens.empty() || badges.empty() ) {
-        cout << "ERROR" << endl;
-    }
-    else {
-
-        cout << "This Small World game set has:" << endl;
-        cout << VictoryCoin::demoVictoryCoins(coins) << endl;
-        cout << MatchingRaceToken::demoMatchingRaceTokens(raceTokens, 1) << endl;
-        cout << SpecialPowerBadge::demoSpecialPowerBadges(badges) << endl;
-        cout << GamePiece::demoGamePieces(gamePieces) << endl;
-        cout << LostTribeToken::demoLostTribeTokens(lostTribes) << endl;
-        cout << FantasyRaceBanner::demoFantasyRaceBanner(raceBanners);
-    }
+    return map;
 
 }
 
@@ -398,8 +354,6 @@ void demoGame(vector<VictoryCoin>& coins, vector<GamePiece>& gamePieces, vector<
 void createGame() {
 
     vector<FantasyRaceBanner>* raceBanners = FantasyRaceBanner::createFantasyRaceBanners();
-
-    vector<VictoryCoin>* coins = VictoryCoin::createVictoryCoins(ONES, THREES, FIVES, TENS);
 
     vector<GamePiece>* gamePieces = GamePiece::createGamePieces(DRAGONS, ENCAMPMENTS, FORTRESSES, HEROES, MOUNTAINS, TROLLLAIRS,
                                                                HOLESINTHEGROUND);
@@ -423,10 +377,11 @@ void createGame() {
                                                                                          SPIRIT_TOKENS, STOUT_TOKENS, SWAMP_TOKENS,
                                                                                          UNDERWORLD_TOKENS, WEALTHY_TOKENS);
 
-    demoGame(*coins, *gamePieces, *lostTribes, *raceBanners, *raceTokens, *powerBadges);
 
 }
 
-Map::~Map()
-{
+Map::~Map() {
+
+
+
 }

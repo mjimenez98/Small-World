@@ -26,12 +26,8 @@ public:
     // Getters
     int getValue();
 
-    // Setters
-    void setValue(int newValue);
-
-    // Other functions
+    //Other functions
     static string demoVictoryCoins(vector<VictoryCoin>& coins);
-    static vector<VictoryCoin>* createVictoryCoins(int numOfOnes, int numOfThrees, int numOfFives, int numOfTens);
 
 private:
     int value;

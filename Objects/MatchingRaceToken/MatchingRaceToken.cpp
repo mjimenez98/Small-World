@@ -65,18 +65,6 @@ void MatchingRaceToken::setTaken(bool isTaken) {
 
 }
 
-void MatchingRaceToken::activate() {
-
-    //TBD
-
-}
-
-void MatchingRaceToken::giveCoinsToPlayer() {
-
-    //TBD
-
-}
-
 /* Prints a description of all the Matching Race Tokens created.
  *      raceTokens: vector to be described
  *      withTokens: whether the number of tokens should be returned or not */

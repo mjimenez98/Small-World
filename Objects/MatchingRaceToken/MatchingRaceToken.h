@@ -60,8 +60,6 @@ public:
     void setTaken(bool isTaken);
 
     // Other functions
-    void activate();
-    void giveCoinsToPlayer();
     static string demoMatchingRaceTokens(vector<MatchingRaceToken>& raceTokens, bool withTokens);
     static vector<MatchingRaceToken>* createMatchingRaceTokens(int numOfAmazons, int numOfDwarves, int numOfElves, int numOfGhouls,
         int numOfGiants, int numOfHalflings, int numOfHumans, int numOfOrcs, int numOfRatmen, int numOfSkeletons, int numOfSorcerers,

@@ -14,126 +14,175 @@ using namespace std;
 
 int main() {
 
+    bool loop = true;
+    int input = -1;
+
     Observer obs;
+    Map map;
+
     vector<FantasyRaceBanner>* raceBanners = FantasyRaceBanner::createFantasyRaceBanners();
 
-    int opponentType = 0;
-    bool loop = true;
+    // MAIN MENU
 
-    cout << "WELCOME TO SMALL WORLD!" << endl << endl;
+    cout << "WELCOME TO SMALL WORLD!" << endl << endl << endl;
 
     while(loop) {
-        cout << "Choose your opponent:" << endl
-             << "1. Aggressive" << endl
-             << "2. Defensive" << endl
-             << "3. Moderate" << endl
-             << "4. Random" << endl;
-        cin >> opponentType;
-        if (opponentType < 1 || opponentType > 4)
-            cout << "Invalid input." << endl;
+        cout << "Select mode:" << endl;
+        cout << "1. Solo" << endl;
+        cout << "2. Multiplayer" << endl;
+        cin >> input;
+        if (input < 1 || input > 2)
+            cout << "Invalid input." << endl << endl;
         else
             loop = false;
     }
+    loop = true;
+    cout << endl << endl;
 
-    Map m1 = loadMap("../textMaps/2Players.txt");
-    Map* map = &m1;
-    if (!checkConnect(m1))
-        return (0);
 
-    Player p1 = Player(map);
+    // PlAYER SELECTION
 
-    //notify Observer of number of players
-    obs.notifyNumberOfPlayers(2);
+    // If solo
+    if(input == 1) {
 
-    switch(opponentType)
-    {
-        case 1:
-        {
-            Aggressive p2 = Aggressive(map);
-            cout << "Loaded the 2 player map and created 2 players" << endl << endl;
-
-            p1.getObserver()->notifyPlayer(1);
-            p1.picks_race(*raceBanners);
-            p1.firstConquer();
-            p1.redeploy();
-            p1.scores();
-
-            p2.getObserver()->notifyPlayer(2);
-            p2.picks_race(*raceBanners);
-            p2.firstConquer();
-            p2.redeploy();
-            p2.scores();
-
-            MainLoop play(&p1,&p2);
-            play.playGame(*raceBanners);
-            break;
+        while(loop) {
+            cout << "Select oponent:" << endl;
+            cout << "1. Aggressive" << endl;
+            cout << "2. Defensive" << endl;
+            cout << "3. Moderate" << endl;
+            cout << "4. Random" << endl;
+            cin >> input;
+            if (input < 1 || input > 4)
+                cout << "Invalid input." << endl << endl;
+            else
+                loop = false;
         }
-        case 2:
-        {
-            Defensive p2 = Defensive(map);
-            cout << "Loaded the 2 player map and created 2 players" << endl << endl;
+        loop = true;
+        cout << endl << endl;
 
-            p1.getObserver()->notifyPlayer(1);
-            p1.picks_race(*raceBanners);
-            p1.firstConquer();
-            p1.redeploy();
-            p1.scores();
+        // Notify Observer of number of players
+        obs.notifyNumberOfPlayers(input);
 
-            p2.getObserver()->notifyPlayer(2);
-            p2.picks_race(*raceBanners);
-            p2.firstConquer();
-            p2.redeploy();
-            p2.scores();
+        cout << "Let the Small World conquest begin!" << endl;
 
-            MainLoop play(&p1,&p2);
-            play.playGame(*raceBanners);
-            break;
+        // Load map and create Player 1
+        map = loadMap("../textMaps/2Players.txt");
+        Player p1 = Player(&map);
+
+        // Create proper opponent and load map
+        switch(input) {
+
+            case 1: {
+                Aggressive p2 = Aggressive(&map);
+
+                MainLoop play(&p1, &p2, *raceBanners);
+                play.playGame(*raceBanners);
+                break;
+            }
+            case 2: {
+                Defensive p2 = Defensive(&map);
+
+                MainLoop play(&p1, &p2, *raceBanners);
+                play.playGame(*raceBanners);
+                break;
+            }
+            case 3: {
+                Moderate p2 = Moderate(&map);
+
+                MainLoop play(&p1, &p2, *raceBanners);
+                play.playGame(*raceBanners);
+                break;
+            }
+            case 4: {
+                Random p2 = Random(&map);
+
+                MainLoop play(&p1, &p2, *raceBanners);
+                play.playGame(*raceBanners);
+                break;
+            }
+            default: {
+                cerr << "ERROR: Opponent not found" << endl;
+                break;
+            }
+
         }
-        case 3:
-        {
-            Moderate p2 = Moderate(map);
-            cout << "Loaded the 2 player map and created 2 players" << endl << endl;
 
-            p1.getObserver()->notifyPlayer(1);
-            p1.picks_race(*raceBanners);
-            p1.firstConquer();
-            p1.redeploy();
-            p1.scores();
+    }
+    // If multiplayer
+    else {
 
-            p2.getObserver()->notifyPlayer(2);
-            p2.picks_race(*raceBanners);
-            p2.firstConquer();
-            p2.redeploy();
-            p2.scores();
-
-            MainLoop play(&p1,&p2);
-            play.playGame(*raceBanners);
-            break;
+        while(loop) {
+            cout << "Type in the number of players (2-5):" << endl;
+            cin >> input;
+            if (input < 2 || input > 5)
+                cout << "Invalid input." << endl << endl;
+            else
+                loop = false;
         }
-        case 4:
-        {
-            Random p2 = Random(map);
-            cout << "Loaded the 2 player map and created 2 players" << endl << endl;
+        loop = true;
+        cout << endl << endl;
 
-            p1.getObserver()->notifyPlayer(1);
-            p1.picks_race(*raceBanners);
-            p1.firstConquer();
-            p1.redeploy();
-            p1.scores();
+        // Notify Observer of number of players
+        obs.notifyNumberOfPlayers(input);
 
-            p2.getObserver()->notifyPlayer(2);
-            p2.picks_race(*raceBanners);
-            p2.firstConquer();
-            p2.redeploy();
-            p2.scores();
+        cout << "Let the Small World conquest begin!" << endl;
 
-            MainLoop play(&p1,&p2);
-            play.playGame(*raceBanners);
-            break;
+        // Create proper number of players and according map
+        switch(input) {
+
+            case 2: {
+                map = loadMap("../textMaps/2Players.txt");
+
+                Player p1 = Player(&map);
+                Player p2 = Player(&map);
+
+                MainLoop play(&p1, &p2, *raceBanners);
+                play.playGame(*raceBanners);
+                break;
+            }
+            case 3: {
+                map = loadMap("../textMaps/3Players.txt");
+
+                Player p1 = Player(&map);
+                Player p2 = Player(&map);
+                Player p3 = Player(&map);
+
+                MainLoop play(&p1, &p2, &p3, *raceBanners);
+                play.playGame(*raceBanners);
+                break;
+            }
+            case 4: {
+                map = loadMap("../textMaps/4Players.txt");
+
+                Player p1 = Player(&map);
+                Player p2 = Player(&map);
+                Player p3 = Player(&map);
+                Player p4 = Player(&map);
+
+                MainLoop play(&p1, &p2, &p3, &p4, *raceBanners);
+                play.playGame(*raceBanners);
+                break;
+            }
+            case 5: {
+                map = loadMap("../textMaps/5Players.txt");
+
+                Player p1 = Player(&map);
+                Player p2 = Player(&map);
+                Player p3 = Player(&map);
+                Player p4 = Player(&map);
+                Player p5 = Player(&map);
+
+                MainLoop play(&p1, &p2, &p3, &p4, &p5, *raceBanners);
+                play.playGame(*raceBanners);
+                break;
+            }
+            default: {
+                cerr << "ERROR: Players could not be created" << endl;
+                break;
+            }
+
         }
-        default: cout << "switch error" << endl; break;
 
     }
 
-    return 0;
 };

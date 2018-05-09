@@ -41,7 +41,6 @@ public:
 	void setTokens(int region, int tokens);
 	void setHadGhouls(int region, bool state);
 
-
 	// Is
 	bool isCavern(int region);
 	bool isConnected(int region1, int region2);
@@ -71,5 +70,4 @@ private:
 };
 
 Map loadMap(string mapName);
-bool checkConnect(Map);
 void createGame();
