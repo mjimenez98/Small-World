@@ -20,12 +20,12 @@ cd Small-world
 cmake . 
 ```
 
-![cmake result](https://github.com/Knackie/Small-World/blob/master/cmake.PNG)
+![cmake result](https://github.com/mjimenez98/Small-World/blob/master/cmake.PNG)
 
 
 Run make : 
 ``` make ```
 
-![make result](https://github.com/Knackie/Small-World/blob/master/make.PNG)
+![make result](https://github.com/mjimenez98/Small-World/blob/master/make.PNG)
 
 # enjoy
