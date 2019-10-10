@@ -27,3 +27,5 @@ Run make :
 ``` make ```
 
 ![make result](https://github.com/Knackie/Small-World/blob/master/make.PNG)
+
+# enjoy
