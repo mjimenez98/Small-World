@@ -6,6 +6,9 @@ For clone the repo, you have to run :
 
 ```https://github.com/mjimenez98/Small-World.git```
 
+# How install Small world ?
+
+
 Install cmake : 
 
 Ubuntu : `apt install cmake`
