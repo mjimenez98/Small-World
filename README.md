@@ -13,8 +13,8 @@ Arch Linux : `yay cmake` or `pacman -S cmake`
 
 Run cmake : 
 
-``` cd Small-world
-cmake . ```
+cd Small-world
+cmake . 
 
 ![cmake result](cmake.png)
 
