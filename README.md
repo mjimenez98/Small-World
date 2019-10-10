@@ -12,9 +12,10 @@ Ubuntu : `apt install cmake`
 Arch Linux : `yay cmake` or `pacman -S cmake`
 
 Run cmake : 
-
+```
 cd Small-world
 cmake . 
+```
 
-![cmake result](cmake.png)
+![cmake result](https://github.com/Knackie/Small-World/blob/master/cmake.PNG)
 
