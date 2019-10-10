@@ -16,3 +16,5 @@ Run cmake :
 ``` cd Small-world
 cmake .```
 
+![cmake result](cmake.png)
+
